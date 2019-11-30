@@ -161,7 +161,7 @@
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Models\SDWebApiDbContext.cs" />
+    <Compile Include="Models\SdMvc4DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
