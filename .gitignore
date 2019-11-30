@@ -8,6 +8,14 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.txt 
+*.csv
+*.accdb
+
+# User-specific directories
+[Ll]og/
+[Ii]mages/
+_bu/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -22,7 +30,6 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
-[Ll]og/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -64,10 +71,8 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
-*.iobj
 *.pch
 *.pdb
-*.ipdb
 *.pgc
 *.pgd
 *.rsp
@@ -84,6 +89,9 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+# Ignore Archives
+*.rar
+*.zip
 
 # Chutzpah Test files
 _Chutzpah*
@@ -240,7 +248,6 @@ Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 ServiceFabricBackup/
-*.rptproj.bak
 
 # SQL Server files
 *.mdf
@@ -251,7 +258,6 @@ ServiceFabricBackup/
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
-*.rptproj.rsuser
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -262,6 +268,9 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+
+# TypeScript v1 declaration files
+typings/
 
 # Visual Studio 6 build log
 *.plg
@@ -323,8 +332,46 @@ ASALocalRun/
 # MSBuild Binary and Structured Log
 *.binlog
 
-# NVidia Nsight GPU debugger configuration file
-*.nvuser
 
-# MFractors (Xamarin productivity tool) working folder 
-.mfractor/
+# ANGULAR PROJ
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
