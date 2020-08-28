@@ -62,6 +62,9 @@
     <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>packages\EntityFramework.SharpDevelop.6.0.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -107,6 +110,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
@@ -133,12 +137,6 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TuesPechkin, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\TuesPechkin.2.1.1\lib\net20\TuesPechkin.dll</HintPath>
-    </Reference>
-    <Reference Include="TuesPechkin.Wkhtmltox.Win32, Version=0.12.2.1, Culture=neutral, processorArchitecture=x86">
-      <HintPath>packages\TuesPechkin.Wkhtmltox.Win32.0.12.2.1\lib\net20\TuesPechkin.Wkhtmltox.Win32.dll</HintPath>
-    </Reference>
     <Reference Include="WebMatrix.Data">
       <HintPath>packages\Microsoft.AspNet.WebPages.Data.3.2.7\lib\net45\WebMatrix.Data.dll</HintPath>
     </Reference>
@@ -157,7 +155,6 @@
     <Compile Include="Helpers\FileUploadExtension.cs" />
     <Compile Include="Helpers\ImageUploadExtension.cs" />
     <Compile Include="Helpers\SimpleLogger.cs" />
-    <Compile Include="Helpers\TuesPechkinPdf.cs" />
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -165,6 +162,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\MyAccessDb.mdb" />
     <None Include="Content\bootstrap-grid.css" />
     <None Include="Content\bootstrap-grid.css.map" />
     <None Include="Content\bootstrap-grid.min.css" />
@@ -203,15 +201,11 @@
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content" />
-    <Folder Include="Scripts" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
