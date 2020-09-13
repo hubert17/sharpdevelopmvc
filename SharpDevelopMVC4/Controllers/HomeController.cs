@@ -19,15 +19,15 @@ namespace SharpDevelopMVC4.Controllers
         		Email = "gabs@gmail.com",
         		BirthDate = "1981/09/17"
         	};
-        	
-        	using (var conn = new OleDbConnection(mdb))
-        	{
-//        		conn.Execute( "INSERT INTO contacts(FullName, Email, BirthDate) "
-//	            	+ "VALUES (@FullName, @Email, @BirthDAte)", contact);
-        		var contactList = conn.Query("Select Id, FullName, Email, BirthDate from contacts").ToList();
-				ViewBag.Data = Newtonsoft.Json.JsonConvert.SerializeObject(contactList);
-        	}
-        	
+
+            using (var conn = new OleDbConnection(mdb))
+            {
+                //        		conn.Execute( "INSERT INTO contacts(FullName, Email, BirthDate) "
+                //	            	+ "VALUES (@FullName, @Email, @BirthDAte)", contact);
+                var contactList = conn.Query("Select Id, FullName, Email, BirthDate from contacts").ToList();
+                ViewBag.Data = Newtonsoft.Json.JsonConvert.SerializeObject(contactList);
+            }
+
             return View();
         }
 
