@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.OleDb;
 using Dapper;
+using Newtonsoft.Json;
 
 namespace SharpDevelopMVC4.Controllers
 {
@@ -13,20 +14,28 @@ namespace SharpDevelopMVC4.Controllers
         public ActionResult Index()
         {
         	string mdb = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + AppDomain.CurrentDomain.GetData("DataDirectory") + @"\MyAccessDb.mdb";
-        	var contact = new 
-        	{
-        		FullName = "Hewbhurt Gabon",
-        		Email = "gabs@gmail.com",
-        		BirthDate = "1981/09/17"
-        	};
+        	
+			//Generate Class from Table
+//			using (var connection = new OleDbConnection(mdb))
+//			{	
+//				ViewBag.Data = connection.GenerateClass("select * from Songs");
+//			}
+		
+//        	var contact = new 
+//        	{
+//        		FullName = "Hewbhurt Gabon",
+//        		Email = "gabs@gmail.com",
+//        		BirthDate = "1981/09/17"
+//        	};
 
             using (var conn = new OleDbConnection(mdb))
             {
-                //        		conn.Execute( "INSERT INTO contacts(FullName, Email, BirthDate) "
-                //	            	+ "VALUES (@FullName, @Email, @BirthDAte)", contact);
+                // conn.Execute( "INSERT INTO contacts(FullName, Email, BirthDate) "
+                // + "VALUES (@FullName, @Email, @BirthDAte)", contact);
                 var contactList = conn.Query("Select Id, FullName, Email, BirthDate from contacts").ToList();
-                ViewBag.Data = Newtonsoft.Json.JsonConvert.SerializeObject(contactList);
+                ViewBag.Data = JsonConvert.SerializeObject(contactList);
             }
+
 
             return View();
         }
