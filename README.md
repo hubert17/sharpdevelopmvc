@@ -4,6 +4,7 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 
 ## Features and Libraries
 
+- Bootstrap 4.5 theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
 - AutoMapper
