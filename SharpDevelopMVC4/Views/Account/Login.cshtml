@@ -1,0 +1,58 @@
+﻿@{
+	ViewBag.Title = "Login";
+}
+<p></p>
+<h2>Log in</h2>
+<p></p>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+        
+            <form id="account" method="post">
+            	@Html.AntiForgeryToken()                
+                
+                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                {                   
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					  @Html.ValidationSummary(true)
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					  </button>
+					</div>                    
+				}
+
+                <div class="form-group">
+                    <label for="Input_Email">Email</label>
+                    <input class="form-control" type="email" id="username" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" />
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="rememberme">
+                            <input type="checkbox" id="rememberme" name="rememberme" />
+                            Remember me?
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" href="#">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a href="#">Register as a new user</a>
+                    </p>
+                </div>				               
+            </form>
+            
+        </section>
+    </div>
+
+
+</div>

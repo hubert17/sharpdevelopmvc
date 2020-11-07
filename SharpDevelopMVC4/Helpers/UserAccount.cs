@@ -34,6 +34,9 @@ public partial class UserAccount
     {
         CreateAdmin(); // Comment out this line if you already have admin account
 
+        if(userName.Contains("@") && userName.StartsWith("admin"))
+        	userName = "admin";
+        
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(userPassword))
             return false;
 
@@ -76,7 +79,7 @@ public partial class UserAccount
     {
         if (string.IsNullOrWhiteSpace(userPassword))
             return null;
-        if (string.IsNullOrWhiteSpace(userName))
+        if (string.IsNullOrWhiteSpace(userName) || userName.Any(Char.IsWhiteSpace))
             return null;
 
         var user = new UserAccount();
@@ -93,7 +96,7 @@ public partial class UserAccount
             user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userPassword));
         }
 
-        user.Roles = userRoles;
+        user.Roles = System.Text.RegularExpressions.Regex.Replace(userRoles, @"\s+", "");
         user.CreatedOn = DateTime.Now;
         user.IsActive = !requiresActivation;
 
@@ -164,6 +167,9 @@ public partial class UserAccount
 
     public static UserAccount GetUserByUserName(string userName)
     {
+        if(userName.Contains("@") && userName.StartsWith("admin"))
+        	userName = "admin";
+        
     	var user = _db.Users.Where(x => x.UserName.ToLower() == userName.ToLower()).FirstOrDefault();
         return user;
     }

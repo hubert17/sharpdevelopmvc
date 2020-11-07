@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace SharpDevelopMVC4.Controllers
 {
     public class HomeController : Controller
-    {
+    {    	
         public ActionResult Index()
         {
         	string mdb = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + AppDomain.CurrentDomain.GetData("DataDirectory") + @"\MyAccessDb.mdb";
@@ -40,6 +40,7 @@ namespace SharpDevelopMVC4.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -53,5 +54,22 @@ namespace SharpDevelopMVC4.Controllers
 
             return View();
         }
+        
+        [Authorize]
+        public ActionResult ForAuthUser()
+        {
+        	ViewBag.Message = "Authorized user page. ";
+
+            return View("About");
+        }
+        
+        [Authorize(Roles="admin")]
+        public ActionResult ForRoleUser()
+        {
+            ViewBag.Message = "Authorized ADMIN page.";
+
+            return View("About");
+        }        
+                
     }
 }
