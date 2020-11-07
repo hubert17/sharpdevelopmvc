@@ -28,6 +28,7 @@ Just copy Web.github.config then rename to Web.config
 
 - Run nuget.bat
 - or execute this command `nuget restore`
+- or download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
 
 ### Running in IIS Express
 
