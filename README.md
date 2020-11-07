@@ -9,11 +9,11 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 - AutoMapper
 - Hangfire Core / Hangfire.MemoryStorage
 - FluentValidation
-- ~~TuesPechkin PDF~~
-- SimpleExcelImport
 - Image/File Upload
 - Email / SMTP
 - SimpleLogger
+- ~~TuesPechkin PDF~~
+- SimpleExcelImport
 
 ### Why it's lite?
 
@@ -40,10 +40,6 @@ Just copy Web.github.config then rename to Web.config
 5. Goto `Documents\IISExpress\config` folder
 6. In `applicationhost.config`, delete `<site name=...>` entries in `<sites>...</sites>`
 7. Repeat step 1.
-
-### Portable Asp.Net Web Server
-
-Run the project without SharpDevelop in this tiny web server!
 
 ### Database Browsers
 
