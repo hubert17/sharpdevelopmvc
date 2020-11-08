@@ -7,6 +7,7 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 - Bootstrap 4.5 theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
+- Simple Forms Authentication
 - AutoMapper
 - Hangfire Core / Hangfire.MemoryStorage
 - FluentValidation
