@@ -1,4 +1,8 @@
-﻿body {
+﻿html {
+  overflow-x: hidden !important;
+  overflow-wrap: break-word;
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
