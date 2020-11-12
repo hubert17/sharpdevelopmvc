@@ -15,6 +15,12 @@ namespace SharpDevelopMVC4.Models
         // Map model classes to database tables
         public DbSet<UserAccount> Users { get; set; }
         
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+<<<<<<< Updated upstream
+        
+=======
+>>>>>>> Stashed changes
     }
 
 

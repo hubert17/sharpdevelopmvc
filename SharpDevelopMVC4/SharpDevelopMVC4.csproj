@@ -150,10 +150,19 @@
       <HintPath>packages\Microsoft.AspNet.WebPages.WebData.3.2.7\lib\net45\WebMatrix.WebData.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="X.PagedList">
+      <HintPath>packages\X.PagedList.5.3.0.5300\lib\portable-net45+wp8+win8\X.PagedList.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< Updated upstream
+    <Compile Include="Controllers\ProductsController.cs" />
+=======
+    <Compile Include="Controllers\ProductController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,6 +173,8 @@
     <Compile Include="Helpers\SimpleLogger.cs" />
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SdMvc4DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -197,6 +208,7 @@
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Products\Create.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Web.config" />
@@ -205,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account" />
+    <Folder Include="Views\Products" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

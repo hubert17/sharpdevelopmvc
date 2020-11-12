@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<div class="col-sm-10">
+
+    <form class="form-horizontal" method="post" action="/GradeInquiry/SendGrade">
+    	@Html.AntiForgeryToken()
+    	
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Create Product</legend>
+            
+            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+            {                   
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  @Html.ValidationSummary(true)
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				  </button>
+				</div>                    
+			}
+           
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Name">Name</label>
+                <div class="col-md-4">
+                    <input type="text" id="Name" name="Name"  class="form-control input-md" required>
+                </div>
+            </div>            
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="UnitPrice">Unit Price:</label>
+                <div class="col-md-4">
+                    <input type="text" id="UnitPrice" name="UnitPrice" class="form-control input-md" required>
+                </div>
+            </div>
+
+			<!-- File Upload -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="UnitPrice">Unit Price:</label>
+                <div class="col-md-4">
+                    <input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="form-control input-md" required>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Email Grade</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+</div>
+
+
