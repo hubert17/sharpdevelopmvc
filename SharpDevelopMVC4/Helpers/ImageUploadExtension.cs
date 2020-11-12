@@ -53,7 +53,7 @@ public static class ImageUploadExtension
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>byte[] JpegImage</returns>
-    public static byte[] ToImageByteArray(this HttpPostedFile File, int maxHeight, bool highQuality = QUALITY)
+    public static byte[] ToImageByteArray(this HttpPostedFileBase File, int maxHeight, bool highQuality = QUALITY)
     {
         try
         {
@@ -74,7 +74,7 @@ public static class ImageUploadExtension
     /// </summary>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>byte[] JpegImage</returns>
-    public static byte[] ToImageByteArray(this HttpPostedFile File, bool highQuality)
+    public static byte[] ToImageByteArray(this HttpPostedFileBase File, bool highQuality)
     {
         return ToImageByteArray(File, MAX_HEIGHT, highQuality);
     }
@@ -82,7 +82,7 @@ public static class ImageUploadExtension
     /// Convert the uploaded image file to an array of byte and store in the database as Jpeg data. [BernardGabon.com]
     /// </summary>
     /// <returns>byte[] JpegImage</returns>
-    public static byte[] ToImageByteArray(this HttpPostedFile File)
+    public static byte[] ToImageByteArray(this HttpPostedFileBase File)
     {
         return ToImageByteArray(File, MAX_HEIGHT, QUALITY);
     }
@@ -97,7 +97,7 @@ public static class ImageUploadExtension
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFile File, string strFileName, string strFolder, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
+    public static string SaveAsJpegFile(this HttpPostedFileBase File, string strFileName, string strFolder, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
     {
         try
         {
@@ -140,7 +140,7 @@ public static class ImageUploadExtension
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFile File, string strFileName, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
+    public static string SaveAsJpegFile(this HttpPostedFileBase File, string strFileName, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
     {
         return SaveAsJpegFile(File, strFileName, FOLDER, maxHeight, highQuality);
     }
@@ -150,7 +150,7 @@ public static class ImageUploadExtension
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFile File, int maxHeight, bool highQuality = QUALITY)
+    public static string SaveAsJpegFile(this HttpPostedFileBase File, int maxHeight, bool highQuality = QUALITY)
     {
         return SaveAsJpegFile(File, string.Empty, FOLDER, maxHeight, highQuality);
     }
@@ -159,7 +159,7 @@ public static class ImageUploadExtension
     /// </summary>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFile File, bool highQuality)
+    public static string SaveAsJpegFile(this HttpPostedFileBase File, bool highQuality)
     {
         return SaveAsJpegFile(File, string.Empty, FOLDER, MAX_HEIGHT, highQuality);
     }
@@ -167,7 +167,7 @@ public static class ImageUploadExtension
     /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFile File)
+    public static string SaveAsJpegFile(this HttpPostedFileBase File)
     {
         return SaveAsJpegFile(File, string.Empty, FOLDER, MAX_HEIGHT, QUALITY);
     }
