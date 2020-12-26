@@ -16,21 +16,20 @@ namespace SharpDevelopMVC4.Controllers
 		}
 		
 		[HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]		
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]		
 		public ActionResult Login(string username, string password, bool rememberme = false)
 		{
-			if(UserAccount.Authenticate(username, password))
-		    {
-		    	var user = UserAccount.GetUserByUserName(username);
+			if (UserAccount.Authenticate(username, password)) {
+				var user = UserAccount.GetUserByUserName(username);
 				var authTicket = new FormsAuthenticationTicket(
-				    1,                             	// version
-				    user.UserName,               	// user name
-				    DateTime.Now,                  	// created
-				    DateTime.Now.AddMinutes(20),   	// expires
-				    rememberme,                    	// persistent?
-		    		user.Roles              		// can be used to store roles
-			    );
+	                 1,                             	// version
+	                 user.UserName,               	// user name
+	                 DateTime.Now,                  	// created
+	                 DateTime.Now.AddMinutes(20),   	// expires
+	                 rememberme,                    	// persistent?
+	                 user.Roles              		// can be used to store roles
+                 );
 				
 				string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
 				
@@ -41,17 +40,17 @@ namespace SharpDevelopMVC4.Controllers
 				
 				return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed
 				
-		    }
+			}
 		    
-		    // invalid username or password
-		    ModelState.AddModelError("", "Invalid username or password");
-		    return View();
+			// invalid username or password
+			ModelState.AddModelError("", "Invalid username or password");
+			return View();
 		}
 		
 		public ActionResult Logoff()
 		{
-		    FormsAuthentication.SignOut();
-		    return RedirectToAction("Index", "Home");
+			FormsAuthentication.SignOut();
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }
