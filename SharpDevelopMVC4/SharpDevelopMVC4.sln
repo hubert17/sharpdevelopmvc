@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # SharpDevelop 5.1
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDevelopMVC4", "SharpDevelopMVC4.csproj", "{13972DB3-52D0-4AC2-8540-7F7AD4E8DE8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctavioMVCProject", "OctavioMVCProject.csproj", "{13972DB3-52D0-4AC2-8540-7F7AD4E8DE8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
