@@ -10,11 +10,11 @@ using SharpDevelopMVC4.Models;
 using X.PagedList;
 
 
-namespace SharpDevelopMVC4.Controllers
+namespace MyAspNetMvcApp.Areas.OrderFramework.Controllers
 {
     public class ProductsController : Controller
     {
-        private SdMvc4DbContext _db = new SdMvc4DbContext();
+        private SdMvc4DbContext db = new SdMvc4DbContext();
 
         // GET: Products
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int pageSize = 6)
@@ -34,11 +34,12 @@ namespace SharpDevelopMVC4.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var items = _db.Products.AsQueryable();
+            var items = db.Products.AsEnumerable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
-            	items = items.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+                items = items.Where(s => s.Name.ToUpper().Contains(searchString.ToUpper())
+                                       || s.Category.Name.ToUpper().Contains(searchString.ToUpper()));
             }
             switch (sortOrder)
             {
@@ -67,7 +68,7 @@ namespace SharpDevelopMVC4.Controllers
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
-            Product product = _db.Products.Find(id);
+            Product product = db.Products.Find(id);
             return View(product);
         }
 
@@ -75,7 +76,7 @@ namespace SharpDevelopMVC4.Controllers
         //[Authorize(Roles = "staff")]
         public ActionResult Create()
         {
-            var categories = _db.Categories
+            var categories = db.Categories
                 .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name })
                 .ToList();
 
@@ -87,71 +88,93 @@ namespace SharpDevelopMVC4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product, HttpPostedFileBase fileUpload)
+        public ActionResult Create(Product product)
         {
             if(ModelState.IsValid)
             {
-            	product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name, "products");
-                _db.Products.Add(product);
-                _db.SaveChanges();
+            	var fileUpload = Request.Files[0];
+            	
+            	var folder = Server.MapPath("~/UploadedFiles/Products"
+            	
+                product.Picture = fileUpload.ToImageByteArray();
+                db.Products.Add(product);
+                db.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Products", new { area = "OrderFramework" });
         }
 
 
-        // GET: Products/Edit/5        
-        public ActionResult Edit(int id)
+        // GET: Products/Edit/5
+        public ActionResult Edit(int? id)
         {
-            Product product = _db.Products.Find(id);
+            Product product = db.Products.Find(id);
 
             if (product == null)
             {
-                TempData["msgAlert"] = "Product does not exist.";
+                TempData[BSMessage.ALERT] = "Product does not exist.";
                 return RedirectToAction("Index");
             }
 
-            ViewBag.categories = _db.Categories.Select(s => new SelectListItem
+            ViewBag.categories = db.Lookups.Where(x => x.Type == "product_category")
+                .Select(s => new SelectListItem
                 {
-                    Value = s.Id.ToString(),
-                    Text = s.Name,
+                    Value = s.Key.ToString(),
+                    Text = s.Value,
                     Selected = s.Id == product.CategoryId ? true : false
                 }).ToList();
 
             return View(product);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product updatedProduct, HttpPostedFileBase fileUpload)
+        public ActionResult Edit(Product product, HttpPostedFileBase fileUpload)
         {
-            _db.Entry(updatedProduct).State = EntityState.Modified;
+            db.Entry(product).State = EntityState.Modified;
 
             if (fileUpload != null) // Update picture
-                updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name, "products");
+                product.Picture = fileUpload.ToImageByteArray();
             else // Retain the current picture
-                _db.Entry(updatedProduct).Property(x => x.Picture).IsModified = false;
+                db.Entry(product).Property(x => x.Picture).IsModified = false;
 
-            _db.SaveChanges();
+            db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Products", new { area = "OrderFramework" });
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            Product product = _db.Products.Find(id);
-            if(product != null)
+            if (id == null)
             {
-	            _db.Products.Remove(product);
-	            _db.SaveChanges();	           
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
-            	TempData["msgAlert"] = "Product not found";
+                return HttpNotFound();
             }
-
-            return RedirectToAction("Index");
+            return View(product);
         }
 
+        // POST: Products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Products", new { area = "OrderFramework" });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

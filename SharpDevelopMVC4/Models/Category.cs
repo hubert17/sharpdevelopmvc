@@ -10,7 +10,14 @@ namespace SharpDevelopMVC4.Models
 {
     [Table("OF_Categories")]
     public class Category
-    {       
+    {
+<<<<<<< Updated upstream
+        
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+=======
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
@@ -21,5 +28,6 @@ namespace SharpDevelopMVC4.Models
         public string MetaData { get; set; }
 
         public virtual ICollection<Product> Items { get; set; }
+>>>>>>> Stashed changes
     }
 }
