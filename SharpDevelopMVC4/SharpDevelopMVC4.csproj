@@ -158,7 +158,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< Updated upstream
+    <Compile Include="Controllers\ProductsController.cs" />
+=======
     <Compile Include="Controllers\ProductController.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
