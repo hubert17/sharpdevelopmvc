@@ -17,51 +17,20 @@ namespace SharpDevelopMVC4.Controllers
         private SdMvc4DbContext _db = new SdMvc4DbContext();
 
         // GET: Products
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int pageSize = 6)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int page = 0, int pageSize = 6)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
-
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-
             var items = _db.Products.AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
             	items = items.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    items = items.OrderByDescending(s => s.Name);
-                    break;
-                case "Price":
-                    items = items.OrderBy(s => s.UnitPrice);
-                    break;
-                case "price_desc":
-                    items = items.OrderByDescending(s => s.UnitPrice);
-                    break;
-                default:  // Name ascending 
-                    items = items.OrderBy(s => s.Name);
-                    break;
-            }
-
-            int pageNumber = (page ?? 1);
-            return View(items.ToPagedList(pageNumber, pageSize));
-
-
-            //var items = db.Items.Include(i => i.Catagorie);
-            //return View(await items.ToListAsync());
+            
+            if(page > 0)
+            	items = items.Skip(pageSize * (page - 1)).Take(pageSize);
+            
+            return View(items.ToList());
+            
         }
 
         // GET: Products/Details/5
@@ -75,12 +44,6 @@ namespace SharpDevelopMVC4.Controllers
         //[Authorize(Roles = "staff")]
         public ActionResult Create()
         {
-            var categories = _db.Categories
-                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name })
-                .ToList();
-
-            ViewBag.categories = categories;
-
             return View();
         }
 
@@ -91,7 +54,7 @@ namespace SharpDevelopMVC4.Controllers
         {
             if(ModelState.IsValid)
             {
-            	product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name, "products");
+            	product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name);
                 _db.Products.Add(product);
                 _db.SaveChanges();
             }
@@ -110,13 +73,6 @@ namespace SharpDevelopMVC4.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.categories = _db.Categories.Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name,
-                    Selected = s.Id == product.CategoryId ? true : false
-                }).ToList();
-
             return View(product);
         }
 
@@ -129,7 +85,7 @@ namespace SharpDevelopMVC4.Controllers
             if (fileUpload != null) // Update picture
                 updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name, "products");
             else // Retain the current picture
-                _db.Entry(updatedProduct).Property(x => x.Picture).IsModified = false;
+                _db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
 
             _db.SaveChanges();
 

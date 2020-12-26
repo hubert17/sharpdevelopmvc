@@ -18,30 +18,17 @@ namespace SharpDevelopMVC4.Models
 
         public string Description { get; set; }
 
-        [ForeignKey("Category")]
-        public int? CategoryId { get; set; } // Nullable
-
-        //[Range(0.01, 999.99, ErrorMessage = "Price must be between 0.01 and 999.99")]
         [Required(ErrorMessage = "Price is required")]
+        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         public decimal UnitPrice { get; set; }
 
         public string Unit { get; set; }
 
         [ScaffoldColumn(false)]
-        public byte[] Picture { get; set; }
-
-        [ScaffoldColumn(false)]
-        public string PictureFilename { get; set; }
+        public string PictureFilename { get; set; } // Save as image file on disk
 
         public string MetaData { get; set; }
 
-        public virtual Category Category { get; set; }
-<<<<<<< Updated upstream
-
         
-=======
-        //public virtual List<OrderDetail> OrderDetails { get; set; }
->>>>>>> Stashed changes
-
     }
 }
