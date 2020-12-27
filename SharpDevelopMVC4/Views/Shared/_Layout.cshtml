@@ -10,7 +10,15 @@
 	  <meta name="Description" content="Site Description" />
 	  <meta property="og:title" content="@ViewBag.Title - My ASP.NET Application" />
 	  <meta property="og:description" content="Site Description" /> 
+	  
+    @if (TempData["msgAlert"] != null)
+    {
+        <script>
+            alert('@TempData["msgAlert"]')
+        </script>
+    }	  
 
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/Site.css" />
@@ -44,6 +52,8 @@
               <a class="dropdown-item" href="#">Other Page 1</a>
               <a class="dropdown-item" href="/Home/ForAuthUser">Other Page 2</a>
               <a class="dropdown-item" href="/Home/ForRoleUser">Other Page 3</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/crudsample">CRUD Sample</a>
             </div>
           </li>
           

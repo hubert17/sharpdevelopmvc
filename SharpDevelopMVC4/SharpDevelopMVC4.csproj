@@ -154,6 +154,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CrudsampleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,6 +165,7 @@
     <Compile Include="Helpers\SimpleLogger.cs" />
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SdMvc4DbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -194,6 +196,11 @@
     <None Include="Scripts\jquery.slim.min.js" />
     <None Include="Scripts\jquery.slim.min.map" />
     <None Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Crudsample\Create.cshtml" />
+    <None Include="Views\Crudsample\Details.cshtml" />
+    <None Include="Views\Crudsample\Edit.cshtml" />
+    <None Include="Views\Crudsample\Index.cshtml" />
+    <None Include="Views\Crudsample\Manage.cshtml" />
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
@@ -205,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account" />
+    <Folder Include="Views\Crudsample" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

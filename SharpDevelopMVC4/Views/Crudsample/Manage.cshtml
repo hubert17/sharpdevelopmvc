@@ -1,0 +1,43 @@
+﻿@model List<SharpDevelopMVC4.Models.Product>
+
+@{
+	ViewBag.Title = "Manage";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manage Products</h2>
+
+    <p class="float-right">
+        <a href="/crudsample/create" class="btn btn-primary btn-lg rounded-circle">+</a>
+    </p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Unit Price</th>
+                <th>Unit</th>
+                <th>Photo</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+			@foreach(var product in Model)
+			{
+	            <tr>
+	                <td>@product.Id</td>
+	                <td>@product.Name</td>
+	                <td>@product.UnitPrice</td>
+	                <td>@product.Unit</td>
+	                <td>
+	                	<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+	                </td>
+	                <td>
+	                    <a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>
+	                    <a href="/crudsample/Delete/@product.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+	                </td>
+	            </tr>
+			}
+        </tbody>
+    </table>
+
