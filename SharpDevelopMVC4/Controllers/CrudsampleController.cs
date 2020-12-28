@@ -8,7 +8,7 @@ using SharpDevelopMVC4.Models;
 namespace SharpDevelopMVC4.Controllers
 {
 	/// <summary>
-	/// Description of SamplesController.
+	/// Description of ProductsController.
 	/// </summary>
 	public class CrudsampleController : Controller
 	{
