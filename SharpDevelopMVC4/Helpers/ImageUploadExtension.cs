@@ -92,7 +92,7 @@ public static class ImageUploadExtension
     /// <summary>
     /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
-    /// <param name="strFileName">Filename</param>
+    /// <param name="strFileName">Filename without extension</param>
     /// <param name="strFolder">Folder</param>
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
@@ -107,7 +107,8 @@ public static class ImageUploadExtension
 
                 string folder = string.IsNullOrEmpty(strFolder) ? System.Web.HttpContext.Current.Server.MapPath("~/" + FOLDER) : System.Web.HttpContext.Current.Server.MapPath("~/" + strFolder);
                 string filename = string.IsNullOrEmpty(strFileName) ? Path.GetFileNameWithoutExtension(File.FileName) : strFileName;
-                string filenameExt = filename + "_" + GenerateUniqueChars() + ".jpg";
+                bool fileExist =  System.IO.File.Exists(Path.Combine(folder, filename + ".jpg"));
+                string filenameExt = filename + GenerateUniqueChars(fileExist) + ".jpg";
                 string path = Path.Combine(folder, filenameExt);
 
                 System.IO.Directory.CreateDirectory(folder);
@@ -136,7 +137,7 @@ public static class ImageUploadExtension
     /// <summary>
     /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
-    /// <param name="strFileName">Filename</param>
+    /// <param name="strFileName">Filename without extension</param>
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
@@ -360,9 +361,12 @@ public static class ImageUploadExtension
         }
     }
 
-    private static string GenerateUniqueChars()
+    private static string GenerateUniqueChars(bool fileExist = true)
     {
-    	return DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+    	if(fileExist)
+    		return "_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss"); // append this to avoid file overwrite
+    	else
+    		return string.Empty;
     }
     #endregion
 
