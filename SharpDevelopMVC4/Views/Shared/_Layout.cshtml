@@ -98,5 +98,14 @@
     <script src="/Scripts/bootstrap.bundle.min.js"></script>
     
     @RenderSection("scripts", required: false)
+    
+    @* This is to remove the overlay ad in Somee.com *@
+    <script>
+        $(document).ready(function () {
+            $('#nextAll').nextAll().remove();
+        });
+    </script>
+    <hr id="nextAll" style="display:none;" />
+    
 </body>
 </html>
