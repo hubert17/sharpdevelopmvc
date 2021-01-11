@@ -26,9 +26,8 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 
 Just copy Web.github.config then rename to Web.config
 
-### Build Error? Could not resolve reference... Could not locate assembly...
-
-- Run nuget.bat
+### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
+- Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
 - or execute this command `nuget restore`
 - or download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
 
@@ -37,7 +36,7 @@ Just copy Web.github.config then rename to Web.config
 1. Click Project Menu > Project Options
 2. In **Web** tab, choose **[Use IIS Express Web Server]**
 3. Enter a port number higher than `8001`
-4. Click **[Create application/virtual directory]** button
+4. Click **[Create application/virtual directory]** button. Done! You can now run/debug the web app.
    > \*\*\* Error indicating duplicate entry of type 'site' with unique key attributes...
 5. Goto `Documents\IISExpress\config` folder
 6. In `applicationhost.config`, delete `<site name=...>` entries in `<sites>...</sites>`
