@@ -28,6 +28,7 @@ Just copy Web.github.config then rename to Web.config
 
 ### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
 - Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
+- or run nuget.bat
 - or execute this command `nuget restore`
 - or download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
 
