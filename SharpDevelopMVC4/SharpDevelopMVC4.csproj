@@ -153,8 +153,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CrudsampleController.cs" />
+    <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +198,7 @@
     <None Include="Scripts\jquery.slim.min.js" />
     <None Include="Scripts\jquery.slim.min.map" />
     <None Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Contact\Index.cshtml" />
     <None Include="Views\Crudsample\Create.cshtml" />
     <None Include="Views\Crudsample\Details.cshtml" />
     <None Include="Views\Crudsample\Edit.cshtml" />
@@ -206,6 +209,8 @@
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Song\GetSong.cshtml" />
+    <None Include="Views\Song\Index.cshtml" />
     <None Include="Views\Web.config" />
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="web.config" />
@@ -213,6 +218,8 @@
   <ItemGroup>
     <Folder Include="Views\Account" />
     <Folder Include="Views\Crudsample" />
+    <Folder Include="Views\Contact" />
+    <Folder Include="Views\Song" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
