@@ -99,13 +99,19 @@
     
     @RenderSection("scripts", required: false)
     
-    @* This is to remove the overlay ad in Somee.com *@
+    @* This is to remove the overlay ad in Somee.com *@   
     <script>
         $(document).ready(function () {
-            $('#nextAll').nextAll().remove();
+			var checkExist = setInterval(function() {
+			   if ($('#nextAll').nextAll().length) {
+			      console.log("Exists!");
+			      clearInterval(checkExist);
+			      $('#nextAll').nextAll().remove();
+			   }
+			}, 500);
         });
-    </script>
-    <hr id="nextAll" style="display:none;" />
-    
+	</script>
+
+   <hr id="nextAll" style="display:none;" />   
 </body>
 </html>

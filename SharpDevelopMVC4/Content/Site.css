@@ -30,3 +30,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+#nextAll ~ * {
+   display: none;
+}
