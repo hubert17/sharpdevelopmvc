@@ -1,0 +1,76 @@
+﻿@model Song
+
+@{
+	ViewBag.Title = "Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Song</h2>
+
+
+
+<form action="/song/edit" method="post">
+  <div class="form-group row">
+    <label for="Title" class="col-4 col-form-label">Id</label> 
+    <div class="col-8">
+      <input id="Id" name="Id" value="@Model.Id" type="text" class="form-control" readonly>
+    </div>
+  </div>
+  <div clas
+  
+  <div class="form-group row">
+    <label for="Title" class="col-4 col-form-label">Title</label> 
+    <div class="col-8">
+      <input id="Title" name="Title" value="@Model.Title" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="Artist" class="col-4 col-form-label">Artist</label> 
+    <div class="col-8">
+      <input id="Artist" name="Artist" value="@Model.Artist" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Genre" class="col-4 col-form-label">Genre</label> 
+    <div class="col-8">
+      <select id="Genre" name="Genre" class="custom-select" value="@Model.Genre" >
+      	<option></option>
+        <option value="Pop">Pop</option>
+        <option value="Ballad">Ballad</option>
+        <option value="Rock">Rock</option>
+        <option value="Dance">Dance</option>
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="RecordLabel" class="col-4 col-form-label">Record Label</label> 
+    <div class="col-8">
+      <select id="RecordLabel" name="RecordLabel" class="custom-select" value="@Model.RecordLabel">
+      	<option></option>
+        <option value="Sony">Sony Music</option>
+        <option value="Warner">Warner Music</option>
+        <option value="EMI">EMI Records</option>
+        <option value="Universal">Universal Music</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Year</label> 
+    <div class="col-8">
+      <input id="ReleaseYear" name="ReleaseYear" type="text" class="form-control" value="@Model.ReleaseYear" >
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Submit</button> 
+      <a href="/song/index" class="btn btn-secondary">Cancel</a>
+    </div>
+  </div>
+  
+
+
+
+</form>

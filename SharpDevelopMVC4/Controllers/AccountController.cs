@@ -12,17 +12,21 @@ namespace SharpDevelopMVC4.Controllers
 	{
 		public ActionResult Login()
 		{
+			// Logout account
+			FormsAuthentication.SignOut();
+			// Then return login form
 			return View();
 		}
 		
-		[HttpPost]
+		
         [AllowAnonymous]
+		[HttpPost]	        
         [ValidateAntiForgeryToken]		
 		public ActionResult Login(string username, string password, bool rememberme = false)
-		{
-			if(UserAccount.Authenticate(username, password))
+		{		
+			var user = UserAccountCSV.Authenticate(username, password);
+			if(user != null) // If not null then it's a valid login
 		    {
-		    	var user = UserAccount.GetUserByUserName(username);
 				var authTicket = new FormsAuthenticationTicket(
 				    1,                             	// version
 				    user.UserName,               	// user name
@@ -44,7 +48,7 @@ namespace SharpDevelopMVC4.Controllers
 		    }
 		    
 		    // invalid username or password
-		    ModelState.AddModelError("", "Invalid username or password");
+		    ModelState.AddModelError("invalidLogin", "Invalid username or password");
 		    return View();
 		}
 		
@@ -52,6 +56,12 @@ namespace SharpDevelopMVC4.Controllers
 		{
 		    FormsAuthentication.SignOut();
 		    return RedirectToAction("Index", "Home");
+		}
+		
+		public ActionResult Reg(string username, string password)
+		{
+			var result = UserAccountCSV.Create(username, password, "user");
+			return Content(result.UserName);
 		}
 	}
 }

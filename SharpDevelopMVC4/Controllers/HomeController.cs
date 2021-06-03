@@ -35,8 +35,6 @@ namespace SharpDevelopMVC4.Controllers
                 var contactList = conn.Query("Select Id, FullName, Email, BirthDate from contacts").ToList();
                 ViewBag.Data = JsonConvert.SerializeObject(contactList);
             }
-
-
             return View();
         }
 

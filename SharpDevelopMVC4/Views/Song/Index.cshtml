@@ -1,8 +1,41 @@
-﻿@{
+﻿@model List<Song>
+
+@{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Song page</h2>
-<p>hello this a view</p>
+<h2>All Songs</h2>
+
+<a href="/song/create" class="btn btn-primary btn-lg float-right">New Song</a>
+<br>
+<table class="table table-bordered table-dark">
+	<tr>
+	    <th>Id</th>
+	    <th>Title</th>
+	    <th>Artist</th>
+	    <th>Genre</th>
+	    <th>Record Label</th>
+	    <th>Year</th>
+	    <th>Action</th>
+	<tr>
+	@foreach(var song in Model)
+	{
+		<tr>
+			<td>@song.Id</td>
+			<td>@song.Title</td>
+			<td>@song.Artist</td>
+			<td>@song.Genre</td>
+			<td>@song.RecordLabel</td>
+			<td>@song.ReleaseYear</td>
+			<td>
+				<a href="/song/edit/@song.Id" class="btn btn-warning btn-sm">Edit</a>
+				<a href="/song/delete/@song.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+			</td>
+		</tr>
+	}
+	
+	
+</table>
+
 
