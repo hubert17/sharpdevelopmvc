@@ -26,22 +26,26 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 
 Just copy Web.github.config then rename to Web.config
 
-### Build Error? Could not resolve reference... Could not locate assembly...
-
-- Run nuget.bat
-- or execute this command `nuget restore`
-- or download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
+### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
+- Option 1: Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
+- Option 2: run nuget.bat
+- Option 3: execute this command `nuget restore`
+- Option 4: download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
 
 ### Running in IIS Express
 
 1. Click Project Menu > Project Options
 2. In **Web** tab, choose **[Use IIS Express Web Server]**
 3. Enter a port number higher than `8001`
-4. Click **[Create application/virtual directory]** button
+4. Click **[Create application/virtual directory]** button. Done! You can now run/debug the web app.
    > \*\*\* Error indicating duplicate entry of type 'site' with unique key attributes...
 5. Goto `Documents\IISExpress\config` folder
-6. In `applicationhost.config`, delete `<site name=...>` entries in `<sites>...</sites>`
-7. Repeat step 1.
+6. Open `applicationhost.config` in a text editor, delete `<site name=...>` entries in `<sites>...</sites>`
+7. Repeat step 1. 
+
+### Local IIS or IIS Express was not found
+
+[Download](https://www.microsoft.com/en-us/download/details.aspx?id=48264) and install [IIS Express](https://www.microsoft.com/en-us/download/details.aspx?id=48264)
 
 ### Database Browsers
 
@@ -52,6 +56,7 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 - [Somee.com](https://somee.com/FreeAspNetHosting.aspx)
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
 - [myasp.net](https://www.myasp.net/freeaspnethosting)
+- [Azure For Students](https://azure.microsoft.com/en-us/free/students/) (Requires school .edu email address)
 
 ### Learning Slides
 
