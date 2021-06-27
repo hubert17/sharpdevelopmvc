@@ -62,7 +62,7 @@ jobs:
 
     - name: Build Solution
       run: |     
-        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln 
         xcopy /E bin /_build
         xcopy /E App_Data _build
         xcopy /E Content _build
