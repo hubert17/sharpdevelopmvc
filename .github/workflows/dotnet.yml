@@ -14,12 +14,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Configure environment variables
-      run: |
-        echo "ftpuser=${{ secrets.SOMEE_USERNAME }}" >> $GITHUB_ENV
-        echo "ftppwd=${{ secrets.SOMEE_PASSWORD }}" >> $GITHUB_ENV          
+    - uses: actions/checkout@v2    
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
@@ -51,7 +46,7 @@ jobs:
         xcopy /Y Global.asax _build
         xcopy /Y web.config _build
               
-    - name: 📂 Publish
+    - name: 📂 Publish to somee.com
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
         server: "${{ secrets.SOMEE_USERNAME }}.somee.com"
@@ -60,7 +55,3 @@ jobs:
         local-dir: ./SharpDevelopMVC4/_build/
         server-dir: "www.${{ secrets.SOMEE_USERNAME }}.somee.com/"
         
-    - name: Check the site
-      uses: srt32/uptime@master
-      with:
-        url-to-hit: "http://${{ secrets.SOMEE_USERNAME }}.somee.com"     
