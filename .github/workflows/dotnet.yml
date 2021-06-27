@@ -63,13 +63,15 @@ jobs:
     - name: Build Solution
       run: |     
         msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln 
-        xcopy /E bin /_build
-        xcopy /E App_Data _build
-        xcopy /E Content _build
-        xcopy /E Scripts _build
-        xcopy /E Views _build
-        xcopy Global.asax _build
-        xcopy web.config _build
+        cd SharpDevelopMVC4
+        xcopy /E bin ../_build
+        xcopy /E App_Data ../_build
+        xcopy /E Content ../_build
+        xcopy /E Scripts ../_build
+        xcopy /E Views ../_build
+        xcopy Global.asax ../_build
+        xcopy web.config ../_build
+        cd..
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
