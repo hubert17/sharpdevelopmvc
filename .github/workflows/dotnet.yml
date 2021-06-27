@@ -76,7 +76,7 @@ jobs:
         server: bernardgabon.somee.com/www.bernardgabon.somee.com
         username: bernardgabon
         password: ${{ secrets.SOMEE_PASSWORD }}
-        local-dir: "./_build"  
+        local-dir: "./_build/"  
         
 #   publish:
 #       runs-on: windows-latest
