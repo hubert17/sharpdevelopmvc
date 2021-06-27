@@ -52,19 +52,19 @@ jobs:
         nuget-version: '5.x'
       
     - name: Navigate to Workspace
-      run: | 
-        cd $GITHUB_WORKSPACE
-        cd SharpDevelopMVC4
-
-    - name: Create Build Directory
-      run: mkdir _build
+      run: cd $GITHUB_WORKSPACE      
       
     - name: Restore Packages
-      run: nuget restore SharpDevelopMVC4.sln
+      run: nuget restore ./SharpDevelopMVC4/SharpDevelopMVC4.sln
 
     - name: Build Solution
-      run: |     
-        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln 
+      run: msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln 
+        
+        
+    - name: Create Build Directory
+      run: |
+        cd SharpDevelopMVC4
+        mkdir _build        
         xcopy /E bin _build
         xcopy /E App_Data _build
         xcopy /E Content _build
