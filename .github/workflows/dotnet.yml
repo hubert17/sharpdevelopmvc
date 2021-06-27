@@ -73,11 +73,11 @@ jobs:
         xcopy /Y Global.asax _build
         xcopy /Y web.config _build
         
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: SDMVC4Bundle
-        path: "./_build"        
+#     - name: Upload artifact
+#       uses: actions/upload-artifact@v1.0.0
+#       with:
+#         name: SDMVC4Bundle
+#         path: "./SharpDevelopMVC4/_build"        
         
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -85,7 +85,7 @@ jobs:
         server: bernardgabon.somee.com
         username: bernardgabon
         password: ${{ secrets.SOMEE_PASSWORD }}
-        local-dir: "./_build/"  
+        local-dir: "./SharpDevelopMVC4/_build/"  
         server-dir: www.bernardgabon.somee.com/ 
         
 #   publish:
