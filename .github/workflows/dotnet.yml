@@ -58,11 +58,11 @@ jobs:
       run: mkdir _build
       
     - name: Restore Packages
-      run: nuget restore SharpDevelopMVC4.sln
+      run: nuget restore ./SharpDevelopMVC4/SharpDevelopMVC4.sln
 
     - name: Build Solution
       run: |
-        msbuild.exe SharpDevelopMVC4.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
