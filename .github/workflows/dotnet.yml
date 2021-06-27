@@ -1,34 +1,8 @@
-# name: .NET
-
-# on:
-#   push:
-#     branches: [ master ]
-#   pull_request:
-#     branches: [ master ]
-
-# jobs:
-#   build:
-
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Setup .NET
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 5.0.x
-#     - name: Restore dependencies
-#       run: dotnet restore
-#     - name: Build
-#       run: dotnet build --no-restore
-#     - name: Test
-#       run: dotnet test --no-build --verbosity normal
-
 name: SharpDevelopMVC Build
 
 on:
   # Trigger the workflow on push or pull request,
-  # but only for the development branch
+  # but only for the master branch
   push:
     branches:
       - master
@@ -59,8 +33,7 @@ jobs:
 
     - name: Build Solution
       run: msbuild.exe .\SharpDevelopMVC4\SharpDevelopMVC4.sln 
-        
-        
+                
     - name: Create Build Directory
       run: |
         cd SharpDevelopMVC4
@@ -72,24 +45,17 @@ jobs:
         xcopy /E /Y Views _build\Views\
         xcopy /Y Global.asax _build
         xcopy /Y web.config _build
-        
-#     - name: Upload artifact
-#       uses: actions/upload-artifact@v1.0.0
-#       with:
-#         name: SDMVC4Bundle
-#         path: "./SharpDevelopMVC4/_build"        
-        
-    - name: 📂 Sync files
+              
+    - name: 📂 Publish
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: bernardgabon.somee.com
-        username: bernardgabon
+        server: ${{ secrets.SOMEE_USERNAME }}.somee.com
+        username: ${{ secrets.SOMEE_USERNAME }}
         password: ${{ secrets.SOMEE_PASSWORD }}
         local-dir: "./SharpDevelopMVC4/_build/"  
-        server-dir: www.bernardgabon.somee.com/ 
+        server-dir: www.${{ secrets.SOMEE_USERNAME }}.somee.com/ 
         
-#   publish:
-#       runs-on: windows-latest
-
-#       steps:
-#       - uses: actions/checkout@v2        
+    - name: Check the site
+      uses: srt32/uptime@master
+      with:
+        url-to-hit: "http://${{ secrets.SOMEE_USERNAME }}.somee.com"     
