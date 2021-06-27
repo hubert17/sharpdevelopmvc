@@ -58,10 +58,25 @@ namespace SharpDevelopMVC4.Controllers
 		    return RedirectToAction("Index", "Home");
 		}
 		
-		public ActionResult Reg(string username, string password)
+		public ActionResult Register(string username, string password, string role = "")
 		{
-			var result = UserAccountCSV.Create(username, password, "user");
+			if(role.ToLower() == "admin") role = "user"; // Prevent unauthorized creation of admin account			
+			var result = UserAccountCSV.Create(username, password, role);
 			return Content(result.UserName);
+		}
+		
+		[Authorize(Roles="admin")]
+		public ActionResult ManageUsers()
+		{		
+			return View();
+		}
+		
+		[Authorize(Roles="admin")]
+		[Route("/account.csv")]
+		public ActionResult GetUsersCSV()
+		{
+			var file = UserAccountCSV.GetCsvFile();
+			return File(file, "text/csv");	
 		}
 	}
 }

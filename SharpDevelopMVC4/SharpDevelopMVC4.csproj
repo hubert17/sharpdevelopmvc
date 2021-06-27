@@ -205,6 +205,7 @@
     <None Include="Scripts\jquery.slim.min.map" />
     <None Include="Views\Account2\Login.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Account\ManageUsers.cshtml" />
     <None Include="Views\Contact\Index.cshtml" />
     <None Include="Views\Crudsample\Create.cshtml" />
     <None Include="Views\Crudsample\Details.cshtml" />

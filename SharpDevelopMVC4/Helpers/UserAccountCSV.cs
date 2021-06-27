@@ -20,38 +20,6 @@ public partial class UserAccountCSV
     public bool IsActive { get; set; }
     public string Roles { get; set; } // comma-separated 
 
-    private static UserAccountCSV CurrentUser = null;
-
-    private static List<UserAccountCSV> ReadAccountCSV()
-    {
-        var csvFile = Path.IsPathRooted(ACCOUNT_CSV_FILE) ? ACCOUNT_CSV_FILE : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ACCOUNT_CSV_FILE);
-        if (File.Exists(csvFile))
-        {
-            using (var reader = new StreamReader(csvFile))
-            using (var csv = new CsvReader(reader))
-            {
-                return csv.GetRecords<UserAccountCSV>().ToList(); ;
-            }
-        }
-
-        return new List<UserAccountCSV>();
-    }
-
-    private static void WriteAccountCSV(List<UserAccountCSV> records)
-    {
-        var csvFile = Path.IsPathRooted(ACCOUNT_CSV_FILE) ? ACCOUNT_CSV_FILE : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ACCOUNT_CSV_FILE);
-        using (var writer = new StreamWriter(csvFile))
-        using (var csv = new CsvWriter(writer))
-        {
-            csv.WriteRecords(records);
-        }
-    }
-
-    private static UserAccountCSV GetAccount(string userName)
-    {
-        return ReadAccountCSV().FirstOrDefault(x => x.UserName == userName);
-    }
-
     public static UserAccountCSV Authenticate(string userName, string userPassword)
     {
         var accounts = CreateAdmin();
@@ -59,8 +27,11 @@ public partial class UserAccountCSV
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(userPassword))
             return null;
 
-        if (userName.Contains("@") && userName.StartsWith("admin", StringComparison.OrdinalIgnoreCase))
-            userName = "admin";
+        if (userName.Contains("@") && userName.StartsWith(DEFAULT_ADMIN_LOGIN, StringComparison.OrdinalIgnoreCase))
+        {
+        	var u = userName.Split('@')[0];
+        	userName = u == DEFAULT_ADMIN_LOGIN ? u : userName;
+        }			           
 
         userName = userName.Trim().ToLower();
         var user = GetAccount(userName);
@@ -80,22 +51,6 @@ public partial class UserAccountCSV
         }
 
         return null;
-    }
-
-    private static bool VerifyPasswordHash(string userPassword, byte[] passwordSalt, byte[] passwordHash)
-    {
-        // Verify PasswordHash
-        using (var hmac = new System.Security.Cryptography.HMACSHA1(passwordSalt)) // HMACSHA512
-        {
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userPassword));
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != passwordHash[i])
-                    return false;
-            }
-        }
-
-        return true;
     }
 
     public static UserAccountCSV Create(string userName, string userPassword, string userRoles = "", bool requiresActivation = false)
@@ -130,19 +85,6 @@ public partial class UserAccountCSV
         user.PasswordSalt = null;
         user.PasswordHash = null;
         return user;
-    }
-
-    private static List<UserAccountCSV> CreateAdmin()
-    {
-        var accounts = ReadAccountCSV();
-        var hasAdmin = accounts.Any(x => x.Roles == DEFAULT_ADMIN_LOGIN);
-        if (!hasAdmin)
-        {
-            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN);
-            accounts = ReadAccountCSV();
-        }
-
-        return accounts;
     }
 
     public static bool ChangePassword(string userName, string userPassword = "", string newPassword = "", bool forceChange = false)
@@ -205,8 +147,11 @@ public partial class UserAccountCSV
             userName = DEFAULT_ADMIN_LOGIN;
 
         var user = GetAccount(userName);
-        user.PasswordHash = null;
-        user.PasswordSalt = null;
+        if(user != null) 
+        {
+         	user.PasswordHash = null;
+        	user.PasswordSalt = null;   	
+        }
         return user;
     }
 
@@ -259,9 +204,78 @@ public partial class UserAccountCSV
         else
             return null;
     }
+    
+    public static string GetCsvFile()
+    {
+    	return Path.IsPathRooted(ACCOUNT_CSV_FILE) ? ACCOUNT_CSV_FILE : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", ACCOUNT_CSV_FILE);
+    }
 
     #endregion
 
+    #region private methods
+    
+    private static UserAccountCSV CurrentUser = null;      
+
+    private static List<UserAccountCSV> ReadAccountCSV()
+    {
+    	var csvFile = GetCsvFile();
+        if (File.Exists(csvFile))
+        {
+            using (var reader = new StreamReader(csvFile))
+            using (var csv = new CsvReader(reader))
+            {
+                return csv.GetRecords<UserAccountCSV>().ToList();
+            }
+        }
+
+        return new List<UserAccountCSV>();
+    }
+
+    private static void WriteAccountCSV(List<UserAccountCSV> records)
+    {
+    	var csvFile = GetCsvFile();
+        using (var writer = new StreamWriter(csvFile))
+        using (var csv = new CsvWriter(writer))
+        {
+            csv.WriteRecords(records);
+        }
+    }
+
+    private static UserAccountCSV GetAccount(string userName)
+    {
+        return ReadAccountCSV().FirstOrDefault(x => x.UserName == userName);
+    }
+    
+    private static List<UserAccountCSV> CreateAdmin()
+    {
+        var accounts = ReadAccountCSV();
+        var hasAdmin = accounts.Any(x => x.Roles == DEFAULT_ADMIN_LOGIN);
+        if (!hasAdmin)
+        {
+            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN);
+            accounts = ReadAccountCSV();
+        }
+
+        return accounts;
+    }    
+    
+    private static bool VerifyPasswordHash(string userPassword, byte[] passwordSalt, byte[] passwordHash)
+    {
+        // Verify PasswordHash
+        using (var hmac = new System.Security.Cryptography.HMACSHA1(passwordSalt)) // HMACSHA512
+        {
+            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userPassword));
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != passwordHash[i])
+                    return false;
+            }
+        }
+
+        return true;
+    }    
+
+    #endregion
 }
 
 
