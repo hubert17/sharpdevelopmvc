@@ -70,14 +70,14 @@ jobs:
         name: SDMVC4Bundle
         path: "./_build"        
         
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+    - name: Publish
+      uses: sebastianpopp/ftp-action@releases/v2
       with:
-        server: bernardgabon.somee.com
-        username: bernardgabon
+        host: bernardgabon.somee.com
+        user: bernardgabon
         password: ${{ secrets.SOMEE_PASSWORD }}
-        local-dir: "./_build/"  
-        server-dir: www.bernardgabon.somee.com/
+        localDir: "./_build/" 
+        remoteDir: www.bernardgabon.somee.com/    
         
 #   publish:
 #       runs-on: windows-latest
