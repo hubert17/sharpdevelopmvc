@@ -66,7 +66,7 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 ### Warning
 
 - Do not load the project in Visual Studio
-- Do not add Nuget packages which supports .NET Standard
+- Do not add Nuget packages which supports .NET Standard 
 
 ## Contributors
 
