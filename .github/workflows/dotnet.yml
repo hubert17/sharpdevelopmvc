@@ -54,13 +54,13 @@ jobs:
     - name: 📂 Publish
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: $ftpuser.somee.com
-        username: $ftpuser
-        password: $ftppwd
+        server: "${{ secrets.SOMEE_USERNAME }}.somee.com"
+        username: "${{ secrets.SOMEE_USERNAME }}"
+        password: "${{ secrets.SOMEE_PASSWORD }}"
         local-dir: ./SharpDevelopMVC4/_build/
-        server-dir: www.$ftpuser.somee.com/ 
+        server-dir: "www.${{ secrets.SOMEE_USERNAME }}.somee.com/"
         
     - name: Check the site
       uses: srt32/uptime@master
       with:
-        url-to-hit: "http://$ftpuser.somee.com"     
+        url-to-hit: "http://${{ secrets.SOMEE_USERNAME }}.somee.com"     
