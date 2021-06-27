@@ -61,8 +61,15 @@ jobs:
       run: nuget restore ./SharpDevelopMVC4/SharpDevelopMVC4.sln
 
     - name: Build Solution
-      run: |
-        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+      run: |     
+        msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln
+        xcopy ./bin ./_build
+        xcopy ./App_Data ./_build
+        xcopy ./Content ./_build
+        xcopy ./Scripts ./_build
+        xcopy ./Views ./_build
+        xcopy ./Global.asax ./_build
+        xcopy ./web.config ./_build
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
@@ -78,7 +85,6 @@ jobs:
         password: ${{ secrets.SOMEE_PASSWORD }}
         local-dir: "./_build/"  
         server-dir: www.bernardgabon.somee.com/ 
-        dangerous-clean-slate: true
         
 #   publish:
 #       runs-on: windows-latest
