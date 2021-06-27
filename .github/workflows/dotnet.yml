@@ -67,9 +67,9 @@ jobs:
         xcopy /App_Data /_build
         xcopy /Content /_build
         xcopy /Scripts /_build
-        xcopy ./Views /_build
-        xcopy ./Global.asax /_build
-        xcopy ./web.config /_build
+        xcopy /Views /_build
+        xcopy /Global.asax /_build
+        xcopy /web.config /_build
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
