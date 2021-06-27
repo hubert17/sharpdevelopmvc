@@ -55,23 +55,23 @@ jobs:
       run: cd $GITHUB_WORKSPACE      
       
     - name: Restore Packages
-      run: nuget restore ./SharpDevelopMVC4/SharpDevelopMVC4.sln
+      run: nuget restore .\SharpDevelopMVC4\SharpDevelopMVC4.sln
 
     - name: Build Solution
-      run: msbuild.exe ./SharpDevelopMVC4/SharpDevelopMVC4.sln 
+      run: msbuild.exe .\SharpDevelopMVC4\SharpDevelopMVC4.sln 
         
         
     - name: Create Build Directory
       run: |
         cd SharpDevelopMVC4
         mkdir _build        
-        xcopy /E /Y bin/ _build/
-        xcopy /E /Y App_Data/ _build/
-        xcopy /E /Y Content/ _build/
-        xcopy /E /Y Scripts/ _build/
-        xcopy /E /Y Views/ _build/
-        xcopy /Y Global.asax _build/
-        xcopy /Y web.config _build/
+        xcopy /E /Y bin _build
+        xcopy /E /Y App_Data _build
+        xcopy /E /Y Content _build
+        xcopy /E /Y Scripts _build
+        xcopy /E /Y Views _build
+        xcopy /Y Global.asax _build
+        xcopy /Y web.config _build
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
