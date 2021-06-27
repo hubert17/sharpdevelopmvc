@@ -43,13 +43,13 @@ jobs:
       run: |
         cd SharpDevelopMVC4
         mkdir _build        
-        move /E /Y bin _build\
-        move /E /Y App_Data _build\
-        move /E /Y Content _build\
-        move /E /Y Scripts _build\
-        move /E /Y Views _build\
-        move /Y Global.asax _build
-        move /Y web.config _build
+        move /y .\bin _build\
+        move /y .\App_Data _build\
+        move /y .\Content _build\
+        move /y .\Scripts _build\
+        move /y .\Views _build\
+        move /y .\Global.asax _build
+        move /y .\web.config _build
               
     - name: 📂 Publish
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
