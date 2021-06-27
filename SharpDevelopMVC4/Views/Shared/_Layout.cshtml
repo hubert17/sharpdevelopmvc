@@ -104,7 +104,6 @@
         $(document).ready(function () {
 			var checkExist = setInterval(function() {
 			   if ($('#nextAll').nextAll().length) {
-			      console.log("Exists!");
 			      clearInterval(checkExist);
 			      $('#nextAll').nextAll().remove();
 			   }
