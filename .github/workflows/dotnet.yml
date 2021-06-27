@@ -16,6 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Configure environment variables
+      run: |
+        echo "ftpuser=${{ secrets.SOMEE_USERNAME }}" >> $GITHUB_ENV
+        echo "ftppwd=${{ secrets.SOMEE_PASSWORD }}" >> $GITHUB_ENV          
+    
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
@@ -38,24 +43,24 @@ jobs:
       run: |
         cd SharpDevelopMVC4
         mkdir _build        
-        xcopy /E /Y bin _build\bin\
-        xcopy /E /Y App_Data _build\App_Data\
-        xcopy /E /Y Content _build\Content\
-        xcopy /E /Y Scripts _build\Scripts\
-        xcopy /E /Y Views _build\Views\
-        xcopy /Y Global.asax _build
-        xcopy /Y web.config _build
+        move /E /Y bin _build\
+        move /E /Y App_Data _build\
+        move /E /Y Content _build\
+        move /E /Y Scripts _build\
+        move /E /Y Views _build\
+        move /Y Global.asax _build
+        move /Y web.config _build
               
     - name: 📂 Publish
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: ${{ secrets.SOMEE_USERNAME }}.somee.com
-        username: ${{ secrets.SOMEE_USERNAME }}
-        password: ${{ secrets.SOMEE_PASSWORD }}
-        local-dir: "./SharpDevelopMVC4/_build/"  
-        server-dir: www.${{ secrets.SOMEE_USERNAME }}.somee.com/ 
+        server: $ftpuser.somee.com
+        username: $ftpuser
+        password: $ftppwd
+        local-dir: ./SharpDevelopMVC4/_build/" 
+        server-dir: www.$ftpuser.somee.com/ 
         
     - name: Check the site
       uses: srt32/uptime@master
       with:
-        url-to-hit: "http://${{ secrets.SOMEE_USERNAME }}.somee.com"     
+        url-to-hit: "http://$ftpuser.somee.com"     
