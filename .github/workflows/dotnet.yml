@@ -57,7 +57,7 @@ jobs:
         server: $ftpuser.somee.com
         username: $ftpuser
         password: $ftppwd
-        local-dir: ./SharpDevelopMVC4/_build/" 
+        local-dir: ./SharpDevelopMVC4/_build/
         server-dir: www.$ftpuser.somee.com/ 
         
     - name: Check the site
