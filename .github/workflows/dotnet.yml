@@ -65,13 +65,13 @@ jobs:
       run: |
         cd SharpDevelopMVC4
         mkdir _build        
-        xcopy /E bin _build
-        xcopy /E App_Data _build
-        xcopy /E Content _build
-        xcopy /E Scripts _build
-        xcopy /E Views _build
-        xcopy Global.asax _build
-        xcopy web.config _build
+        xcopy /E /Y bin/ _build/
+        xcopy /E /Y App_Data/ _build/
+        xcopy /E /Y Content/ _build/
+        xcopy /E /Y Scripts/ _build/
+        xcopy /E /Y Views/ _build/
+        xcopy /Y Global.asax _build/
+        xcopy /Y web.config _build/
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
