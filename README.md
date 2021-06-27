@@ -58,6 +58,12 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 - [myasp.net](https://www.myasp.net/freeaspnethosting)
 - [Azure For Students](https://azure.microsoft.com/en-us/free/students/) (Requires school .edu email address)
 
+### Github Actions (CD/CI to Somee.com)
+
+Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) (Settings > Secrets) and supply with your Somee username and password: 
+- SOMEE_USERNAME
+- SOMEE_PASSWORD
+
 ### Learning Slides
 
 - See folder for PPTs
