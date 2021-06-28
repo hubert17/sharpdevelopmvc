@@ -31,7 +31,7 @@ jobs:
     - name: Restore Packages
       run: nuget restore .\SharpDevelopMVC4\SharpDevelopMVC4.sln
 
-    - name: Build Solution
+    - name: 🚧 Build Solution
       run: msbuild.exe .\SharpDevelopMVC4\SharpDevelopMVC4.sln 
                 
     - name: Create Build Directory
