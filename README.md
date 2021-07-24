@@ -57,6 +57,7 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
 - [myasp.net](https://www.myasp.net/freeaspnethosting)
 - [Azure For Students](https://azure.microsoft.com/en-us/free/students/) (Requires school .edu email address)
+- local hosting with [Ngrok](https://github.com/hubert17/ngrok-redirector)
 
 ### Github Actions (CD/CI to Somee.com)
 
