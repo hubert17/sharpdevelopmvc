@@ -1,6 +1,8 @@
 # SharpDevelopMVC4
 
-A light-weight solid starting point for developing ASP.NET MVC application in portable [SharpDevelop](https://portable.info.pl/sharpdevelop-portable/). Great for student learning and small medium size projects!
+A light-weight solid starting point for developing ASP.NET MVC application in portable [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small medium size projects!
+
+![https://portable.info.pl/sharpdevelop-portable/](https://portable.info.pl/wp-content/uploads/2017/10/SharpDevelop_Softables.png)
 
 ## Features and Libraries
 
