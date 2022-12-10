@@ -1,0 +1,57 @@
+name: SharpDevelopMVC Build
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2    
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NuGetAPIKey }}
+        nuget-version: '5.x'
+      
+    - name: Navigate to Workspace
+      run: cd $GITHUB_WORKSPACE      
+      
+    - name: Restore Packages
+      run: nuget restore .\SharpDevelopMVC4\SharpDevelopMVC4.sln
+
+    - name: 🚧 Build Solution
+      run: msbuild.exe .\SharpDevelopMVC4\SharpDevelopMVC4.sln 
+                
+    - name: Create Build Directory
+      run: |
+        cd SharpDevelopMVC4
+        mkdir _build        
+        xcopy /E /Y bin _build\bin\
+        xcopy /E /Y App_Data _build\App_Data\
+        xcopy /E /Y Content _build\Content\
+        xcopy /E /Y Scripts _build\Scripts\
+        xcopy /E /Y Views _build\Views\
+        xcopy /Y Global.asax _build
+        xcopy /Y web.config _build
+              
+    - name: 📂 Publish to somee.com
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        server: "${{ secrets.SOMEE_USERNAME }}.somee.com"
+        username: "${{ secrets.SOMEE_USERNAME }}"
+        password: "${{ secrets.SOMEE_PASSWORD }}"
+        local-dir: ./SharpDevelopMVC4/_build/
+        server-dir: "www.${{ secrets.SOMEE_USERNAME }}.somee.com/"
+        

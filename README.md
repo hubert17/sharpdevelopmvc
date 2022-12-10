@@ -1,6 +1,8 @@
 # SharpDevelopMVC4
 
-A light-weight solid starting point for developing ASP.NET MVC application in portable [SharpDevelop](https://portable.info.pl/sharpdevelop-portable/). Great for student learning and small medium size projects!
+A light-weight solid starting point for developing ASP.NET MVC application in portable [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small medium size projects!
+
+![https://portable.info.pl/sharpdevelop-portable/](https://portable.info.pl/wp-content/uploads/2017/10/SharpDevelop_Softables.png)
 
 ## Features and Libraries
 
@@ -57,6 +59,13 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
 - [myasp.net](https://www.myasp.net/freeaspnethosting)
 - [Azure For Students](https://azure.microsoft.com/en-us/free/students/) (Requires school .edu email address)
+- Local hosting with [Ngrok](https://github.com/hubert17/ngrok-redirector)
+
+### Github Actions (CD/CI to Somee.com)
+
+Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) (Settings > Secrets) and supply with your Somee username and password: 
+- SOMEE_USERNAME
+- SOMEE_PASSWORD
 
 ### Learning Slides
 
@@ -66,7 +75,7 @@ You can browse the database using SQL Server Management Studio (SSMS) or portabl
 ### Warning
 
 - Do not load the project in Visual Studio
-- Do not add Nuget packages which supports .NET Standard
+- Do not add Nuget packages which supports .NET Standard 
 
 ## Contributors
 
