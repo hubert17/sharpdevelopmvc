@@ -12,7 +12,7 @@ namespace SharpDevelopMVC4.Controllers
 	/// </summary>
 	public class CrudsampleController : Controller
 	{
-		private SdMvc4DbContext _db = new SdMvc4DbContext();
+		private readonly SdMvc4DbContext _db = new SdMvc4DbContext();
 
 		// GET: Products
 		public ActionResult Index(string searchString, int page = 0, int pageSize = 6)
