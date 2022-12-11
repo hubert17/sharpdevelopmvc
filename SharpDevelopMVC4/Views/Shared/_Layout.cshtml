@@ -84,14 +84,17 @@
       </div>
     </div>
   </nav>
+  
+<div id="footer-flush-bottom-wrap">
+   <div id="footer-flush-bottom-main" class="container clear-top body-content">
+      @RenderBody()
+   </div>
+</div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+<footer id="footer-flush-bottom-container" class="container">
+   <hr />
+   <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+</footer>
    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/Scripts/jquery.min.js"></script>
