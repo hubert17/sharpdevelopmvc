@@ -31,6 +31,11 @@ namespace SharpDevelopMVC4.Controllers
             return View();
         }
         
+        public ActionResult Gallery()
+        {
+            return View();
+        }        
+        
         [Authorize]
         public ActionResult ForAuthUser()
         {
