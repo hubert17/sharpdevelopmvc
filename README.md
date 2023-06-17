@@ -1,6 +1,7 @@
+
 # SharpDevelopMVC4
 
-A light-weight solid starting point for developing ASP.NET MVC application in portable [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small medium size projects!
+A light-weight solid starting point for developing ASP.NET MVC and Web API application in portable [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small medium size projects!
 
 ![https://portable.info.pl/sharpdevelop-portable/](https://portable.info.pl/wp-content/uploads/2017/10/SharpDevelop_Softables.png)
 
@@ -9,15 +10,20 @@ A light-weight solid starting point for developing ASP.NET MVC application in po
 - Bootstrap 4.5 theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
+- EFUtilities
 - Simple Forms Authentication
 - AutoMapper
-- Hangfire Core / Hangfire.MemoryStorage
 - FluentValidation
-- Image/File Upload
+- Image / File Upload
 - Email / SMTP
 - SimpleLogger
-- ~~TuesPechkin PDF~~
+- Hangfire Core / Hangfire.MemoryStorage
+- CsvHelper
 - SimpleExcelImport
+- [petite-vue](https://github.com/vuejs/petite-vue)
+- ~~# OpenHtmlToPdf~~
+- Simple JWT Authentication
+- Swagger / Swashbuckle
 
 ### Why it's lite?
 
@@ -71,6 +77,8 @@ Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.gi
 
 - See folder for PPTs
 - [Entity Framework 6 Code-First Tutorial](https://bernardgabon.com/blog/entity-framework-tutorial/)
+- JSON
+- ASP.NET Web API
 
 ### Warning
 
