@@ -1,0 +1,51 @@
+﻿@model List<ASPNETWebApp45.Models.WeatherForecast>
+@{
+    ViewBag.Title = "Weather forecast [MVC]";
+}
+
+<h2>Weather forecast [MVC]</h2>
+
+<table class="table table-dark" @@vue:mounted="getForecast">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody v-html="_ForecastsPartialView">
+        @Html.Partial("_ForecastsPartialView", Model)
+    </tbody>
+</table>
+
+<div class="form-group row">
+    <label for="select" class="col-2 col-form-label"><strong>Page Size</strong></label>
+    <div class="col-2">
+        <select v-model="pageSize" class="custom-select" @@change="getForecast">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+        </select>
+    </div>
+</div>
+
+<script type="module"> 
+     // https://github.com/baptistejamin/petite-vue-csp
+    import { createApp } from "/Scripts/petite-vue-csp.es.js";
+    const app = {
+        //data
+        _ForecastsPartialView: '',
+        pageSize: 5,
+        //methods
+        getForecast() {
+            fetch('/WeatherForecast/GetForecastsPartialView?maxItem=' + this.pageSize)
+                .then(response => response.text())
+                .then((data) => {
+                    this._ForecastsPartialView = data;
+                });
+        }
+    };
+    createApp(app).mount();
+</script>
+
