@@ -32,7 +32,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ### Web.config missing?
 
-Just copy Web.github.config then rename to Web.config
+Just copy _web.config then rename to Web.config
 
 ### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
 - Option 1: Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)

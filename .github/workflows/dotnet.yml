@@ -29,10 +29,10 @@ jobs:
       run: cd $GITHUB_WORKSPACE      
       
     - name: Restore Packages
-      run: nuget restore .\SharpDevelopMVC4\SharpDevelopMVC4.sln
+      run: nuget restore .\SharpDevelopMVC4\ASPNETWebApp45.sln
 
     - name: 🚧 Build Solution
-      run: msbuild.exe .\SharpDevelopMVC4\SharpDevelopMVC4.sln 
+      run: msbuild.exe .\SharpDevelopMVC4\ASPNETWebApp45.sln 
                 
     - name: Create Build Directory
       run: |
