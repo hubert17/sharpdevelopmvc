@@ -57,7 +57,7 @@ Just copy _web.config then rename to Web.config
 
 ### Database Browsers
 
-You can browse the database using SQL Server Management Studio (SSMS) or portable [Database.NET](https://bit.ly/30tqqxU). To enable (LocalDB)\MSSQLLocalDB, install [SQL Server Express LocalDB](https://bit.ly/2Mlijj1).
+You can browse the database using SQL Server Management Studio (SSMS) or [portable](https://bit.ly/30tqqxU) [Database.NET](https://fishcodelib.com/files/DatabaseNet4.zip). To enable (LocalDB)\MSSQLLocalDB, install [SQL Server Express LocalDB](https://bit.ly/2Mlijj1).
 
 ### Free ASP.NET Hosting
 
