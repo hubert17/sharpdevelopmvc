@@ -10,7 +10,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 - Bootstrap 4.5 theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
-- EFUtilities
+- ~~EFUtilities~~
 - Simple Forms Authentication
 - AutoMapper
 - FluentValidation
@@ -24,6 +24,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 - ~~OpenHtmlToPdf~~
 - Simple JWT Authentication
 - Swagger / Swashbuckle
+- SignalR 1 [(ChatDemo)](https://github.com/aspdotnetgabs/sharpdevelopmvc/tree/chatdemo-signalr-petitevue)
 
 ### Why it's lite?
 
