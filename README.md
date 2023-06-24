@@ -21,7 +21,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 - CsvHelper
 - SimpleExcelImport
 - [petite-vue](https://github.com/vuejs/petite-vue)
-- ~~# OpenHtmlToPdf~~
+- ~~OpenHtmlToPdf~~
 - Simple JWT Authentication
 - Swagger / Swashbuckle
 

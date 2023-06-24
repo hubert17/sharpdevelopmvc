@@ -109,19 +109,19 @@ namespace ASPNETWebApp45.Controllers.Api
 			}
 		}
 
-		[HttpGet]
-		[Route("api/Song/seed")]
-		public IHttpActionResult Seed(bool clearSongTable = false)
-        {
-			try
-            {
-				Song.Seed(clearSongTable);
-				return Ok("Successful seeding of database with Songs.");
-			}
-			catch(Exception ex)
-            {
-				return BadRequest("Seeding failed. " + ex.Message);
-			}
-		}
+//		[HttpGet]
+//		[Route("api/Song/seed")]
+//		public IHttpActionResult Seed(bool clearSongTable = false)
+//        {
+//			try
+//            {
+//				Song.Seed(clearSongTable);
+//				return Ok("Successful seeding of database with Songs.");
+//			}
+//			catch(Exception ex)
+//            {
+//				return BadRequest("Seeding failed. " + ex.Message);
+//			}
+//		}
 	}
 }
