@@ -47,9 +47,8 @@ Just copy _web.config then rename to Web.config
 3. Enter a port number higher than `8001`
 4. Click **[Create application/virtual directory]** button. Done! You can now run/debug the web app.
    > \*\*\* Error indicating duplicate entry of type 'site' with unique key attributes...
-5. Goto `Documents\IISExpress\config` folder
-6. Open `applicationhost.config` in a text editor, delete `<site name=...>` entries in `<sites>...</sites>`
-7. Repeat step 1. 
+5. Just right-click the Project and rename it. Ex: **ASPNETWebApp45** --> **ASPNETWebApp45A**
+6. Repeat step 1. 
 
 ### Local IIS or IIS Express was not found
 
