@@ -10,7 +10,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 - Bootstrap 4.5 theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
-- ~~EFUtilities~~
+- EFUtilities.SharpDevelop
 - Simple Forms Authentication
 - AutoMapper
 - FluentValidation
