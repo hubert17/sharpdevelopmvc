@@ -19,7 +19,7 @@ namespace ASPNETWebApp45
 
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
-                {
+                {                    
                     c.OperationFilter<FileUpload>();
 
                     // By default, the service root url is inferred from the request used to access the docs.
@@ -27,6 +27,7 @@ namespace ASPNETWebApp45
                     // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                     //
                     //c.RootUrl(req => GetRootUrlFromAppConfig());
+                    c.RootUrl(httpReq => string.Format("{0}://{1}", httpReq.RequestUri.Scheme, httpReq.RequestUri.Authority) );
 
                     // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                     // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
@@ -38,7 +39,7 @@ namespace ASPNETWebApp45
                     // hold additional metadata for an API. Version and title are required but you can also provide
                     // additional fields by chaining methods off SingleApiVersion.
                     //
-                    c.SingleApiVersion("v1", "ASPNETWebApp45 API | <a href=\"https://bernardgabon.com/sdwebapi\">Download</a> | <a href=\"https://github.com/aspdotnetgabs/sharpdevelopwebapi\" > Code</a>");
+                    c.SingleApiVersion("v1", "<a href=\"/swagger\">ASPNETWebApp45 API</a> | <a href=\"/\">Home</a> | <a href=\"https://github.com/aspdotnetgabs/sharpdevelopwebapi\">Download</a>");
 
                     // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                     //
