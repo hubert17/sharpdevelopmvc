@@ -47,9 +47,10 @@ namespace ASPNETWebApp45
 				new string[] { "ASPNETWebApp45.Controllers" });
 		}
 
-        protected void Application_Start()
-		{        	
-        	AutoMapperConfig.Initialize();
+		protected void Application_Start()
+		{     
+			SimpleLogger.Init();        	
+			AutoMapperConfig.Initialize();
 
 			var config = System.Web.Http.GlobalConfiguration.Configuration;
 
@@ -68,10 +69,9 @@ namespace ASPNETWebApp45
 
 			// Configure Hangfire www.hangfire.io            
 			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
-			_backgroundJobServer = new Hangfire.BackgroundJobServer();         
-
-			SimpleLogger.Init();
-        }
+			_backgroundJobServer = new Hangfire.BackgroundJobServer();    
+			Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")			
+		}
         
         protected void Application_End(object sender, EventArgs e)
         {
@@ -116,5 +116,20 @@ namespace ASPNETWebApp45
         }
         #endregion
         
+		#region KeepAlive
+		public static class Pinger
+		{
+			public static void KeepAliveHangfire(string hostUrl = null)
+			{
+				if (!string.IsNullOrEmpty(hostUrl))
+					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(hostUrl), "0 */5 * ? * *");
+			}
+			static System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+			public static void Ping(string url)
+			{
+				client.GetAsync(url);
+			}
+		}
+		#endregion
     }
 }
