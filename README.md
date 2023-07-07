@@ -33,7 +33,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ### Web.config missing?
 
-Just copy _web.config then rename to Web.config
+Just `Rebuild` the project or copy _web.config then rename to Web.config
 
 ### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
 - Option 1: Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
@@ -47,8 +47,9 @@ Just copy _web.config then rename to Web.config
 2. In **Web** tab, choose **[Use IIS Express Web Server]**
 3. Enter a port number higher than `8001`
 4. Click **[Create application/virtual directory]** button. Done! You can now run/debug the web app.
+
    > \*\*\* Error indicating duplicate entry of type 'site' with unique key attributes...
-5. Just right-click the Project and rename it. Ex: **ASPNETWebApp45** --> **ASPNETWebApp45A**
+5. Just right-click, rename and `Clean` the project. Ex: **ASPNETWebApp45** --> **NewNameOfMyWebApp**
 6. Repeat step 1. 
 
 ### Local IIS or IIS Express was not found

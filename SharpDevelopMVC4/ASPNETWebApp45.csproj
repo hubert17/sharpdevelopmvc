@@ -273,11 +273,12 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup />
-	<Target Name="SpicNSpan"  AfterTargets="Clean">
-		<!-- Remove obj folder -->
-		<RemoveDir Directories="$(BaseIntermediateOutputPath)" />
-		<!-- Remove bin folder -->
-		<RemoveDir Directories="$(BaseOutputPath)" />
+	<Target Name="SpicNSpan"  AfterTargets="Clean"> 
+		 <RemoveDir Directories="$(TargetDir)" /> <!-- bin -->
+		 <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" /> <!-- obj -->
+	</Target>
+	<Target Name="RenameWebconfig"  AfterTargets="Rebuild"> 
+		 <Move SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" OverwriteReadOnlyFiles="false" Condition="Exists('$(ProjectDir)_web.config')" />
 	</Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
