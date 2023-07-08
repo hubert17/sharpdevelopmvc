@@ -33,13 +33,12 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ### Web.config missing?
 
-Just `Rebuild` the project or copy _web.config then rename to Web.config
+Just `Build` then reload the project. Or copy _web.config then rename to Web.config
 
 ### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
 - Option 1: Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
 - Option 2: run nuget.bat
 - Option 3: execute this command `nuget restore`
-- Option 4: download the offline [nuget packages here](https://drive.google.com/file/d/1_BPJqxucppNr5WX337RRxpl8jv7YB8Kd/view?usp=sharing). Extract and add as a local source, Tools > Option > Package Management > Package Sources
 
 ### Running in IIS Express
 
