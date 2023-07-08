@@ -70,7 +70,7 @@ namespace ASPNETWebApp45
 			// Configure Hangfire www.hangfire.io            
 			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
 			_backgroundJobServer = new Hangfire.BackgroundJobServer();    
-			Pinger.KeepAliveHangfire("http://localhost:8086"); // KeepAliveHangfire("https://mysite.com")			
+			Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")			
 		}
         
         protected void Application_End(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace ASPNETWebApp45
 			public static void KeepAliveHangfire(string siteUrl = null, int minuteInterval = 5)
 			{
 				if (!string.IsNullOrEmpty(siteUrl))
-					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl), string.Format("*/{0} * * * *", minuteInterval));
+					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/home/pinger"), string.Format("*/{0} * * * *", minuteInterval));
 			}
 			static System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
 			public static void Ping(string url)
@@ -130,6 +130,7 @@ namespace ASPNETWebApp45
 				client.GetAsync(url);
 			}
 		}
+
 		#endregion
     }
 }

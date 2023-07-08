@@ -9,43 +9,49 @@ using Newtonsoft.Json;
 
 namespace ASPNETWebApp45.Controllers
 {
-    public class HomeController : Controller
-    {    	
-        public ActionResult Index()
-        {
-            return View();
-        }
+	public class HomeController : Controller
+	{
+		public ActionResult Index()
+		{
+			return View();
+		}
 
-        [AllowAnonymous]
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+		[AllowAnonymous]
+		public ActionResult About()
+		{
+			ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+			return View();
+		}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+		public ActionResult Contact()
+		{
+			ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+			return View();
+		}
         
-        [Authorize]
-        public ActionResult ForAuthUser()
-        {
-        	ViewBag.Message = "Authorized user page. ";
+		[Authorize]
+		public ActionResult ForAuthUser()
+		{
+			ViewBag.Message = "Authorized user page. ";
 
-            return View("About");
-        }
+			return View("About");
+		}
         
-        [Authorize(Roles="admin")]
-        public ActionResult ForRoleUser()
-        {
-            ViewBag.Message = "Authorized ADMIN page.";
+		[Authorize(Roles = "admin")]
+		public ActionResult ForRoleUser()
+		{
+			ViewBag.Message = "Authorized ADMIN page.";
 
-            return View("About");
-        }        
+			return View("About");
+		}
+
+		// DONT DELETE
+		public ActionResult Pinger()
+		{
+			return Content(DateTime.Now.ToString());
+		}
                 
-    }
+	}
 }
