@@ -197,6 +197,9 @@
     <Reference Include="X.PagedList">
       <HintPath>packages\X.PagedList.7.9.0\lib\net45\X.PagedList.dll</HintPath>
     </Reference>
+    <Reference Include="X.PagedList.Mvc">
+      <HintPath>packages\X.PagedList.Mvc.7.5.0\lib\net452\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -277,8 +280,8 @@
   </ItemGroup>
   <ItemGroup />
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)\packages')" />
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
-    <Move SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" OverwriteReadOnlyFiles="false" Condition="Exists('$(ProjectDir)_web.config')" />
   </Target>
   <Target Name="ClearBinObj" AfterTargets="Clean">
     <RemoveDir Directories="$(TargetDir)" />
