@@ -261,11 +261,11 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
-    <None Include="Views\Crudsample\Create.cshtml" />
     <None Include="Views\Crudsample\Details.cshtml" />
     <None Include="Views\Crudsample\Edit.cshtml" />
     <None Include="Views\Crudsample\Index.cshtml" />
     <None Include="Views\Crudsample\Manage.cshtml" />
+    <None Include="Views\Crudsample\_Create.cshtml" />
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />

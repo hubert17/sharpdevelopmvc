@@ -7,7 +7,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ## Features and Libraries
 
-- Bootstrap 4.5 theme
+- Bootstrap 4.6 with bonus Bootswatch theme
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
 - EFUtilities.SharpDevelop
@@ -38,7 +38,8 @@ Just `Build` then reload the project. Or copy _web.config then rename to Web.con
 ### Build Error? Could not resolve reference... Could not locate assembly... The underlying connection was closed...
 - Option 1: Run (Merge) [nugetfix.reg](https://stackoverflow.com/a/53677845/1281209)
 - Option 2: run nuget.bat
-- Option 3: execute this command `nuget restore`
+- Option 3: In SharpDevelop, run Restore packages
+- Option 4: execute this command `nuget restore`
 
 ### Running in IIS Express
 

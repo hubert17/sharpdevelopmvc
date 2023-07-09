@@ -66,7 +66,10 @@ namespace ASPNETWebApp45.Controllers
 				return RedirectToAction("Manage");
 			}
 			else
+			{
+				ModelState.AddModelError("", "There are some validation errors. Please check.");
 				return View(product);
+			}				
 		}
 
 

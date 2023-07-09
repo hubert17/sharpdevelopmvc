@@ -7,77 +7,56 @@
 
 <h2>Edit Product</h2>
 
-<div class="col-sm-10">
+<form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal">
+	@Html.AntiForgeryToken()
 
-    <form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal">
-    	@Html.AntiForgeryToken()
-    	
-        <fieldset>
-            
-            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
-            {                   
-				<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				  @Html.ValidationSummary(true)
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				  </button>
-				</div>                    
-			}
-			
-			 <!-- Hidden field to include Id/primary key on submit -->
-			@Html.HiddenFor(m => m.Id)
-           
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Name">Name</label>
-                <div class="col-md-4">
-                    <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control input-md" required>
-                </div>
-            </div> 
+	<!-- Text input-->
+	<div class="form-group row">
+		<label for="Id" class="col-sm-2 col-form-label">Id:</label>
+		<div class="col-sm-10">
+			<input id="Id" name="Id" type="text" value="@Model.Id" class="form-control" readonly>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="Name" class="col-sm-2 col-form-label">Name:</label>
+		<div class="col-sm-10">
+			<input id="Name" name="Name" type="text" value="@Model.Name" class="form-control" required="required">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="UnitPrice" class="col-sm-2 col-form-label">Unit Pric:e</label>
+		<div class="col-sm-10">
+			<input id="UnitPrice" name="UnitPrice" type="text" value="@Model.UnitPrice" class="form-control" required="required">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="Unit" class="col-sm-2 col-form-label">Unit:</label>
+		<div class="col-sm-10">
+			<input id="Unit" name="Unit" type="text" value="@Model.Unit" class="form-control">
+		</div>
+	</div>
 
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Description">Description:</label>
-                <div class="col-md-4">
-                    <input type="text" id="Description" name="Description" value="@Model.Description" class="form-control input-md" required>
-                </div>
-            </div>
+	<!-- File Upload -->
+	<div class="form-group row">
+		<label for="fileUpload" class="col-sm-2 col-form-label">Upload Photo:</label>
+		<div class="col-sm-10">
+			<input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="form-control-file">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">Photo:</label>
+		<div class="col-sm-10">
+			<img src="/uploadedimages/@Model.PictureFilename" class="img-thumbnail" alt="@Model.Name Photo">
+		</div>
+	</div>
 
+	<!-- Button -->
+	<div class="form-group row">
+		<label class="col-sm-2"></label>
+		<div class="col-sm-10">
+			<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+			<a href="/crudsample/manage" class="btn btn-secondary btn-lg">Cancel</a>
+		</div>
+	</div>
+</form>
 
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="UnitPrice">Unit Price:</label>
-                <div class="col-md-4">
-                    <input type="text" id="UnitPrice" name="UnitPrice" value="@Model.UnitPrice" class="form-control input-md" required>
-                </div>
-            </div>
-            
-
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Unit">Unit:</label>
-                <div class="col-md-4">
-                    <input type="text" id="Unit" name="Unit" value="@Model.Unit" class="form-control input-md">
-                </div>
-            </div>
-            
-
-			<!-- File Upload -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="fileUpload">Photo</label>
-                <div class="col-md-4">
-                    <input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="form-control input-md">                    
-                </div>
-            </div>
-          
-
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="singlebutton"></label>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                    <a href="/crudsample/manage" class="btn btn-secondary btn-lg">Cancel</a>
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
-
-</div>
