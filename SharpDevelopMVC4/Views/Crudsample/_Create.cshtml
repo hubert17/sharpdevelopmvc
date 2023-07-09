@@ -4,7 +4,7 @@
 <div class="modal fade" id="createProductModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="createProductModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-            <form action="/crudsample/Create" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <form action="/crudsample/Create" method="post" enctype="multipart/form-data" id="productForm" class="form-horizontal">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">New Product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,10 +14,6 @@
                 <div class="modal-body">
                     @Html.AntiForgeryToken()
                     <!-- Text input-->
-                    <div class="form-group">
-                        <label for="Name">Id</label>
-                        <input id="Name" name="Name" type="text" class="form-control" required="required">
-                    </div>
                     <div class="form-group">
                         <label for="Name">Name</label>
                         <input id="Name" name="Name" type="text" class="form-control" required="required">
