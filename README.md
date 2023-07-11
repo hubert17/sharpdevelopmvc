@@ -86,7 +86,7 @@ Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.gi
 
 1. [Creating your first aspnet mvc application (until 5:07)](https://www.youtube.com/watch?v=KvTy_FAYjks)
 
-2. [Controllers in an mvc application](https://www.youtube.com/watch?v=duQ1Pvr-oW0))
+2. [Controllers in an mvc application](https://www.youtube.com/watch?v=duQ1Pvr-oW0)
 
 3. [Views in an mvc application](https://www.youtube.com/watch?v=N6srbKfNcV4)
 
