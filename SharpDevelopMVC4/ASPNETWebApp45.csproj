@@ -252,10 +252,8 @@
     <None Include="Scripts\bootstrap.bundle.min.js.map" />
     <None Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\bootstrap.min.js.map" />
-    <None Include="Scripts\jquery.min.js" />
-    <None Include="Scripts\jquery.min.map" />
-    <None Include="Scripts\jquery.slim.min.js" />
-    <None Include="Scripts\jquery.slim.min.map" />
+    <None Include="Scripts\jquery-3.5.1.min.js" />
+    <None Include="Scripts\jquery-3.5.1.slim.min.js" />
     <None Include="Scripts\petite-vue.es.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />

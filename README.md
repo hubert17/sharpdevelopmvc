@@ -1,4 +1,5 @@
 
+
 # SharpDevelopMVC4
 
 A light-weight solid starting point for developing ASP.NET MVC and Web API application in [portable](https://portable.info.pl/sharpdevelop-portable/) [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small medium size projects!
@@ -7,10 +8,10 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ## Features and Libraries
 
-- Bootstrap 4.6 with bonus Bootswatch theme
+- Bootstrap 4.6 with bonus [Bootswatch](https://bootswatch.com/4/) themes
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
-- EFUtilities.SharpDevelop
+- [EFUtilities.SharpDevelop](https://github.com/MikaelEliasson/EntityFramework.Utilities)
 - Simple Forms Authentication
 - AutoMapper
 - FluentValidation
@@ -29,7 +30,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 ### Why it's lite?
 
 - No OWIN
-- No ASP.NET Identity
+- No ASP .NET Identity
 
 ### Web.config missing?
 
@@ -60,7 +61,7 @@ Just `Build` then reload the project. Or copy _web.config then rename to Web.con
 
 You can browse the database using SQL Server Management Studio (SSMS) or [portable](https://bit.ly/30tqqxU) [Database.NET](https://fishcodelib.com/files/DatabaseNet4.zip). To enable (LocalDB)\MSSQLLocalDB, install [SQL Server Express LocalDB](https://bit.ly/2Mlijj1).
 
-### Free ASP.NET Hosting
+### Free ASP .NET Hosting
 
 - [Somee.com](https://somee.com/FreeAspNetHosting.aspx)
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
@@ -80,6 +81,43 @@ Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.gi
 - [Entity Framework 6 Code-First Tutorial](https://bernardgabon.com/blog/entity-framework-tutorial/)
 - JSON
 - ASP.NET Web API
+
+### ASP .NET MVC Tutorial
+
+1. [Creating your first aspnet mvc application (until 5:07)](https://www.youtube.com/watch?v=KvTy_FAYjks)
+
+2. [Controllers in an mvc application](https://www.youtube.com/watch?v=duQ1Pvr-oW0))
+
+3. [Views in an mvc application](https://www.youtube.com/watch?v=N6srbKfNcV4)
+
+4. [ViewData and ViewBag in mvc](https://www.youtube.com/watch?v=KrdMO2akohE)
+
+5. [Models in an mvc application](https://www.youtube.com/watch?v=KYOMgtZ4k3w)
+
+6. [Data access in mvc using Entity Framework](https://www.youtube.com/watch?v=Lrr66APUwBk)
+
+7. [Generate hyperlinks using actionlink html helper](https://www.youtube.com/watch?v=It_X8Br2rmY)
+
+8. [Creating a view to insert data using mvc](https://www.youtube.com/watch?v=OX69gRT7azs)
+
+9. [Model Binding in mvc](https://www.youtube.com/watch?v=uXwmyuvrn1E)
+
+10. [Insert update delete in mvc using entity framework](https://www.youtube.com/watch?v=8f4P8U1a2TI)
+
+11. [Partial views in mvc](https://www.youtube.com/watch?v=SABg7RyjX-4)
+
+12. [Razor views in mvc](https://www.youtube.com/watch?v=PRLGP_S9_K8)
+
+13. [Layout view in mvc](https://www.youtube.com/watch?v=VyQhEArGTNs)
+
+14. [Authorize and AllowAnonymous action filters in mvc](https://www.youtube.com/watch?v=ColwQX-dRJY)
+
+### ENTITY FRAMEWORK Tutorial
+01. [What is Entity Framework](https://www.youtube.com/watch?v=Z7713GBhi4k) 
+
+02. [Entity Framework Code First Approach](https://www.youtube.com/watch?v=kbH-rqMl8cE)
+
+03. [Customizing table, column and foreign key column names](https://www.youtube.com/watch?v=XIlTTKjRzO4)
 
 ### Warning
 
