@@ -248,6 +248,7 @@
     <None Include="Content\Site.css" />
     <None Include="Global.asax" />
     <None Include="packages.config" />
+    <None Include="Scripts\bootbox.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js.map" />
     <None Include="Scripts\bootstrap.min.js" />

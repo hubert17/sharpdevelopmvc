@@ -117,6 +117,14 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/Scripts/jquery-3.5.1.slim.min.js"></script>
     <script src="/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="/Scripts/bootbox.min.js"></script>
+    
+    @if (TempData["alertbox"] != null)
+    {
+        <script>
+            bootbox.alert('@TempData["alertbox"]');
+        </script>
+    } 
     
     @RenderSection("scripts", required: false)
     

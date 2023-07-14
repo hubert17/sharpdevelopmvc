@@ -8,7 +8,7 @@ A light-weight solid starting point for developing ASP.NET MVC and Web API appli
 
 ## Features and Libraries
 
-- Bootstrap 4.6 with bonus [Bootswatch](https://bootswatch.com/4/) themes
+- Bootstrap 4.6 with bonus [Bootswatch](https://bootswatch.com/4/) themes and [Bootbox.js](https://bootboxjs.com/examples.html)
 - EntityFramework.SharpDevelop (SQL Server)
 - Dapper (MS Access support)
 - [EFUtilities.SharpDevelop](https://github.com/MikaelEliasson/EntityFramework.Utilities)
