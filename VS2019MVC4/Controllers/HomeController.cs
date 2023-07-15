@@ -47,11 +47,10 @@ namespace ASPNETWebApp45.Controllers
             return View("About");
         }
 
-        // DONT DELETE
-        public ActionResult Pinger()
-        {
-            return Content(DateTime.Now.ToString());
-        }
 
+        public ActionResult ChatDemo()
+        {
+            return View();
+        }
     }
 }

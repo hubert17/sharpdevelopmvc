@@ -51,7 +51,7 @@ namespace ASPNETWebApp45.Controllers
 		    }
 		    
 		    // invalid username or password
-		    TempData["alert"] = "Invalid username or password";
+		    TempData["invalidLogin"] = "Invalid username or password";
 			return RedirectToAction("Login", new { ReturnUrl = returnUrl });
 		}
 		

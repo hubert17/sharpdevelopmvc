@@ -8,7 +8,11 @@
         <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <form action="/account/Login" method="post">
                 @Html.AntiForgeryToken()
-                @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)             
+                @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+                @if(TempData["invalidLogin"] != null)
+                {
+                    <p class="text-danger">@TempData["invalidLogin"]</p>
+                }                
                 <div class="form-group">
                     <label for="username">Email</label>
                     <input type="text" id="username" name="username" class="form-control" required />

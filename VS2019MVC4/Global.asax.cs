@@ -19,15 +19,13 @@ using Hangfire.MemoryStorage;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Linq;
-using Hangfire;
-using System.Net.Http;
+using Microsoft.AspNet.SignalR;
 
 namespace ASPNETWebApp45
 {
 	public class MvcApplication : HttpApplication
 	{
         Hangfire.BackgroundJobServer _backgroundJobServer;
-
 		const string API_Route_Prefix = "api";
 
 		public static void RegisterRoutes(RouteCollection routes)
@@ -58,6 +56,11 @@ namespace ASPNETWebApp45
 
 			config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
+			RouteTable.Routes.MapHubs(new HubConfiguration
+			{
+				EnableCrossDomain = true
+			});
+
 			config.MapHttpAttributeRoutes();
 
 			RegisterRoutes(RouteTable.Routes);
@@ -71,8 +74,7 @@ namespace ASPNETWebApp45
 
 			// Configure Hangfire www.hangfire.io            
 			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
-			_backgroundJobServer = new Hangfire.BackgroundJobServer();
-			Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")	
+			_backgroundJobServer = new Hangfire.BackgroundJobServer();         
 
 			SimpleLogger.Init();
         }
@@ -118,23 +120,16 @@ namespace ASPNETWebApp45
         {
 			HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
         }
-		#endregion
+        #endregion
+        
+    }
 
-		#region KeepAlive
-		public static class Pinger
+	public class ChatHub : Hub
+	{
+		public void Send(string name, string message)
 		{
-			public static void KeepAliveHangfire(string siteUrl = null, int minuteInterval = 5)
-			{
-				if (!string.IsNullOrEmpty(siteUrl))
-					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/home/pinger"), string.Format("*/{0} * * * *", minuteInterval));
-			}
-			static System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
-			public static void Ping(string url)
-			{
-				client.GetAsync(url);
-			}
+			// Broadcast the message to all clients
+			Clients.All.sendMessage(name, message);
 		}
-
-		#endregion
 	}
 }

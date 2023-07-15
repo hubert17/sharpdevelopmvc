@@ -56,20 +56,17 @@ namespace ASPNETWebApp45.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(Product product, HttpPostedFileBase fileUpload)
 		{
-			if (ModelState.IsValid)
+			if (ModelState.IsValid) 
 			{
-				if (fileUpload != null)
+				if(fileUpload != null)
 					product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name);
-
+				
 				_db.Products.Add(product);
 				_db.SaveChanges();
-
+				return RedirectToAction("Manage");
 			}
 			else
-				// ModelState.AddModelError("", "There are some validation errors. Please check.");
-				TempData["alertcard"] = "There are some validation errors. Please check and try again.";
-
-			return RedirectToAction("Manage");
+				return View(product);
 		}
 
 
