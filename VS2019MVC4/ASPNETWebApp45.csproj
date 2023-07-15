@@ -290,11 +290,33 @@
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
   </Target>
   <Target Name="ClearBinObj" AfterTargets="Clean">
+	<!-- bin -->
     <RemoveDir Directories="$(TargetDir)" />
-    <!-- bin -->
+    <!-- obj -->	
     <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
-    <!-- obj -->
+    <!-- publish -->
+	<RemoveDir Directories="$(ProjectDir)\_publish" />
   </Target>
+  	<Target Name="CreatePublishFolder" AfterTargets="Rebuild">
+		<PropertyGroup>
+			<PublishFolder>_publish</PublishFolder>
+		</PropertyGroup>
+		<MakeDir Directories="$(PublishFolder)" />
+		<ItemGroup>
+			<AppDataFolder Include="$(ProjectDir)\App_Data\**\*.*" />
+			<BinFolder Include="$(ProjectDir)\bin\**\*.*" />
+			<ContentFolder Include="$(ProjectDir)\Content\**\*.*" />
+			<ScriptsFolder Include="$(ProjectDir)\Scripts\**\*.*" />
+			<ViewsFolder Include="$(ProjectDir)\Views\**\*.*" />
+			<FilesToCopy Include="favicon.ico;Global.asax;web.config" />
+		</ItemGroup>
+		<Copy  SourceFiles="@(AppDataFolder)" DestinationFolder="$(PublishFolder)\App_Data\%(RecursiveDir)" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300"/>
+		<Copy  SourceFiles="@(BinFolder)" DestinationFolder="$(PublishFolder)\bin\%(RecursiveDir)" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300"/>
+		<Copy  SourceFiles="@(ContentFolder)" DestinationFolder="$(PublishFolder)\Content\%(RecursiveDir)" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300"/>
+		<Copy  SourceFiles="@(ScriptsFolder)" DestinationFolder="$(PublishFolder)\Scripts\%(RecursiveDir)" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300"/>
+		<Copy  SourceFiles="@(ViewsFolder)" DestinationFolder="$(PublishFolder)\Views\%(RecursiveDir)" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300"/>
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(PublishFolder)" OverwriteReadOnlyFiles="true" />
+	</Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

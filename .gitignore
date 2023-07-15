@@ -16,6 +16,7 @@
 [Ll]og/
 [Ii]mages/
 _bu/
+_publish/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
