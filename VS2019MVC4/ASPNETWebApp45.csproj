@@ -286,7 +286,7 @@
   </ItemGroup>
   <ItemGroup />
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)\packages')" />
+    <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)web.config')" />
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
   </Target>
   <Target Name="ClearBinObj" AfterTargets="Clean">
