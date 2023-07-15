@@ -62,6 +62,9 @@ Just `Build` then reload the project. Or copy _web.config then rename to Web.con
 You can browse the database using SQL Server Management Studio (SSMS) or [portable](https://bit.ly/30tqqxU) [Database.NET](https://fishcodelib.com/files/DatabaseNet4.zip). To enable (LocalDB)\MSSQLLocalDB, install [SQL Server Express LocalDB](https://bit.ly/2Mlijj1).
 
 ### Free ASP .NET Hosting
+Run `Rebauild` to generate publish files. See _publish folder.
+
+### Free ASP .NET Hosting
 
 - [Somee.com](https://somee.com/FreeAspNetHosting.aspx)
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
