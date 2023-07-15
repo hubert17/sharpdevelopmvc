@@ -26,7 +26,7 @@
     @RenderSection("head", required: false)    
 </head>
 <body>
-  <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">My ASP.NET Webapp</a>
@@ -90,48 +90,56 @@
                 </form>
             </div>
         </div>
-</nav>
+    </nav>
 
-  
-<div id="footer-flush-bottom-wrap">
-    <div id="footer-flush-bottom-main" class="container clear-top body-content">
-        @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
-        {
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                @Html.ValidationSummary(true)
-                @TempData["alertcard"]
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
-        @RenderBody()
+
+    <div id="footer-flush-bottom-wrap">
+        <div id="footer-flush-bottom-main" class="container clear-top body-content">
+            @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @Html.ValidationSummary(true)
+                    @TempData["alertcard"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            @RenderBody()
+        </div>
     </div>
-</div>
 
-<footer id="footer-flush-bottom-container" class="container">
-   <hr />
-   <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
-</footer>
-   
+    <footer id="footer-flush-bottom-container" class="container">
+        <hr />
+        <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
+    </footer>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/Scripts/jquery-3.5.1.slim.min.js"></script>
     <script src="/Scripts/bootstrap.bundle.min.js"></script>
-    
+    <script src="/Scripts/bootbox.min.js"></script>
+
+    @if (TempData["alertbox"] != null)
+    {
+        <script>
+            bootbox.alert('@TempData["alertbox"]');
+        </script>
+    }
+
     @RenderSection("scripts", required: false)
-    
-    @* This is to remove the overlay ad in Somee.com *@   
+
+    @* This is to remove the overlay ad in Somee.com *@
     <script>
         $(document).ready(function () {
-			var checkExist = setInterval(function() {
-			   if ($('#nextAll').nextAll().length) {
-			      clearInterval(checkExist);
-			      $('#nextAll').nextAll().remove();
-			   }
-			}, 500);
+            var checkExist = setInterval(function () {
+                if ($('#nextAll').nextAll().length) {
+                    clearInterval(checkExist);
+                    $('#nextAll').nextAll().remove();
+                }
+            }, 500);
         });
-	</script>
+    </script>
 
-   <hr id="nextAll" style="display:none;" />   
+    <hr id="nextAll" style="display:none;" />
 </body>
 </html>

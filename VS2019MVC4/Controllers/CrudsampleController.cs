@@ -80,7 +80,7 @@ namespace ASPNETWebApp45.Controllers
 			Product product = _db.Products.Find(id);
 
 			if (product == null) {
-				TempData["alert"] = "Product does not exist.";
+				TempData["alertbox"] = "Product does not exist.";
 				return RedirectToAction("Manage");
 			}
 
@@ -112,7 +112,7 @@ namespace ASPNETWebApp45.Controllers
 				_db.Products.Remove(product);
 				_db.SaveChanges();	           
 			} else {
-				TempData["alert"] = "Product not found";
+				TempData["alertbox"] = "Product not found";
 			}
 
 			return RedirectToAction("Manage");

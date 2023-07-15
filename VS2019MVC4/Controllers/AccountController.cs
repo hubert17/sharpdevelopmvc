@@ -73,9 +73,9 @@ namespace ASPNETWebApp45.Controllers
 		{
 			bool success = UserAccountCSV.ChangePassword(User.Identity.Name, currentPassword, newPassword);
 			if (success)
-				TempData["alert"] = "Password changed successfully.";
+				TempData["alertbox"] = "Password changed successfully.";
 			else
-				TempData["alert"] = "Failed to change password.";
+				TempData["alertbox"] = "Failed to change password.";
 
 			return RedirectToAction("Logoff");
 		}
