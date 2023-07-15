@@ -90,9 +90,9 @@ namespace ASPNETWebApp45
 
 			var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
 
-			FormsIdentity formsIdentity = new FormsIdentity(authTicket);
+			var formsIdentity = new FormsIdentity(authTicket);
 
-			ClaimsIdentity claimsIdentity = new ClaimsIdentity(formsIdentity);
+			var claimsIdentity = new ClaimsIdentity(formsIdentity);
 
 			var roles = authTicket.UserData.Split(',');
 
@@ -101,7 +101,7 @@ namespace ASPNETWebApp45
 				claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
 			}
 
-			ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+			var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
 			HttpContext.Current.User = claimsPrincipal;
 		}
@@ -128,7 +128,7 @@ namespace ASPNETWebApp45
 				if (!string.IsNullOrEmpty(siteUrl))
 					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/home/pinger"), string.Format("*/{0} * * * *", minuteInterval));
 			}
-			static System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+			static readonly System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
 			public static void Ping(string url)
 			{
 				client.GetAsync(url);

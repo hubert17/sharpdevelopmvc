@@ -13,8 +13,8 @@ namespace JWTAuth
 {
 	public static class TokenManager
 	{
-		// Change this with your own secret
-	    public const string secret = "SEiL4IiTEq4EW155ySS1T25GtXo68VVUvSNbsUw8Vm53YI6rBao86Fpne5venhn";
+		// YOU MUST CHANGE THIS WITH YOUR OWN SECRET!!!
+		public const string secret = "SEiL4IiTEq4EW155ySS1T25GtXo68VVUvSNbsUw8Vm53YI6rBao86Fpne5venhn";
 
 		public static string CreateToken(string username, string[] roles = null, int expireMinutes = 20)
 		{
