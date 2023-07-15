@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using ASPNETWebApp45.Models;
-using X.PagedList;
 
 namespace ASPNETWebApp45.Controllers.Api
 {
@@ -16,7 +15,7 @@ namespace ASPNETWebApp45.Controllers.Api
 		private readonly MyApp45DbContext _db = new MyApp45DbContext();
 
 		[HttpGet]
-		public IHttpActionResult GetAll(int page = 1, int pageSize = 100, string search = "", string artist = "", int? year = null, int? peak = null)
+		public IHttpActionResult GetAll(string search = "", string artist = "", int? year = null, int? peak = null, int limit = 100)
 		{		
 			IQueryable<Song> songs = _db.Songs.AsQueryable();
 					
@@ -43,26 +42,15 @@ namespace ASPNETWebApp45.Controllers.Api
 				songs = songs.Where(x => x.PeakChartPosition <= peak);
 			}
 			
-			try
+			if(string.IsNullOrWhiteSpace(search))
 			{
-				var songPagedList = songs.ToPagedList(page, pageSize);
-				return Ok(new
-				{
-					PageNumber = songPagedList.PageNumber,
-					PageSize = songPagedList.PageSize,
-					TotalItemCount = songPagedList.TotalItemCount,
-					TotalPageCount = songPagedList.PageCount,
-					Items = songPagedList.ToList()
-				});
+				// Randomize and Limit to create mock result
+				// This is to prevent Somee from suspending your account due to high bandwidth usage
+				// Remove this code if you only have few songs/records in your database
+				songs = songs.Take(100);
 			}
-			catch
-			{
-				if(string.IsNullOrWhiteSpace(search))
-					return Ok(songs.Skip((page - 1) * pageSize).Take(pageSize));
-				else
-					return Ok(songs.ToList());
-			}
-
+			
+			return Ok(songs.ToList());
 		}
 		
 		[HttpGet] 

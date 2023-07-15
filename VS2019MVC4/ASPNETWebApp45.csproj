@@ -202,9 +202,6 @@
     <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
       <HintPath>packages\X.PagedList.7.9.0\lib\net45\X.PagedList.dll</HintPath>
     </Reference>
-    <Reference Include="X.PagedList.Mvc, Version=7.5.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
-      <HintPath>packages\X.PagedList.Mvc.7.5.0\lib\net452\X.PagedList.Mvc.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -253,24 +250,24 @@
     <None Include="Content\Site.css" />
     <None Include="Global.asax" />
     <None Include="packages.config" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js.map" />
     <None Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\bootstrap.min.js.map" />
+    <None Include="Scripts\jquery.min.js" />
+    <None Include="Scripts\jquery.min.map" />
+    <None Include="Scripts\jquery.slim.min.js" />
+    <None Include="Scripts\jquery.slim.min.map" />
     <None Include="Scripts\petite-vue.es.js" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\jquery-3.5.1.min.js" />
-    <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
+    <None Include="Views\Crudsample\Create.cshtml" />
     <None Include="Views\Crudsample\Details.cshtml" />
     <None Include="Views\Crudsample\Edit.cshtml" />
     <None Include="Views\Crudsample\Index.cshtml" />
     <None Include="Views\Crudsample\Manage.cshtml" />
-    <Content Include="Views\Crudsample\_Create.cshtml" />
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
@@ -284,26 +281,26 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup />
-  <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)\packages')" />
-    <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
-  </Target>
-  <Target Name="ClearBinObj" AfterTargets="Clean">
-    <RemoveDir Directories="$(TargetDir)" />
-    <!-- bin -->
-    <RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
-    <!-- obj -->
-  </Target>
+	<Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
+		<Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
+		<Move SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" OverwriteReadOnlyFiles="false" Condition="Exists('$(ProjectDir)_web.config')" />
+	</Target>
+	<Target Name="ClearBinObj" AfterTargets="Clean">
+		<RemoveDir Directories="$(TargetDir)" />
+		<!-- bin -->
+		<RemoveDir Directories="$(ProjectDir)$(BaseIntermediateOutputPath)" />
+		<!-- obj -->
+	</Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8086</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8084/</IISUrl>
+          <IISUrl>http://localhost:8086/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -47,7 +47,7 @@ namespace ASPNETWebApp45.Models
                             {
                                 EFBatchOperation.For(_db, _db.Songs).InsertAll(songs);
                             }
-                            catch(InvalidOperationException)
+                            catch(InvalidOperationException iopEx)
                             {
                                 Hangfire.BackgroundJob.Enqueue(() => InsertAllNormal(songs));
                                 //throw new Exception(iopEx.Message + " Seeding song the normal way and this will take sometime but will be processed in the background.");
