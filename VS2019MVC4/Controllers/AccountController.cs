@@ -28,9 +28,6 @@ namespace ASPNETWebApp45.Controllers
 			var user = UserAccountCSV.Authenticate(username, password);
 			if(user != null) // If not null then it's a valid login
 		    {
-				if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
-					return RedirectToAction("ChangePassword");
-
 				var authTicket = new FormsAuthenticationTicket(
 				    1,                             	// version
 				    user.UserName,               	// user name
@@ -47,7 +44,10 @@ namespace ASPNETWebApp45.Controllers
 				
 				Session["user"] = user.UserName;
 
-				return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
+				if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
+					return RedirectToAction("ChangePassword");
+				else
+					return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
 		    }
 		    
 		    // invalid username or password
