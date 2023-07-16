@@ -24,10 +24,13 @@ namespace ASPNETWebApp45.Controllers
 		[HttpPost]	        
         [ValidateAntiForgeryToken]		
 		public ActionResult Login(string username, string password, bool rememberme = false, string returnUrl = "/")
-		{		
+		{				
 			var user = UserAccountCSV.Authenticate(username, password);
 			if(user != null) // If not null then it's a valid login
 		    {
+				if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
+					return RedirectToAction("ChangePassword");
+								
 				var authTicket = new FormsAuthenticationTicket(
 				    1,                             	// version
 				    user.UserName,               	// user name
@@ -44,10 +47,7 @@ namespace ASPNETWebApp45.Controllers
 				
 				Session["user"] = user.UserName;
 
-				if (username.ToLower() == "admin" && password == "admin")
-					return RedirectToAction("ChangePassword");
-				else
-					return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
+				return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
 		    }
 		    
 		    // invalid username or password

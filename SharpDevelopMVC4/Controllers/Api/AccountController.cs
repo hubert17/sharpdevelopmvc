@@ -12,10 +12,13 @@ namespace ASPNETWebApp45.Controllers.Api
         [HttpPost]
         [Route("TOKEN")]
         public IHttpActionResult GetToken(string username, string password)
-        {
+        {        			
             var user = UserAccountCSV.Authenticate(username, password);
             if (user != null)
             {     
+            	if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
+                    return BadRequest("Please change your password");
+            					
             	var userRoles = user.Roles.Split(',');
                 var data = new 
                 { 

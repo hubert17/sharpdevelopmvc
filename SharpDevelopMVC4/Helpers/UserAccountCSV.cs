@@ -236,7 +236,7 @@ public partial class UserAccountCSV
         var hasAdmin = accounts.Any(x => x.Roles == DEFAULT_ADMIN_LOGIN);
         if (!hasAdmin)
         {
-            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN);
+        	Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, "admin");
             accounts = ReadAccountCSV();
         }
 
