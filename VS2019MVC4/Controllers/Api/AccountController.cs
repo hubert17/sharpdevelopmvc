@@ -15,8 +15,11 @@ namespace ASPNETWebApp45.Controllers.Api
         {
             var user = UserAccountCSV.Authenticate(username, password);
             if (user != null)
-            {     
-            	var userRoles = user.Roles.Split(',');
+            {
+                if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
+                    return BadRequest("Please change your password");
+
+                var userRoles = user.Roles.Split(',');
                 var data = new 
                 { 
                 	userId = user.UserName,
