@@ -196,16 +196,17 @@ public partial class UserAccountCSV
 
     #region private methods
     
-    private static UserAccountCSV CurrentUser = null;      
+    private static UserAccountCSV CurrentUser = null;
 
     private static List<UserAccountCSV> ReadAccountCSV()
     {
-    	var csvFile = GetCsvFile();
+        var csvFile = GetCsvFile();
         if (File.Exists(csvFile))
         {
             using (var reader = new StreamReader(csvFile))
             using (var csv = new CsvReader(reader))
             {
+                csv.Configuration.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-US");
                 return csv.GetRecords<UserAccountCSV>().ToList();
             }
         }
@@ -215,10 +216,11 @@ public partial class UserAccountCSV
 
     private static void WriteAccountCSV(List<UserAccountCSV> records)
     {
-    	var csvFile = GetCsvFile();
+        var csvFile = GetCsvFile();
         using (var writer = new StreamWriter(csvFile))
         using (var csv = new CsvWriter(writer))
         {
+            csv.Configuration.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-US");
             csv.WriteRecords(records);
         }
     }
