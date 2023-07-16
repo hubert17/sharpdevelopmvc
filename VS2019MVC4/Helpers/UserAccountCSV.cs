@@ -77,6 +77,7 @@ public partial class UserAccountCSV
 
         user.Roles = System.Text.RegularExpressions.Regex.Replace(userRoles, @"\s+", "");
         user.CreatedOn = DateTime.Now;
+        user.LastLogin = default(DateTime);
         user.IsActive = !requiresActivation;
 
         accounts.Add(user);
@@ -169,42 +170,23 @@ public partial class UserAccountCSV
             return new string[] { string.Empty };
     }
 
-    public static UserAccountCSV Deactivate(string userName)
+    public static string SetUserActivation(string userName, bool isActive)
     {
         var accounts = ReadAccountCSV();
-        var user = accounts.FirstOrDefault(x => x.UserName == userName.Trim());
+        var user = accounts.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
         if (user != null)
         {
-            user.IsActive = false;
             accounts.Where(x => x.UserName == userName).ToList().ForEach(x =>
             {
-                x.IsActive = user.IsActive;
+                x.IsActive = isActive;
             });
             WriteAccountCSV(accounts);
-            return user;
+            return "success";
         }
         else
-            return null;
+            return "failed";
     }
 
-    public static UserAccountCSV Activate(string userName)
-    {
-        var accounts = ReadAccountCSV();
-        var user = accounts.FirstOrDefault(x => x.UserName == userName.Trim());
-        if (user != null)
-        {
-            user.IsActive = true;
-            accounts.Where(x => x.UserName == userName).ToList().ForEach(x =>
-            {
-                x.IsActive = user.IsActive;
-            });
-            WriteAccountCSV(accounts);
-            return user;
-        }
-        else
-            return null;
-    }
-    
     public static string GetCsvFile()
     {
     	return Path.IsPathRooted(ACCOUNT_CSV_FILE) ? ACCOUNT_CSV_FILE : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", ACCOUNT_CSV_FILE);
