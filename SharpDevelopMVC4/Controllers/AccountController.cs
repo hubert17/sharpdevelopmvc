@@ -80,7 +80,7 @@ namespace ASPNETWebApp45.Controllers
 			return RedirectToAction("Logoff");
 		}
 
-		// Account/Register?username=user01&password="pass123"
+		// Account/Register?username=user01&password=pass123
 		[AllowAnonymous]
 		public ActionResult Register(string username, string password, string role = "")
 		{
@@ -93,6 +93,21 @@ namespace ASPNETWebApp45.Controllers
 		public ActionResult ManageUsers()
 		{		
 			return View();
+		}
+		
+		// /Account/Deactivate?username=user01
+		[Authorize(Roles = "admin")]
+		public ActionResult Deactivate(string username)
+		{
+			if (username == "admin")
+				TempData["alert"] = "Admin account cannot be deactivated.";
+			else
+			{
+				UserAccountCSV.SetUserActivation(username, false);
+				TempData["alertbox"] = username + " is now deactivated.";
+			}
+
+			return RedirectToAction("Index", "Home");
 		}
 		
 		[Authorize(Roles="admin")]

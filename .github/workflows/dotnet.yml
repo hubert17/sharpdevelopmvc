@@ -32,7 +32,7 @@ jobs:
       run: nuget restore .\SharpDevelopMVC4\ASPNETWebApp45.sln
 
     - name: 🚧 Build Solution
-      run: msbuild.exe .\SharpDevelopMVC4\ASPNETWebApp45.sln 
+      run: msbuild.exe .\SharpDevelopMVC4\ASPNETWebApp45.sln /t:Rebuild
                 
     - name: Create Build Directory
       run: |
