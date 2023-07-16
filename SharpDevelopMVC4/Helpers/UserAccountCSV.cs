@@ -206,6 +206,7 @@ public partial class UserAccountCSV
             using (var reader = new StreamReader(csvFile))
             using (var csv = new CsvReader(reader))
             {
+            	csv.Configuration.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-US");
                 return csv.GetRecords<UserAccountCSV>().ToList();
             }
         }
@@ -219,6 +220,7 @@ public partial class UserAccountCSV
         using (var writer = new StreamWriter(csvFile))
         using (var csv = new CsvWriter(writer))
         {
+        	csv.Configuration.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("en-US");
             csv.WriteRecords(records);
         }
     }
