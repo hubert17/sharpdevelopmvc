@@ -43,7 +43,7 @@ namespace ASPNETWebApp45.Controllers.Api
 				songs = songs.Where(x => x.PeakChartPosition <= peak);
 			}
 			
-			var songPagedList = songs.ToPagedList(page, pageSize);
+			var songPagedList = songs.OrderByDescending(x => x.ReleaseYear).ToPagedList(page, pageSize);
 			
 			return Ok(new
 			{

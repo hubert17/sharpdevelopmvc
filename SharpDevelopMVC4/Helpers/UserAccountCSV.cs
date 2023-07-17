@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 public partial class UserAccountCSV
 {
@@ -13,12 +14,16 @@ public partial class UserAccountCSV
 
     #region UserAccountRepository
     public string UserName { get; set; }
+    [JsonIgnore]
     public byte[] PasswordHash { get; set; }
+    [JsonIgnore]
     public byte[] PasswordSalt { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime? LastLogin { get; set; }
     public bool IsActive { get; set; }
     public string Roles { get; set; } // comma-separated 
+    
+    public const string DEFAULT_ADMIN_ROLENAME = "admin";
 
     public static UserAccountCSV Authenticate(string userName, string userPassword)
     {
@@ -236,7 +241,7 @@ public partial class UserAccountCSV
         var hasAdmin = accounts.Any(x => x.Roles == DEFAULT_ADMIN_LOGIN);
         if (!hasAdmin)
         {
-        	Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, "admin");
+        	Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_ROLENAME);
             accounts = ReadAccountCSV();
         }
 
