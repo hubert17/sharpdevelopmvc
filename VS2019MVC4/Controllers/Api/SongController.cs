@@ -45,7 +45,7 @@ namespace ASPNETWebApp45.Controllers.Api
 			
 			try
 			{
-				var songPagedList = songs.ToPagedList(page, pageSize);
+				var songPagedList = songs.OrderByDescending(x => x.Id).ToPagedList(page, pageSize);
 				return Ok(new
 				{
 					PageNumber = songPagedList.PageNumber,

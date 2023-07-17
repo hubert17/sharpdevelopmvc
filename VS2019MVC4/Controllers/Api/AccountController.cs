@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JWTAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -60,6 +61,76 @@ namespace ASPNETWebApp45.Controllers.Api
             catch { }
 
             return BadRequest("Invalid Token or Refresh Token");
+        }
+
+
+        [HttpPost]
+        [Route("api/account/register")]
+        public IHttpActionResult RegisterUser(string username, string password, string role = "") // You can add more parameter here ex LastName, FirstName etc
+        {
+            foreach (var r in role.Split(',').Where(r => !string.IsNullOrWhiteSpace(r)))
+            {
+                if (r.Trim().ToLower() == "admin")
+                    return BadRequest("Creating an admin account is forbidden.");
+            }
+
+            var user = UserAccountCSV.GetUserByUserName(username);
+            if (user != null)
+                return BadRequest("Account already exists");
+
+            var newUser = UserAccountCSV.Create(username, password, role);
+            if (newUser == null)
+                return BadRequest("Account registration failed");
+
+            return Ok(new { User = newUser, Message = "Account successfully created" });
+        }
+
+        [ApiAuthorize]
+        [HttpPost]
+        [Route("api/account/registerbyadmin")]
+        public IHttpActionResult RegisterWithRole(string username, string password, string comma_separated_roles = "")
+        {
+            var userRoles = UserAccountCSV.GetUserRoles(User.Identity.Name);
+            var isAdmin = userRoles != null && userRoles.Contains("admin");
+            if (!isAdmin)
+                return BadRequest("Access forbidden. For administrator only.");
+
+            var user = UserAccountCSV.GetUserByUserName(username);
+            if (user != null)
+                return BadRequest("Account already registered!");
+
+            var newUser = UserAccountCSV.Create(username, password, comma_separated_roles);
+            if (newUser != null)
+                return Ok(new { User = newUser, Message = "Account successfully created" });
+            else
+                return BadRequest("Account registration failed");
+        }
+
+        [HttpPost]
+        [Route("api/account/changepassword")]
+        public IHttpActionResult ChangePassword(string username, string newPassword, string currentPassword = "")
+        {
+            var forceChangeIfAdmin = false;
+
+            try
+            {
+                forceChangeIfAdmin = Array.IndexOf(UserAccountCSV.GetUserRoles(User.Identity.Name), UserAccountCSV.DEFAULT_ADMIN_ROLENAME) > -1;
+            }
+            catch { }
+
+            var success = UserAccountCSV.ChangePassword(username, currentPassword, newPassword, forceChangeIfAdmin);
+            if (success)
+                return Ok("Password successfully changed");
+            else
+                return BadRequest("Password change failed");
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/account/me")]
+        public IHttpActionResult GetUserProfile()
+        {
+            return Ok(new { user = UserAccountCSV.GetUserByUserName(User.Identity.Name) });
         }
 
 

@@ -84,7 +84,7 @@ namespace ASPNETWebApp45.Controllers
 		[AllowAnonymous]
 		public ActionResult Register(string username, string password, string role = "")
 		{
-			if(role.ToLower() == "admin") role = "user"; // Prevent unauthorized creation of admin account			
+			if(role.ToLower() == UserAccountCSV.DEFAULT_ADMIN_ROLENAME) role = "user"; // Prevent unauthorized creation of admin account			
 			var result = UserAccountCSV.Create(username, password, role);
 			return Content(result.UserName);
 		}
