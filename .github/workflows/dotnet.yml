@@ -5,10 +5,10 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master
+      - master-disabled
   pull_request:
     branches:
-      - master
+      - master-disabled
 jobs:
   build:
     runs-on: windows-latest
