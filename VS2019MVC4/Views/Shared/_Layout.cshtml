@@ -3,27 +3,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-	  <meta name="Name" content="@ViewBag.Title - My ASP.NET Application" />
-	  <meta name="Description" content="Site Description" />
-	  <meta property="og:title" content="@ViewBag.Title - My ASP.NET Application" />
-	  <meta property="og:description" content="Site Description" /> 
-	  
+    <meta name="Name" content="@ViewBag.Title - My ASP.NET Application" />
+    <meta name="Description" content="Site Description" />
+    <meta property="og:title" content="@ViewBag.Title - My ASP.NET Application" />
+    <meta property="og:description" content="Site Description" />
+
     @if (TempData["alert"] != null)
     {
         <script>
             alert('@TempData["alert"]')
         </script>
-    }	  
+    }
 
-	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/Site.css" />
-    
-    @RenderSection("head", required: false)    
+
+    @RenderSection("head", required: false)
 </head>
 <body>
     <!-- Navigation -->

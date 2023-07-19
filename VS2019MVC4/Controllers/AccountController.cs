@@ -69,6 +69,7 @@ namespace ASPNETWebApp45.Controllers
 
 		[HttpPost]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public ActionResult ChangePassword(string currentPassword, string newPassword)
 		{
 			bool success = UserAccountCSV.ChangePassword(User.Identity.Name, currentPassword, newPassword);
@@ -80,13 +81,28 @@ namespace ASPNETWebApp45.Controllers
 			return RedirectToAction("Logoff");
 		}
 
-		// /Account/Register?username=user01&password=pass123
+		public ActionResult Register()
+		{
+			return View();
+		}
+
 		[AllowAnonymous]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Register(string username, string password, string role = "")
 		{
 			if(role.ToLower() == UserAccountCSV.DEFAULT_ADMIN_ROLENAME) role = "user"; // Prevent unauthorized creation of admin account			
 			var result = UserAccountCSV.Create(username, password, role);
-			return Content(result.UserName);
+			if (result != null)
+			{
+				TempData["alert"] = String.Format("Account successfully created. Welcome {0}!", username);
+				return RedirectToAction("Login");
+			}
+			else
+			{
+				TempData["alertbox"] = "There was an issue creating your account.";
+				return RedirectToAction("Index", "Home");
+			}
 		}
 		
 		[Authorize(Roles="admin")]

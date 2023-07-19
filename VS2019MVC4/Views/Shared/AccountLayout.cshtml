@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="Name" content="@ViewBag.Title - My ASP.NET Application" />
+    <meta name="Description" content="Site Description" />
+    <meta property="og:title" content="@ViewBag.Title - My ASP.NET Application" />
+    <meta property="og:description" content="Site Description" />
+
+    @if (TempData["alert"] != null)
+    {
+        <script>
+            alert('@TempData["alert"]')
+        </script>
+    }
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/Account.css" />
+
+    @RenderSection("head", required: false)
+</head>
+
+<body class="my-login-page">
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-md-center h-100">
+                <div class="card-wrapper">
+                    <div class="brand">
+                        <a href="/" title="Go to homepage"><img src="https://www.svgrepo.com/show/483464/person.svg" alt="My ASP.NET Application"></a>
+                    </div>
+                    @RenderBody()
+                    <div class="footer">
+                        <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="/Scripts/bootbox.min.js"></script>
+
+    @if (TempData["alertbox"] != null)
+    {
+        <script>
+            bootbox.alert('@TempData["alertbox"]');
+        </script>
+    }
+
+    @RenderSection("scripts", required: false)
+
+    @* This is to remove the overlay ad in Somee.com *@
+    <script>
+        $(document).ready(function () {
+            var checkExist = setInterval(function () {
+                if ($('#nextAll').nextAll().length) {
+                    clearInterval(checkExist);
+                    $('#nextAll').nextAll().remove();
+                }
+            }, 500);
+        });
+    </script>
+
+    <hr id="nextAll" style="display:none;" />
+</body>
+</html>
