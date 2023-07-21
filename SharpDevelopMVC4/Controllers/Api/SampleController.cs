@@ -1,4 +1,6 @@
-﻿using JWTAuth;
+﻿using CsvHelper;
+using Hangfire;
+using JWTAuth;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +16,7 @@ using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using ASPNETWebApp45.Models;
+using RestSharp;
 
 namespace ASPNETWebApp45.Controllers.Api
 {
@@ -91,6 +94,76 @@ namespace ASPNETWebApp45.Controllers.Api
             else
                 return BadRequest("Sending failed.");
         }
+        
+        
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/sample/bingphotos")]
+        public IHttpActionResult GetBingPhotos()
+        {
+        	var csvFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "BingPhotos.csv");
+        	List<BingImage> bingImages;
+	        if (System.IO.File.Exists(csvFile))
+	        {
+	            using (var reader = new System.IO.StreamReader(csvFile))
+	            using (var csv = new CsvReader(reader))
+	            {
+	                bingImages = csv.GetRecords<BingImage>().ToList();
+	                return Ok(bingImages);
+	            }
+	        }
+	        
+	        return BadRequest("Bing photos unavailable.");
+        } 
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/sample/news")]
+        public IHttpActionResult GetNews(string apiKey = "", string category = "", int pageSize = 20, int page = 1)
+        {
+        	if(string.IsNullOrEmpty(apiKey)) apiKey = "1db81ac8b6b64bdd9dfb5bed2647f495";
+        	var cacheName = ("newapi" + category + page) + pageSize;
+        	if(HttpRuntime.Cache[cacheName] == null)
+        	{
+	           	if(!string.IsNullOrWhiteSpace(category))
+	        		category = "&category=" + category;
+	           	
+				IRestClient client = new RestClient("https://newsapi.org");  
+				var request = new RestRequest("/v2/top-headlines?country=ph" + category + "&pageSize=" + pageSize + "&page=" + page + "&apiKey=" + apiKey, Method.GET);
+				var response = client.Execute<NewsAPI>(request);
+				var data = response.Data;
+				if(data.articles.Any())
+				{
+					HttpRuntime.Cache[cacheName] = data;    
+					RecurringJob.AddOrUpdate("removeCache" + cacheName, () => HangfireJobsApi45.RemoveNewsCache(cacheName), "* */2 * * *");	
+				}
+        	}
+
+        	return Ok(HttpRuntime.Cache[cacheName]);
+        }
+
+   
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/sample/hangfire")]
+        public IHttpActionResult  MonitorHangfire()
+        {
+			var api = JobStorage.Current.GetMonitoringApi();
+			var ScheduledJob = api.ScheduledJobs(0,100);
+			var	HourlySucceededJobs = api.HourlySucceededJobs();
+			var HourlyFailedJobs = api.HourlyFailedJobs();
+			var SucceededJobs = api.SucceededJobs(0,100);
+			var FailedJobs = api.FailedJobs(0,100);				
+			var stats = new {
+				Enqueued = api.GetStatistics().Enqueued,
+				Recurring = api.GetStatistics().Recurring,
+				Succeeded = api.GetStatistics().Succeeded,
+				Failed = api.GetStatistics().Failed
+			};
+			
+			return Ok(new { stats, ScheduledJob, HourlySucceededJobs, HourlyFailedJobs, SucceededJobs, FailedJobs });
+        } 
 
     }
 

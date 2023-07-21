@@ -59,4 +59,18 @@ namespace ASPNETWebApp45.Models
         }
 
     }
+    
+
+	public class PoordooytifySong
+	{
+		public string Key { get; set; }
+		public string Title { get; set; }
+		public string Artist { get; set; }
+		public string Genre { get; set; }
+		public string Link { get; set; }
+		public string AudioType { get; set; }
+		public string AddedBy { get; set; }
+		public string AddedDate { get; set; }
+	}
+
 }

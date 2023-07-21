@@ -126,6 +126,9 @@
     <Reference Include="PocoClassGenerator">
       <HintPath>packages\PocoClassGenerator.0.9.5\lib\net40\PocoClassGenerator.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleExcelImport, Version=0.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\SimpleExcelImport.0.0.1.5\lib\net35\SimpleExcelImport.dll</HintPath>
     </Reference>
@@ -202,9 +205,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\HangfireConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
+    <Compile Include="Controllers\Api\PoordooytifyController.cs" />
     <Compile Include="Controllers\Api\SampleController.cs" />
     <Compile Include="Controllers\Api\SongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -216,6 +221,7 @@
     <Compile Include="Helpers\AutoMapperConfig.cs" />
     <Compile Include="Helpers\EmailService.cs" />
     <Compile Include="Helpers\FileUploadExtension.cs" />
+    <Compile Include="Helpers\HangfireJobs.cs" />
     <Compile Include="Helpers\ImageUploadExtension.cs" />
     <Compile Include="Helpers\JWTAuth\ApiAuthorize.cs" />
     <Compile Include="Helpers\JWTAuth\RefreshTokenManager.cs" />
@@ -224,6 +230,9 @@
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Helpers\UserAccountCSV.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BingPhoto.cs" />
+    <Compile Include="Models\NeatEaseMusic.cs" />
+    <Compile Include="Models\NewsAPI.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\MyApp45DbContext.cs" />

@@ -14,17 +14,26 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using Hangfire;
 using Newtonsoft.Json.Serialization;
 using Hangfire.MemoryStorage;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Linq;
 
+public class ApplicationPreload : System.Web.Hosting.IProcessHostPreloadClient
+{
+    public void Preload(string[] parameters)
+    {
+        HangfireBootstrapper.Instance.Start();
+    }
+}
+
+
 namespace ASPNETWebApp45
 {
 	public class MvcApplication : HttpApplication
 	{
-        Hangfire.BackgroundJobServer _backgroundJobServer;
 		const string API_Route_Prefix = "api";
 
 		public static void RegisterRoutes(RouteCollection routes)
@@ -68,16 +77,18 @@ namespace ASPNETWebApp45
 			config.EnsureInitialized();
 
 			// Configure Hangfire www.hangfire.io            
-			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
-			_backgroundJobServer = new Hangfire.BackgroundJobServer();    
-			Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")			
+			HangfireBootstrapper.Instance.Start();
+			
+            RecurringJob.AddOrUpdate("get-bing-photos", () => HangfireJobsApi45.BingPhotos(), Cron.Daily);	
+
+			Pinger.KeepAliveHangfire("https://api45gabs.azurewebsites.net"); // KeepAliveHangfire("https://mysite.com")		            
 		}
         
         protected void Application_End(object sender, EventArgs e)
         {
-            _backgroundJobServer.Dispose();
-        }
-
+            HangfireBootstrapper.Instance.Stop();
+        }   
+        
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
 		{
 			HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
