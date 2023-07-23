@@ -12,7 +12,7 @@ namespace ASPNETWebApp45.Controllers
 	/// </summary>
 	public class CrudsampleController : Controller
 	{
-		private readonly MyApp45DbContext _db = new MyApp45DbContext();
+		MyApp45DbContext _db = new MyApp45DbContext();
 
 		// GET: Products
 		public ActionResult Index(string searchString, int page = 0, int pageSize = 6)

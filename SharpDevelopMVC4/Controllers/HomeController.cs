@@ -46,12 +46,16 @@ namespace ASPNETWebApp45.Controllers
 
 			return View("About");
 		}
-
-		// DONT DELETE
-		public ActionResult Pinger()
-		{
-			return Content(DateTime.Now.ToString());
-		}
-                
+            
 	}
+	
+    // DONT DELETE
+    public class PingerController : Controller
+    {
+        public ActionResult Index()
+        {
+            return Content(DateTime.Now.ToString());
+        }
+
+    }	
 }
