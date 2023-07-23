@@ -7,9 +7,6 @@ using ASPNETWebApp45.Models;
 
 namespace ASPNETWebApp45.Controllers
 {
-	/// <summary>
-	/// Description of ProductsController.
-	/// </summary>
 	public class CrudsampleController : Controller
 	{
 		private readonly MyApp45DbContext _db = new MyApp45DbContext();
@@ -21,20 +18,20 @@ namespace ASPNETWebApp45.Controllers
 
 			if (!String.IsNullOrEmpty(searchString))
 				items = items.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
-            
+
 			if (page > 0)
 				items = items.Skip(pageSize * (page - 1)).Take(pageSize);
-            
+
 			return View(items.ToList());
-            
+
 		}
-		
+
 		// [Authorize(Roles = "staff")]
 		public ActionResult Manage()
 		{
-			var items = _db.Products.ToList();           
-			return View(items);            
-		}		
+			var items = _db.Products.ToList();
+			return View(items);
+		}
 
 		// GET: Products/Details/5
 		public ActionResult Details(int? id)
@@ -51,7 +48,6 @@ namespace ASPNETWebApp45.Controllers
 			return View(product);
 		}
 
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(Product product, HttpPostedFileBase fileUpload)
@@ -66,12 +62,14 @@ namespace ASPNETWebApp45.Controllers
 
 			}
 			else
+			{
 				// ModelState.AddModelError("", "There are some validation errors. Please check.");
 				TempData["alertcard"] = "There are some validation errors. Please check and try again.";
+			}
+
 
 			return RedirectToAction("Manage");
 		}
-
 
 		// GET: Products/Edit/5
 		// [Authorize(Roles = "staff")]
@@ -79,7 +77,8 @@ namespace ASPNETWebApp45.Controllers
 		{
 			Product product = _db.Products.Find(id);
 
-			if (product == null) {
+			if (product == null)
+			{
 				TempData["alertbox"] = "Product does not exist.";
 				return RedirectToAction("Manage");
 			}
@@ -94,9 +93,9 @@ namespace ASPNETWebApp45.Controllers
 			_db.Entry(updatedProduct).State = EntityState.Modified;
 
 			if (fileUpload != null) // Update picture
-                updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name);
+				updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name);
 			else // Retain the current picture
-                _db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
+				_db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
 
 			_db.SaveChanges();
 
@@ -108,12 +107,13 @@ namespace ASPNETWebApp45.Controllers
 		public ActionResult Delete(int id)
 		{
 			Product product = _db.Products.Find(id);
-			if (product != null) {
+			if (product != null)
+			{
 				_db.Products.Remove(product);
-				_db.SaveChanges();	           
-			} else {
-				TempData["alertbox"] = "Product not found";
+				_db.SaveChanges();
 			}
+			else
+				TempData["alertbox"] = "Product not found";
 
 			return RedirectToAction("Manage");
 		}

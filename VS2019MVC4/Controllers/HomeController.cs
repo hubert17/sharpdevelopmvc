@@ -54,4 +54,14 @@ namespace ASPNETWebApp45.Controllers
         }
 
     }
+
+    // Don't delete
+    public class PingerController : Controller
+    {
+        public ActionResult Index()
+        {
+            return Content(DateTime.Now.ToString());
+        }
+
+    }
 }

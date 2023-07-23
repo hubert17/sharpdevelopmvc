@@ -5,9 +5,6 @@ using System.Web.Security;
 
 namespace ASPNETWebApp45.Controllers
 {
-	/// <summary>
-	/// Description of AccountController.
-	/// </summary>
 	public class AccountController : Controller
 	{
 		[AllowAnonymous]
