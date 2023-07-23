@@ -73,3 +73,7 @@
             padding: 15px;
         }
 }
+
+[v-cloak] {
+    display: none; /* Avoid flash rendering which happen until petite-vue is loaded */
+}

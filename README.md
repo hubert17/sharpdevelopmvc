@@ -126,11 +126,11 @@ Autodeploy your webapp to Somee.com. Just create these [Secrets](https://docs.gi
 ### Warning
 
 - Do not load the project in Visual Studio
-- Do not add Nuget packages which supports .NET Standard 
+- Do not add Nuget package which supports .NET Standard 
 
 ### Visual Studio 201x version
 
-- [Download here](https://github.com/aspdotnetgabs/sharpdevelopmvc/archive/refs/heads/visual-studio-201x-version.zip) the same project comptible with Visual Studio 2012-2019. 
+- [Download here](https://github.com/aspdotnetgabs/sharpdevelopmvc/archive/refs/heads/visual-studio-201x-version.zip) the same project compatible with Visual Studio 2012-2019. 
 
 ## Contributors
 
