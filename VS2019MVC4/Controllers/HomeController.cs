@@ -10,13 +10,15 @@ using Newtonsoft.Json;
 namespace ASPNETWebApp45.Controllers
 {
     public class HomeController : Controller
-    {    	
+    {
+        
         public ActionResult Index()
         {
             return View();
         }
 
         [AllowAnonymous]
+        [OutputCache(Duration = 300, VaryByParam = "none")] //cached for 300 seconds  
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -14,11 +14,13 @@ namespace ASPNETWebApp45.Controllers.Api
         [Route("TOKEN")]
         public IHttpActionResult GetToken(string username, string password)
         {
-            var user = UserAccountCSV.Authenticate(username, password);
-            if (user != null)
+            var valid = UserAccount.Authenticate(username, password);
+            if (valid)
             {
-                if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
-                    return BadRequest("Please change your password");
+                var user = UserAccount.GetCurrentUser();
+                if (username.Contains("@"))
+                    if (username.Split('@')[0].ToLower().Equals(UserAccount.DEFAULT_ADMIN_LOGIN.ToLower()))
+                         return BadRequest("Please change your password");
 
                 var userRoles = user.Roles.Split(',');
                 var data = new 
@@ -70,36 +72,36 @@ namespace ASPNETWebApp45.Controllers.Api
         {
             foreach (var r in role.Split(',').Where(r => !string.IsNullOrWhiteSpace(r)))
             {
-                if (r.Trim().ToLower() == "admin")
-                    return BadRequest("Creating an admin account is forbidden.");
+                if (r.Trim().ToLower() == UserAccount.DEFAULT_ADMIN_ROLENAME)
+                    return BadRequest("Creating an admin account is forbidden");
             }
 
-            var user = UserAccountCSV.GetUserByUserName(username);
+            var user = UserAccount.GetUserByUserName(username);
             if (user != null)
                 return BadRequest("Account already exists");
 
-            var newUser = UserAccountCSV.Create(username, password, role);
+            var newUser = UserAccount.Create(username, password, role);
             if (newUser == null)
                 return BadRequest("Account registration failed");
 
             return Ok(new { User = newUser, Message = "Account successfully created" });
         }
 
-        [ApiAuthorize]
+        [ApiAuthorize(Roles = UserAccount.DEFAULT_ADMIN_ROLENAME)]
         [HttpPost]
         [Route("api/account/registerbyadmin")]
         public IHttpActionResult RegisterWithRole(string username, string password, string comma_separated_roles = "")
         {
-            var userRoles = UserAccountCSV.GetUserRoles(User.Identity.Name);
-            var isAdmin = userRoles != null && userRoles.Contains("admin");
+            var userRoles = UserAccount.GetUserRoles(User.Identity.Name);
+            var isAdmin = userRoles != null && userRoles.Contains(UserAccount.DEFAULT_ADMIN_ROLENAME);
             if (!isAdmin)
-                return BadRequest("Access forbidden. For administrator only.");
+                return BadRequest("Access forbidden. For administrator only");
 
-            var user = UserAccountCSV.GetUserByUserName(username);
+            var user = UserAccount.GetUserByUserName(username);
             if (user != null)
-                return BadRequest("Account already registered!");
+                return BadRequest("Account already registered");
 
-            var newUser = UserAccountCSV.Create(username, password, comma_separated_roles);
+            var newUser = UserAccount.Create(username, password, comma_separated_roles);
             if (newUser != null)
                 return Ok(new { User = newUser, Message = "Account successfully created" });
             else
@@ -114,11 +116,11 @@ namespace ASPNETWebApp45.Controllers.Api
 
             try
             {
-                forceChangeIfAdmin = Array.IndexOf(UserAccountCSV.GetUserRoles(User.Identity.Name), UserAccountCSV.DEFAULT_ADMIN_ROLENAME) > -1;
+                forceChangeIfAdmin = Array.IndexOf(UserAccount.GetUserRoles(User.Identity.Name), UserAccount.DEFAULT_ADMIN_ROLENAME) > -1;
             }
             catch { }
 
-            var success = UserAccountCSV.ChangePassword(username, currentPassword, newPassword, forceChangeIfAdmin);
+            var success = UserAccount.ChangePassword(username, currentPassword, newPassword, forceChangeIfAdmin);
             if (success)
                 return Ok("Password successfully changed");
             else
@@ -130,7 +132,7 @@ namespace ASPNETWebApp45.Controllers.Api
         [Route("api/account/me")]
         public IHttpActionResult GetUserProfile()
         {
-            return Ok(new { user = UserAccountCSV.GetUserByUserName(User.Identity.Name) });
+            return Ok(new { user = UserAccount.GetUserByUserName(User.Identity.Name) });
         }
 
 
