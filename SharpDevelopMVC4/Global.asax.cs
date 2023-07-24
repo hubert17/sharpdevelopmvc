@@ -66,6 +66,9 @@ namespace ASPNETWebApp45
 			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 			config.EnsureInitialized();
+			
+		    ViewEngines.Engines.Clear();  
+    		ViewEngines.Engines.Add(new RazorViewEngine());  
 
 			// Configure Hangfire www.hangfire.io            
 			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
