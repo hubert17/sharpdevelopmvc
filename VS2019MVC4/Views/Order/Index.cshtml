@@ -1,0 +1,39 @@
+﻿@model List<ASPNETWebApp45.Models.Order>
+@{
+    ViewBag.Title = "Manage Orders";
+}
+
+<h2>Manage Orders</h2>
+
+<p class="float-right">
+    @Html.Partial("_Create")
+</p>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Customer</th>
+                <th>OrderDate</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Customer.LastName, @order.Customer.FirstName</td>
+                    <td>@order.OrderDate</td>
+                    <td>@order.Notes</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+

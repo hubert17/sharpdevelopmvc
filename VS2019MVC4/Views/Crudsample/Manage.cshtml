@@ -1,7 +1,7 @@
 ﻿@model List<ASPNETWebApp45.Models.Product>
 
 @{
-	ViewBag.Title = "Manage";
+	ViewBag.Title = "Manage Products";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -32,10 +32,13 @@
 					<td>@product.UnitPrice</td>
 					<td>@product.Unit</td>
 					<td>
-						<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+						@if (!string.IsNullOrEmpty(@product.PictureFilename))
+                        {
+							<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+                        }							
 					</td>
 					<td>
-						<a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>
+						<button type="button" class="btn btn-warning btn-sm" @@click="showEditModal(@product.Id)">Edit</button>
 						<a href="/crudsample/Delete/@product.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
 					</td>
 				</tr>
@@ -44,3 +47,53 @@
 	</table>
 </div>
 
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-autoheight">
+		<div class="modal-content" v-html="_editModalPartialView">
+			<!-- _editModalPartialView content here -->
+		</div>
+	</div>
+</div>
+
+<script type="module">
+	import { createApp } from "/Scripts/petite-vue-csp.es.js";
+	const app = {
+		//data
+		_editModalPartialView: '',
+		//methods
+		showEditModal(productId) {
+			fetch('/crudsample/_Edit/' + productId)
+				.then(response => response.text())
+				.then((data) => {
+					this._editModalPartialView = data;
+					$('#editModal').modal('show')
+				});
+		}
+	};
+	createApp(app).mount();
+</script>
+
+
+@section Scripts
+{
+	<script>
+		// Bootstrap 4 Modal Auto Height
+		$(function() {
+		  if ($(".modal-autoheight").length > 0) {
+			$(".modal").on("show.bs.modal", resize);
+			$(window).on("resize", resize);
+		  }
+		});
+
+		function resize() {
+		  var winHeight = $(window).height();
+		  $(".modal-autoheight .modal-body").css({
+			width: "auto",
+			height: (winHeight - 200) + "px"
+		  });
+		}
+
+	</script>
+}

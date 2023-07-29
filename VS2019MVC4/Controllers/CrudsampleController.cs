@@ -40,13 +40,6 @@ namespace ASPNETWebApp45.Controllers
 			return View(product);
 		}
 
-		// GET: Products/Create
-		//[Authorize(Roles = "staff")]
-		public ActionResult Create()
-		{
-			var product = new Product();
-			return View(product);
-		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -71,19 +64,10 @@ namespace ASPNETWebApp45.Controllers
 			return RedirectToAction("Manage");
 		}
 
-		// GET: Products/Edit/5
-		// [Authorize(Roles = "staff")]
-		public ActionResult Edit(int id)
+		public ActionResult _Edit(int id)
 		{
 			Product product = _db.Products.Find(id);
-
-			if (product == null)
-			{
-				TempData["alertbox"] = "Product does not exist.";
-				return RedirectToAction("Manage");
-			}
-
-			return View(product);
+			return PartialView(product);
 		}
 
 		[HttpPost]

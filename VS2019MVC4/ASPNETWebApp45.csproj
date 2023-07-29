@@ -215,6 +215,7 @@
     <Compile Include="Controllers\Api\SongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CrudsampleController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\WeatherForecastController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,6 +231,9 @@
     <Compile Include="Helpers\UserAccount.cs" />
     <Compile Include="Helpers\UserAccountCSV.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\MyApp45DbContext.cs" />
@@ -271,14 +275,16 @@
     <None Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <None Include="Views\Crudsample\Details.cshtml" />
-    <None Include="Views\Crudsample\Edit.cshtml" />
     <None Include="Views\Crudsample\Index.cshtml" />
     <None Include="Views\Crudsample\Manage.cshtml" />
     <Content Include="Views\Crudsample\_Create.cshtml" />
+    <Content Include="Views\Crudsample\_Edit.cshtml" />
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\_Create.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\WeatherForecast\Index.cshtml" />

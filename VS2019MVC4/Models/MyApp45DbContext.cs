@@ -15,8 +15,12 @@ namespace ASPNETWebApp45.Models
         // Map model classes to database tables
         public DbSet<UserAccount> Users { get; set; }
         
-        public DbSet<Product> Products { get; set; }
         public DbSet<Song> Songs { get; set; }
+        
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
     }
 

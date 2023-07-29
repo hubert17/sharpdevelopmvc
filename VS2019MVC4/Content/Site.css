@@ -112,6 +112,14 @@ html, body {
 	}
 /* END of Bootstrap 4 circle button */
 
+/* Bootstrap 4 Modal Auto Height */
+.modal-autoheight .modal-body {
+	position: relative;
+	overflow-y: auto;
+	min-height: 100px !important;
+	max-height: 640px !important;
+}
+
 [v-cloak] {
 	display: none; /* Avoid flash rendering which happen until petite-vue is loaded */
 }
