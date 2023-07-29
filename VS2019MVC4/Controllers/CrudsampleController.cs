@@ -60,7 +60,6 @@ namespace ASPNETWebApp45.Controllers
 				TempData["alertcard"] = "There are some validation errors. Please check and try again.";
 			}
 
-
 			return RedirectToAction("Manage");
 		}
 

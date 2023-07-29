@@ -19,8 +19,8 @@ namespace ASPNETWebApp45.Controllers
 
         public ActionResult Get(int Id) // Order Id
         {
-            var orders = _db.Orders.ToList();
-            return View(orders);
+            var order = _db.Orders.Find(Id);
+            return View(order);
         }
 
         [HttpPost]
