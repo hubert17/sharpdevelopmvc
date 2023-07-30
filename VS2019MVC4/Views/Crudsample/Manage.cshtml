@@ -32,7 +32,10 @@
 					<td>@product.UnitPrice</td>
 					<td>@product.Unit</td>
 					<td>
-						<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+						@if (!string.IsNullOrEmpty(product.PictureFilename))
+						{
+							<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+						}
 					</td>
 					<td>
 						<a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>

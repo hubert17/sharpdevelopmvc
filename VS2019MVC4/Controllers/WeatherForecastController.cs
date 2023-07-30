@@ -30,7 +30,7 @@ namespace ASPNETWebApp45.Controllers
             return View(forecasts);
         }
 
-        public ActionResult GetForecastsPartialView(int maxItem = 5)
+        public ActionResult _GetForecasts(int maxItem = 5)
         {
             var forecasts = WeatherForecast.SampleForecasts(maxItem).ToList();
 
