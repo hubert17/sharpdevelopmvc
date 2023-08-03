@@ -235,30 +235,23 @@
     <None Include="App_Data\MyAccessDb.mdb" />
     <None Include="Content\Account.css" />
     <None Include="Content\bootstrap-grid.css" />
-    <None Include="Content\bootstrap-grid.css.map" />
     <None Include="Content\bootstrap-grid.min.css" />
-    <None Include="Content\bootstrap-grid.min.css.map" />
     <None Include="Content\bootstrap-reboot.css" />
-    <None Include="Content\bootstrap-reboot.css.map" />
     <None Include="Content\bootstrap-reboot.min.css" />
-    <None Include="Content\bootstrap-reboot.min.css.map" />
     <None Include="Content\bootstrap.css" />
-    <None Include="Content\bootstrap.css.map" />
     <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\bootstrap.min.css.map" />
     <None Include="Content\Site.css" />
     <None Include="Global.asax" />
     <None Include="packages.config" />
     <None Include="Scripts\bootbox.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
-    <None Include="Scripts\bootstrap.bundle.min.js.map" />
     <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\bootstrap.min.js.map" />
     <None Include="Scripts\jquery-3.5.1.min.js" />
     <None Include="Scripts\jquery-3.5.1.slim.min.js" />
     <None Include="Scripts\petite-vue.es.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <None Include="Scripts\Util\bs-modal-auto-height.js" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
@@ -280,7 +273,9 @@
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\Util" />
+  </ItemGroup>
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)web.config')" />
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
