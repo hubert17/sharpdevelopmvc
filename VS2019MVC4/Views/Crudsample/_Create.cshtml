@@ -1,4 +1,4 @@
-﻿<button type="button" class="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#addModal">+</button>
+﻿<button type="button" id="btnAddModal1" class="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#addModal">+</button>
 
 <!-- Modal -->
 <div class="modal fade" id="addModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
@@ -43,5 +43,14 @@
     </div>
 </div>
 
-
+<button type="button"  id="btnAddModal2" class="btn btn-primary btn-circle btn-lg" @@click="showCreateModal()">Add</button>
+<script type="module">
+    import { createApp } from "/Scripts/petite-vue-csp.es.js";
+    const app = {
+        showCreateModal() {
+            $('#addModal').modal('show')
+        }
+    };
+    createApp(app).mount();
+</script>
 
