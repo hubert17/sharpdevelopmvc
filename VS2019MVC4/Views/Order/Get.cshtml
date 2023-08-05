@@ -1,0 +1,89 @@
+﻿@model ASPNETWebApp45.Models.Order
+
+@{
+    ViewBag.Title = "Order | " + Model.Customer.FirstName  + " " + Model.Customer.LastName;
+}
+
+<div class="card" style="margin-bottom: 20px">
+    <div class="card-body">
+        <form action="/order/edit" method="post">
+            <div class="form-group row">
+                <label for="Id" class="col-2 col-form-label">ID</label>
+                <div class="col-10">
+                    <input id="Id" name="Id" type="text" value="@Model.Id" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Customer" class="col-2 col-form-label">Customer</label>
+                <div class="col-10">
+                    <input type="hidden" id="CustomerId" name="CustomerId" value="@Model.CustomerId" />
+                    <input type="text" id="Customer" value="@Model.Customer.LastName, @Model.Customer.FirstName" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="OrderDate" class="col-2 col-form-label">Order Date</label>
+                <div class="col-10">
+                    @* Google Chrome input type="date" https://stackoverflow.com/a/16108711/1281209 *@
+                    <input type="date" id="OrderDate" name="OrderDate" value="@Model.OrderDate.ToString("yyyy-MM-dd")" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Notes" class="col-2 col-form-label">Notes</label>
+                <div class="col-10">
+                    <textarea id="Notes" name="Notes" cols="40" rows="3" class="form-control">@Model.Notes</textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-2 col-10">
+                    <button name="submit" type="submit" class="btn btn-primary">Save</button>
+                    <a href="/order" class="btn btn-outline-secondary">Go back to Order List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<h3>Items</h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th class="text-center">Quantity</th>
+            <th>Unit</th>
+            <th class="text-right">Unit Price</th>
+            <th class="text-right">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var orderItem in Model.OrderItems)
+        {
+            <tr>
+                <td class="text-center">
+                    <a href="/Order/Delete/@orderItem.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" title="Delete">&times;</a>
+                </td>
+                <td>@orderItem.Product.Name</td>
+                <td class="text-center">@orderItem.Quantity</td>
+                <td>@orderItem.Product.Unit</td>
+                <td class="text-right">@orderItem.UnitPrice</td>
+                <td class="text-right">@orderItem.Amount</td>
+            </tr>
+        }        
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td colspan="3">
+                @Html.Partial("_AddOrderItem", ViewBag.ForAddOrderItemPartial as Dictionary<string, object>)
+            </td>
+            <td class="text-lg-right">
+                <strong>Total:</strong>
+            </td>
+            <td class="text-lg-right">
+                <strong>@string.Format("{0:C}", Model.OrderItems.Sum(t => t.Amount))</strong>
+            </td>
+        </tr>
+    </tfoot>
+</table>
