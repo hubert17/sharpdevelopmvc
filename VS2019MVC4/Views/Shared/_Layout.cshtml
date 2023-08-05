@@ -135,9 +135,20 @@
     </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/Scripts/jquery-3.5.1.min.js"></script>
-    <script src="/Scripts/bootstrap.bundle.min.js"></script>
-    <script src="/Scripts/bootbox.min.js"></script>
+    @if (Request.Url != null && Request.Url.IsLoopback)
+    {
+        @* Check if running on localhost *@
+        <script src="/Scripts/jquery-3.5.1.min.js"></script>
+        <script src="/Scripts/bootstrap.bundle.min.js"></script>
+        <script src="/Scripts/bootbox.min.js"></script>
+    }
+    else
+    {
+        @* Otherwise use CDN references *@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js" integrity="sha512-igl8WEUuas9k5dtnhKqyyld6TzzRjvMqLC79jkgT3z02FvJyHAuUtyemm/P/jYSne1xwFI06ezQxEwweaiV7VA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js" integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    }
 
     @if (TempData["alertbox"] != null)
     {
@@ -149,17 +160,20 @@
     @RenderSection("scripts", required: false)
 
     @* This is to remove the overlay ad in Somee.com *@
-    <script>
-        $(document).ready(function () {
-            var checkExist = setInterval(function () {
-                if ($('#nextAll').nextAll().length) {
-                    clearInterval(checkExist);
-                    $('#nextAll').nextAll().remove();
-                }
-            }, 500);
-        });
-    </script>
+    @if ((Request.Url != null ? Request.Url.Host : "").Equals("somee.com", StringComparison.OrdinalIgnoreCase))
+    {
+        <script>
+            $(document).ready(function () {
+                var checkExist = setInterval(function () {
+                    if ($('#nextAll').nextAll().length) {
+                        clearInterval(checkExist);
+                        $('#nextAll').nextAll().remove();
+                    }
+                }, 500);
+            });
+        </script>
+        <hr id="nextAll" style="display:none;" />
+    }
 
-    <hr id="nextAll" style="display:none;" />
 </body>
 </html>
