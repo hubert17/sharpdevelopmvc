@@ -22,9 +22,9 @@ namespace ASPNETWebApp45.Models
         public virtual Order Order { get; set; }
         public int OrderId { get; set; }
 
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
+        public int ProductId { get; set; }        
         
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }

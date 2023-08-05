@@ -6,7 +6,7 @@
 
 <div class="card" style="margin-bottom: 20px">
     <div class="card-body">
-        <form action="/order/edit" method="post">
+        <form action="/order/edit" method="post" autocomplete="off">
             <div class="form-group row">
                 <label for="Id" class="col-2 col-form-label">ID</label>
                 <div class="col-10">
@@ -46,7 +46,7 @@
 
 
 <h3>Items</h3>
-<table class="table table-bordered table-sm">
+<table class="table table-bordered table-hover table-sm">
     <thead>
         <tr>
             <th></th>
@@ -82,7 +82,7 @@
                 <strong>Total:</strong>
             </td>
             <td class="text-lg-right">
-                <strong>@string.Format("{0:C}", Model.OrderItems.Sum(t => t.Amount))</strong>
+                <strong>@string.Format("{0:C}", Model.OrderTotal)</strong>
             </td>
         </tr>
     </tfoot>

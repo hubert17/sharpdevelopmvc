@@ -18,5 +18,11 @@ namespace ASPNETWebApp45.Models
         public string Notes { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
+
+        [NotMapped]
+        public decimal OrderTotal
+        {
+            get { return OrderItems != null ? OrderItems.Sum(t => t.Amount) : 0; }
+        }
     }
 }
