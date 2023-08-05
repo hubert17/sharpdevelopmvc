@@ -5,11 +5,11 @@
 <head>
   	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-	  <meta name="Name" content="@ViewBag.Title - My ASP.NET Application" />
-	  <meta name="Description" content="Site Description" />
-	  <meta property="og:title" content="@ViewBag.Title - My ASP.NET Application" />
-	  <meta property="og:description" content="Site Description" /> 
+    <title>@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application</title>
+    <meta name="Name" content="@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application" />
+    <meta name="Description" content="Site Description" />
+    <meta property="og:title" content="@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application" />
+    <meta property="og:description" content="Site Description" />
 	  
     @if (TempData["alert"] != null)
     {
@@ -114,6 +114,10 @@
   
 <div id="footer-flush-bottom-wrap">
     <div id="footer-flush-bottom-main" class="container clear-top body-content">
+        @if (ViewBag.Title != null && ViewBag.Title.ToString() != "Home")
+        {
+            <h2>@ViewBag.Title</h2>
+        }
         @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
         {
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
