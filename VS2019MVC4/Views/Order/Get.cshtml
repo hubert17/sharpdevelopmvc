@@ -23,7 +23,7 @@
             <div class="form-group row">
                 <label for="OrderDate" class="col-2 col-form-label">Order Date</label>
                 <div class="col-10">
-                    @* Google Chrome input type="date" https://stackoverflow.com/a/16108711/1281209 *@
+                    <!-- Google Chrome input type="date" https://stackoverflow.com/a/16108711/1281209 -->
                     <input type="date" id="OrderDate" name="OrderDate" value="@Model.OrderDate.ToString("yyyy-MM-dd")" class="form-control" required>
                 </div>
             </div>
@@ -42,8 +42,6 @@
         </form>
     </div>
 </div>
-
-
 
 <h3>Items</h3>
 <table class="table table-bordered table-hover table-sm">

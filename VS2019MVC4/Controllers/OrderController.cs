@@ -19,7 +19,7 @@ namespace ASPNETWebApp45.Controllers
             ViewBag.ForCreatePartial = new Dictionary<string, object>
             {
                 { "CustomerLookup", _db.Customers.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList() },
-                // { "RefName", value },
+                // { "KeyName", value },
                 // Add more objects with their corresponding keys as needed
             };
 
@@ -52,7 +52,7 @@ namespace ASPNETWebApp45.Controllers
         {
             _db.Entry(updatedOrder).State = EntityState.Modified;
             _db.SaveChanges();
-            TempData["alertbox"] = "Order changes has been successfuly saved.";
+            TempData["alertbox"] = "Order changes have been successfully saved.";
             return RedirectToAction("Get", new { Id = updatedOrder.Id });
         }
 
