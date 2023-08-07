@@ -261,6 +261,7 @@
     <Content Include="Scripts\jquery-3.5.1.min.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\Util\bs-modal-auto-height.js" />
     <Content Include="Scripts\Util\slimselect.es.min.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />

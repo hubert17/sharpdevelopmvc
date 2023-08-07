@@ -47,7 +47,11 @@ namespace ASPNETWebApp45.Models
                 // Coca-Cola products
                 new Product("Coca-Cola 1 Liter", 30.00m, "1 Liter bottle of Coca-Cola", "bottle"),
                 new Product("Sprite 12 oz", 12.00m, "12 fl oz can of Sprite", "can"),
-                new Product("Minute Maid Pulpy Orange", 25.00m, "Orange juice with pulp, 16.9 fl oz bottle", "bottle")
+                new Product("Minute Maid Pulpy Orange", 25.00m, "Orange juice with pulp, 16.9 fl oz bottle", "bottle"),
+
+                // Alcoholic beverages, decimal(18,2) is the default precision in EF6 code first
+                new Product("Tanduay White Rum", 125.375m, "750ml", "bottle"),
+                new Product("Red Horse Beer", 118.0625m, "1000ml", "bottle"),
             
                 // Add more products here if needed
             };

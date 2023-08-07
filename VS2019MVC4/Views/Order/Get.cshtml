@@ -34,9 +34,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="offset-2 col-md-10">
+                <div class="offset-md-2 col-md-10">
                     <button name="submit" type="submit" class="btn btn-primary">Save</button>
-                    <a href="/order" class="btn btn-outline-secondary">Go back to Order List</a>
+                    <a href="/order" class="btn btn-outline-primary">Go back to Order List</a>
                 </div>
             </div>
         </form>
@@ -60,7 +60,7 @@
         {
             <tr>
                 <td class="text-center">
-                    <a href="/Order/Delete/@orderItem.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" title="Delete">&times;</a>
+                    <a href="/Order/Delete/@orderItem.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" title="Delete" style="height: 25px;line-height: 1.0;">&times;</a>
                 </td>
                 <td>@orderItem.Product.Name</td>
                 <td class="text-center">@orderItem.Quantity</td>
@@ -76,11 +76,11 @@
             <td colspan="3">
                 @Html.Partial("_AddOrderItem", ViewBag.ForAddOrderItemPartial as Dictionary<string, object>)
             </td>
-            <td class="text-lg-right">
+            <td class="text-right">
                 <strong>Total:</strong>
             </td>
-            <td class="text-lg-right">
-                <strong>@string.Format("{0:C}", Model.OrderTotal)</strong>
+            <td class="text-right">
+                <strong>₱@Model.OrderTotal.ToString("N2")</strong>
             </td>
         </tr>
     </tfoot>

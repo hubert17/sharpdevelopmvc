@@ -2,7 +2,7 @@
 
 @{
     var products = Model["ProductLookup"] as List<Product>;
-    var priceLookup = products.Select(s => new { s.Id, UnitPrice = s.UnitPrice.ToString("0.00") }).ToList();
+    var priceLookup = products.Select(s => new { s.Id, s.UnitPrice }).ToList();
     var arrPriceLookup = Newtonsoft.Json.JsonConvert.SerializeObject(priceLookup);
 }
 
@@ -27,7 +27,7 @@
                             <option value="" selected disabled>Select Product</option>
                             @foreach (var product in products)
                             {
-                                <option value="@product.Id">@product.Name - @string.Format("{0:C}", product.UnitPrice)/@product.Unit</option>
+                                <option value="@product.Id">@product.Name - ₱@product.UnitPrice.ToString("N2")/@product.Unit</option>
                             }
                         </select>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="col-md-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">&#8369;</span>
+                                    <span class="input-group-text">₱</span>
                                 </div>
                                 <input type="text" v-model="UnitPrice" id="UnitPrice" name="UnitPrice" class="form-control" readonly required>
                             </div>
@@ -53,7 +53,7 @@
                         <div class="col-md-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">&#8369;</span>
+                                    <span class="input-group-text">₱</span>
                                 </div>
                                 <input type="text" v-model="Amount" id="Amount" class="form-control" readonly>
                             </div>
@@ -89,7 +89,7 @@
         //methods
         GetProductPrice() {
             let product = @(Html.Raw(arrPriceLookup)).find(x => x.Id == this.ProductId); // Html.Raw(arrPriceLookup)) [{"Id":6,"UnitPrice":"190.00"},{"Id":10,"UnitPrice":"30.00"},{"Id":4,"UnitPrice":"75.00"}]
-            this.UnitPrice = product.UnitPrice;
+            this.UnitPrice = product.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 });
 
             //fetch('/Order/GetProductPrice/' + this.ProductId)
             //    .then(response => response.json())
@@ -99,7 +99,7 @@
         },
         //computed
         get Amount() {
-            return (this.Quantity * this.UnitPrice).toLocaleString('en-US', { minimumFractionDigits: 2 });
+            return (this.Quantity * this.UnitPrice).toLocaleString('en-PH', { minimumFractionDigits: 2 });
         }
     };
     createApp(app).mount();
