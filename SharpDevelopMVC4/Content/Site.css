@@ -54,6 +54,10 @@ html, body {
 	padding-top:1px;
 }
 
+button[type="submit"] {
+	min-width: 100px;
+}
+
 .modal.show {
 	background-color: #000000a3;
 }
