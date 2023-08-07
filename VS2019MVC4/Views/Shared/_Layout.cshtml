@@ -164,6 +164,20 @@
 
     @RenderSection("scripts", required: false)
 
+    <script>
+        $('form').submit(function () {
+            // prevent duplicate form submissions
+            var btn = $(this).find(':submit');
+            var btnText = btn.text();
+            btn.prop('disabled', true);
+            btn.html('<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"><\/span>'); 
+            setTimeout(function () {
+                btn.text(btnText);
+                btn.prop('disabled', false);
+	        }, 10000);
+        });
+    </script>
+
     @* This is to remove the overlay ad in Somee.com *@
     @if ((Request.Url != null ? Request.Url.Host : "").Equals("somee.com", StringComparison.OrdinalIgnoreCase))
     {

@@ -8,33 +8,33 @@
     <div class="card-body">
         <form action="/order/edit" method="post" autocomplete="off">
             <div class="form-group row">
-                <label for="Id" class="col-2 col-form-label">ID</label>
-                <div class="col-10">
+                <label for="Id" class="col-md-2 col-form-label">ID</label>
+                <div class="col-md-10">
                     <input id="Id" name="Id" type="text" value="@Model.Id" class="form-control" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Customer" class="col-2 col-form-label">Customer</label>
-                <div class="col-10">
+                <label for="Customer" class="col-md-2 col-form-label">Customer</label>
+                <div class="col-md-10">
                     <input type="hidden" id="CustomerId" name="CustomerId" value="@Model.CustomerId" />
                     <input type="text" id="Customer" value="@Model.Customer.LastName, @Model.Customer.FirstName" class="form-control" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="OrderDate" class="col-2 col-form-label">Order Date</label>
-                <div class="col-10">
+                <label for="OrderDate" class="col-md-2 col-form-label">Order Date</label>
+                <div class="col-md-10">
                     <!-- Google Chrome input type="date" https://stackoverflow.com/a/16108711/1281209 -->
                     <input type="date" id="OrderDate" name="OrderDate" value="@Model.OrderDate.ToString("yyyy-MM-dd")" class="form-control" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Notes" class="col-2 col-form-label">Notes</label>
-                <div class="col-10">
+                <label for="Notes" class="col-md-2 col-form-label">Notes</label>
+                <div class="col-md-10">
                     <textarea id="Notes" name="Notes" cols="40" rows="3" class="form-control">@Model.Notes</textarea>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="offset-2 col-10">
+                <div class="offset-2 col-md-10">
                     <button name="submit" type="submit" class="btn btn-primary">Save</button>
                     <a href="/order" class="btn btn-outline-secondary">Go back to Order List</a>
                 </div>
