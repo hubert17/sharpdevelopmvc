@@ -4,11 +4,6 @@
     ViewBag.Title = "Order | " + Model.Customer.FirstName + " " + Model.Customer.LastName;
 }
 
-@section head
-{
-    <link rel="stylesheet" href="~/Content/Util/choices.min.css">
-}
-
 <div class="card" style="margin-bottom: 20px">
     <div class="card-body">
         <form action="/order/edit" method="post" autocomplete="off">
@@ -91,11 +86,3 @@
     </tfoot>
 </table>
 
-@section scripts
-{
-    <script src="~/Scripts/Util/choices.min.js"></script>
-    <script>
-        const element = document.querySelector('.js-choice');
-        const choices = new Choices(element);
-    </script>
-}

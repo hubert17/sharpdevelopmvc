@@ -1,6 +1,6 @@
 ﻿@model Dictionary<string, object>
 
-@{    
+@{
     var products = Model["ProductLookup"] as List<Product>;
     var priceLookup = products.Select(s => new { s.Id, UnitPrice = s.UnitPrice.ToString("0.00") }).ToList();
     var arrPriceLookup = Newtonsoft.Json.JsonConvert.SerializeObject(priceLookup);
@@ -9,7 +9,7 @@
 <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addItemModal">+ Add Item</button>
 
 <!-- Modal -->
-<div class="modal fade" id="addItemModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addItemModal" aria-hidden="true">
+<div class="modal fade" id="addItemModal" data-backdrop="static" data-keyboard="false" aria-labelledby="addItemModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <form action="/order/CreateItem" method="post" class="form-horizontal" autocomplete="off">
@@ -23,9 +23,8 @@
                     <!-- Text input-->
                     <input type="hidden" id="OrderId" name="OrderId" value="@Model["OrderId"]" />
                     <div class="form-group">
-                        <label for="ProductId">Product</label>
-                        <select v-model="ProductId" id="ProductId" name="ProductId" class="js-choice form-control" @@change="GetProductPrice()" autofocus required>
-                            <option></option>
+                        <select v-model="ProductId" id="ProductId" name="ProductId" class="form-control" @@change="GetProductPrice()" autofocus required>
+                            <option value="" selected disabled>Select Product</option>
                             @foreach (var product in products)
                             {
                                 <option value="@product.Id">@product.Name - @string.Format("{0:C}", product.UnitPrice)/@product.Unit</option>
@@ -46,7 +45,7 @@
                                     <span class="input-group-text">&#8369;</span>
                                 </div>
                                 <input type="text" v-model="UnitPrice" id="UnitPrice" name="UnitPrice" class="form-control" readonly required>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -57,7 +56,7 @@
                                     <span class="input-group-text">&#8369;</span>
                                 </div>
                                 <input type="text" id="Amount" v-model="Amount" class="form-control" readonly>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
 
@@ -71,7 +70,15 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="~/Content/Util/slimselect.min.css" />
 <script type="module">
+    // https://github.com/brianvoe/slim-select 
+    import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
+    new SlimSelect({
+        select: '#ProductId',
+        settings: { searchPlaceholder: 'Search for the good stuff!' }
+    });
+
     // https://github.com/vuejs/petite-vue
     import { createApp } from "/Scripts/petite-vue.es.js";
     const app = {
