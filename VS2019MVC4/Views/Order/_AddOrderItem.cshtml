@@ -24,7 +24,7 @@
                     <input type="hidden" id="OrderId" name="OrderId" value="@Model["OrderId"]" />
                     <div class="form-group">
                         <label for="ProductId">Product</label>
-                        <select v-model="ProductId" id="ProductId" name="ProductId" class="custom-select" @@change="GetProductPrice()" autofocus required>
+                        <select v-model="ProductId" id="ProductId" name="ProductId" class="js-choice form-control" @@change="GetProductPrice()" autofocus required>
                             <option></option>
                             @foreach (var product in products)
                             {

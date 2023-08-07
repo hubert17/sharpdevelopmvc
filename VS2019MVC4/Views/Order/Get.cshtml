@@ -1,7 +1,12 @@
 ﻿@model ASPNETWebApp45.Models.Order
 
 @{
-    ViewBag.Title = "Order | " + Model.Customer.FirstName  + " " + Model.Customer.LastName;
+    ViewBag.Title = "Order | " + Model.Customer.FirstName + " " + Model.Customer.LastName;
+}
+
+@section head
+{
+    <link rel="stylesheet" href="~/Content/Util/choices.min.css">
 }
 
 <div class="card" style="margin-bottom: 20px">
@@ -56,7 +61,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var orderItem in Model.OrderItems)
+        @foreach (var orderItem in Model.OrderItems)
         {
             <tr>
                 <td class="text-center">
@@ -68,7 +73,7 @@
                 <td class="text-right">@orderItem.UnitPrice</td>
                 <td class="text-right">@orderItem.Amount</td>
             </tr>
-        }        
+        }
     </tbody>
     <tfoot>
         <tr>
@@ -85,3 +90,12 @@
         </tr>
     </tfoot>
 </table>
+
+@section scripts
+{
+    <script src="~/Scripts/Util/choices.min.js"></script>
+    <script>
+        const element = document.querySelector('.js-choice');
+        const choices = new Choices(element);
+    </script>
+}
