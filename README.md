@@ -52,7 +52,7 @@ Simply `Build` and then reload the project, or copy _web.config and rename it to
 5. Right-click, rename, and `Clean` the project. Example: **ASPNETWebApp45** -> **NewNameOfMyWebApp**
 6. Repeat step 1. 
 
-#### To enable SSL/HTTPS
+#### To enable localhost SSL/HTTPS
 Add a port `443xx` https binding in ***My Documents\IISExpress\config\applicationhost.config***
 
         <bindings>
