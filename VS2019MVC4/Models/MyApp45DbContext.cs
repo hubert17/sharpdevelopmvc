@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,9 +7,10 @@ using System.Web;
 
 namespace ASPNETWebApp45.Models
 {
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class MyApp45DbContext : DbContext
     {
-        public MyApp45DbContext() : base("OrderSystemDb") // name_of_dbconnection_string
+        public MyApp45DbContext() : base("MyApp45MySQLdb") // name_of_dbconnection_string
         {
         }
 
