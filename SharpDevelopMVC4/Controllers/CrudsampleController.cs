@@ -59,7 +59,7 @@ namespace ASPNETWebApp45.Controllers
 			if (ModelState.IsValid) 
 			{
 				if (fileUpload != null)
-					product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name);
+					product.PictureFilename = fileUpload.SaveAsImageFile(product.Name);
 				
 				_db.Products.Add(product);
 				_db.SaveChanges();
@@ -94,7 +94,7 @@ namespace ASPNETWebApp45.Controllers
 			_db.Entry(updatedProduct).State = EntityState.Modified;
 
 			if (fileUpload != null) // Update picture
-                updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name);
+                updatedProduct.PictureFilename = fileUpload.SaveAsImageFile(updatedProduct.Name);
 			else // Retain the current picture
                 _db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
 

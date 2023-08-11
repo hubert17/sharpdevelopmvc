@@ -12,6 +12,7 @@ using System.Web;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Drawing.Imaging;
 
 public static class ImageUploadExtension
 {
@@ -31,7 +32,7 @@ public static class ImageUploadExtension
     #endregion
 
     #region ImageByteArray
-    
+
     public static string ToBase64String(this byte[] ImageByte)
     {
         if (ImageByte != null)
@@ -45,8 +46,8 @@ public static class ImageUploadExtension
             return "data:image/jpg;base64," + Convert.ToBase64String(ImageByte);
         else
             return string.Empty;
-    }   
-    
+    }
+
     /// <summary>
     /// Convert the uploaded image file to an array of byte and store in the database as Jpeg data. [BernardGabon.com]
     /// </summary>
@@ -62,7 +63,7 @@ public static class ImageUploadExtension
                 // Convert Uploaded File to byte array
                 byte[] image = new byte[File.ContentLength];
                 File.InputStream.Read(image, 0, File.ContentLength);
-                return Resize(image, maxHeight, highQuality); // Resize and store as Jpeg
+                return Resize(image, Path.GetExtension(File.FileName), maxHeight, highQuality); // Resize and store as Jpeg
             }
         }
         catch { }
@@ -88,16 +89,16 @@ public static class ImageUploadExtension
     }
     #endregion
 
-    #region SaveAsJpegFile
+    #region SaveAsImageFile
     /// <summary>
-    /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
+    /// Resize and save the uploaded image as an image file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <param name="strFileName">Filename without extension</param>
     /// <param name="strFolder">Folder</param>
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFileBase File, string strFileName, string strFolder, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
+    public static string SaveAsImageFile(this HttpPostedFileBase File, string strFileName, string strFolder, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
     {
         try
         {
@@ -107,9 +108,10 @@ public static class ImageUploadExtension
 
                 string folder = string.IsNullOrEmpty(strFolder) ? System.Web.HttpContext.Current.Server.MapPath("~/" + FOLDER) : System.Web.HttpContext.Current.Server.MapPath("~/" + strFolder);
                 string filename = string.IsNullOrEmpty(strFileName) ? Path.GetFileNameWithoutExtension(File.FileName) : strFileName;
-                bool fileExist =  System.IO.File.Exists(Path.Combine(folder, filename + ".jpg"));
-                string filenameExt = filename + GenerateUniqueChars(fileExist) + ".jpg";
-                string path = Path.Combine(folder, filenameExt);
+                string fileExtension = Path.GetExtension(File.FileName);
+                bool fileExist = System.IO.File.Exists(Path.Combine(folder, filename + fileExtension));
+                string filenameWithExt = filename + GenerateUniqueChars(fileExist) + fileExtension;
+                string path = Path.Combine(folder, filenameWithExt);
 
                 System.IO.Directory.CreateDirectory(folder);
                 System.IO.File.WriteAllBytes(path, arrImageBytes);
@@ -120,11 +122,11 @@ public static class ImageUploadExtension
                     Image thumb = FixedSize(image, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, true);
                     folder = Path.Combine(folder, THUMBNAIL);
                     System.IO.Directory.CreateDirectory(folder);
-                    path = Path.Combine(folder, filenameExt);
-                    thumb.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    path = Path.Combine(folder, filenameWithExt);
+                    thumb.Save(path, GetImageFormat(filenameWithExt));
                 }
 
-                return filenameExt;
+                return filenameWithExt;
             }
         }
         catch (Exception ex)
@@ -135,42 +137,42 @@ public static class ImageUploadExtension
         return string.Empty;
     }
     /// <summary>
-    /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
+    /// Resize and save the uploaded image as an image file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <param name="strFileName">Filename without extension</param>
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFileBase File, string strFileName, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
+    public static string SaveAsImageFile(this HttpPostedFileBase File, string strFileName, int maxHeight = MAX_HEIGHT, bool highQuality = QUALITY)
     {
-        return SaveAsJpegFile(File, strFileName, FOLDER, maxHeight, highQuality);
+        return SaveAsImageFile(File, strFileName, FOLDER, maxHeight, highQuality);
     }
     /// <summary>
-    /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
+    /// Resize and save the uploaded image as an image file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFileBase File, int maxHeight, bool highQuality = QUALITY)
+    public static string SaveAsImageFile(this HttpPostedFileBase File, int maxHeight, bool highQuality = QUALITY)
     {
-        return SaveAsJpegFile(File, string.Empty, FOLDER, maxHeight, highQuality);
+        return SaveAsImageFile(File, string.Empty, FOLDER, maxHeight, highQuality);
     }
     /// <summary>
-    /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
+    /// Resize and save the uploaded image as an image file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFileBase File, bool highQuality)
+    public static string SaveAsImageFile(this HttpPostedFileBase File, bool highQuality)
     {
-        return SaveAsJpegFile(File, string.Empty, FOLDER, MAX_HEIGHT, highQuality);
+        return SaveAsImageFile(File, string.Empty, FOLDER, MAX_HEIGHT, highQuality);
     }
     /// <summary>
-    /// Resize and save the uploaded image as a JPG file on disk plus thumbnail copy. [BernardGabon.com]
+    /// Resize and save the uploaded image as an image file on disk plus thumbnail copy. [BernardGabon.com]
     /// </summary>
     /// <returns>string Filename</returns>
-    public static string SaveAsJpegFile(this HttpPostedFileBase File)
+    public static string SaveAsImageFile(this HttpPostedFileBase File)
     {
-        return SaveAsJpegFile(File, string.Empty, FOLDER, MAX_HEIGHT, QUALITY);
+        return SaveAsImageFile(File, string.Empty, FOLDER, MAX_HEIGHT, QUALITY);
     }
     #endregion
 
@@ -181,7 +183,7 @@ public static class ImageUploadExtension
     /// <param name="maxHeight">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>byte[] JpegImage</returns>
-    public static byte[] Resize(this byte[] image, int maxHeight, bool highQuality = QUALITY)
+    public static byte[] Resize(this byte[] image, string fileFormat, int maxHeight, bool highQuality = QUALITY)
     {
         if (image != null)
         {
@@ -200,7 +202,8 @@ public static class ImageUploadExtension
                 img = ScaleImage(img, maxHeight, highQuality);
 
                 var ms = new MemoryStream();
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                img.Save(ms, GetImageFormat(fileFormat));
                 image = ms.ToArray();
             }
 
@@ -218,7 +221,7 @@ public static class ImageUploadExtension
     /// <param name="Height">Height in Pixel</param>
     /// <param name="highQuality">True - High quality, False -  Fast performance</param>
     /// <returns>byte[] JpegImage</returns>
-    public static byte[] ResizeToThumbnail(this byte[] image, int Width = THUMBNAIL_WIDTH, int Height = THUMBNAIL_HEIGHT, bool Fill = true)
+    public static byte[] ResizeToThumbnail(this byte[] image, string fileFormat, int Width = THUMBNAIL_WIDTH, int Height = THUMBNAIL_HEIGHT, bool Fill = true)
     {
         if (image != null)
         {
@@ -230,7 +233,7 @@ public static class ImageUploadExtension
             var resizeImage = FixedSize(img, Width, Height, Fill);
             using (var ms = new MemoryStream())
             {
-                resizeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                resizeImage.Save(ms, GetImageFormat(fileFormat));
                 return ms.ToArray();
             }
         }
@@ -361,12 +364,25 @@ public static class ImageUploadExtension
         }
     }
 
+    private static ImageFormat GetImageFormat(string fileFormat)
+    {
+        ImageFormat imgFormat;
+        if (fileFormat.ToLower().Contains("png"))
+            imgFormat = ImageFormat.Png;
+        else if (fileFormat.ToLower().Contains("gif"))
+            imgFormat = ImageFormat.Gif;
+        else
+            imgFormat = ImageFormat.Jpeg;
+
+        return imgFormat;
+    }
+
     private static string GenerateUniqueChars(bool fileExist = true)
     {
-    	if(fileExist)
-    		return "_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss"); // append this to avoid file overwrite
-    	else
-    		return string.Empty;
+        if (fileExist)
+            return "_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss"); // append this to avoid file overwrite
+        else
+            return string.Empty;
     }
     #endregion
 
