@@ -147,6 +147,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
@@ -200,6 +201,15 @@
     <Reference Include="X.PagedList.Mvc">
       <HintPath>packages\X.PagedList.Mvc.7.5.0\lib\net452\X.PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="ZKWeb.System.Drawing">
+      <HintPath>packages\ZKWeb.System.Drawing.4.0.1\lib\net45\ZKWeb.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing">
+      <HintPath>packages\ZXing.Net.Bindings.ZKWeb.System.Drawing.x86.0.16.7\lib\net45\ZXing.Net.Bindings.ZKWeb.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.SharpDevelop.x86">
+      <HintPath>packages\ZXing.SharpDevelop.x86.0.16.9\lib\net45\ZXing.SharpDevelop.x86.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -209,6 +219,7 @@
     <Compile Include="Controllers\Api\SongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CrudsampleController.cs" />
+    <Compile Include="Controllers\PosController.cs" />
     <Compile Include="Controllers\WeatherForecastController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -263,6 +274,7 @@
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Pos\Reader.cshtml" />
     <None Include="Views\Shared\_AccountLayout.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
@@ -275,6 +287,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\Util" />
+    <Folder Include="Views\Pos" />
   </ItemGroup>
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)web.config')" />

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Reader";
+}
+
+﻿<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title">Barkod Okuma</h3>
+    </div>
+    <form asp-action="Reader" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label><b>Barkod Resmi:</b></label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <input type="file" name="file" class="form-control-file">
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(ViewBag.Barcode))
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>Barkod Numarası:</b></label>
+                        <h4 class="text-danger"><b> @ViewBag.Barcode</b></h4>
+                        <h6 class="text-danger">Size:<b> @ViewBag.ImageSize</b></h6>
+                    </div>
+                    <div class="col-6">
+                        <img src="/uploadedimages/@ViewBag.BarcodeUrl" width="400">
+                    </div>
+                </div>
+            }
+            <div class="card-footer">
+                <button type="submit" value="Reader" class="btn btn-primary">Barkod Yükle</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
