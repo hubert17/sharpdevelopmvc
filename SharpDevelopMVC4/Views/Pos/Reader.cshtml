@@ -1,17 +1,34 @@
-﻿@{
-    ViewBag.Title = "Reader";
+﻿
+@{
+    ViewBag.Title = "QR Reader";
 }
 
-﻿<div class="card card-secondary">
+﻿<div class="card card-secondary" @@vue:mounted="setupScanner()">
     <div class="card-header">
-        <h3 class="card-title">Barkod Okuma</h3>
+        <h3 class="card-title">QR Reader</h3>
     </div>
     <form asp-action="Reader" method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div class="row mb-3">
+                <div class="col-12">
+                    <div style="width: 500px" id="reader"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
                 <div class="col-2">
                     <div class="form-group">
-                        <label><b>Barkod Resmi:</b></label>
+                        <label><b>Scanned Text:</b></label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <input type="text" v-model="barcodeText" id="barcodeText" name="barcodeText" class="form-control" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="row mb-3">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label><b>QR Code from File:</b></label>
                     </div>
                 </div>
                 <div class="col-10">
@@ -21,22 +38,53 @@
             @if (!String.IsNullOrEmpty(ViewBag.Barcode))
             {
                 <div class="row">
-                    <div class="col-6">
-                        <label><b>Barkod Numarası:</b></label>
-                        <h4 class="text-danger"><b> @ViewBag.Barcode</b></h4>
-                        <h6 class="text-danger">Size:<b> @ViewBag.ImageSize</b></h6>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <img src="/uploadedimages/@ViewBag.BarcodeUrl" width="400">
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <img src="/uploadedimages/@ViewBag.BarcodeUrl" width="400">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label><b>Scanned Text:</b></label>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <input type="text" value="@ViewBag.Barcode" class="form-control" readonly>
+                        <span class="form-text text-muted">Size:<b> @ViewBag.ImageSize</b></span>
                     </div>
                 </div>
             }
             <div class="card-footer">
-                <button type="submit" value="Reader" class="btn btn-primary">Barkod Yükle</button>
+                <button type="submit" value="Reader" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
 </div>
 
+@section scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script type="module">
+        // https://github.com/vuejs/petite-vue
+        import { createApp } from "/Scripts/petite-vue.es.js";
+        const app = {
+            html5QrcodeScanner: null,
+            barcodeText: '',
+            // methods
+            onScanSuccess(decodedText, decodedResult) {
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                this.barcodeText = decodedText;
+            },
+            setupScanner() {
+                this.html5QrcodeScanner = new Html5QrcodeScanner(
+                    "reader",
+                    { fps: 10, qrbox: 250 }
+                ).render(this.onScanSuccess);               
+            }
+        };
+        createApp(app).mount();
 
-
+    </script>
+}
