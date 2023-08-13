@@ -15,19 +15,24 @@
     <link rel="stylesheet" href="~/Content/Util/slimselect.min.css" />
     <style>
         @@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+        .scroll-box {
+            height: 310px;
+            overflow-y: scroll;
+        }
     </style>
 }
 
 
 <!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-y-sm bg-default " @@vue:mounted="setupScanner()">
+<section @@vue:mounted="setupScanner()">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="mb-3" style="width: 500px" id="reader"></div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addItemModal">Search Product</button>
+                        <button type="button" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#addItemModal">Search Product or Set Quantity</button>
                     </div>
                 </div> <!-- card.// -->
             </div>
@@ -40,30 +45,32 @@
 
             <div class="col-lg-4">
                 <form action="/pos/Add" method="post">
-                    <div class="card">
-                        <table class="table table-hover">
+                    <div class="card scroll-box" v-effect="if(saleItems.length) $el.scrollTop = $el.scrollHeight">
+                        <table class="table">
                             <thead class="text-muted">
                                 <tr>
-                                    <th scope="col">Item</th>
-                                    <th scope="col" width="120">Qty</th>
-                                    <th scope="col" width="120">Price</th>
-                                    <th scope="col" class="text-right" width="200">Delete</th>
+                                    <th width="20">&nbsp;</th>
+                                    <th>Item</th>
+                                    <th width="20" class="text-center">Qty</th>
+                                    <th width="100" class="text-right">Amount</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item,index) in SaleItems" :key="index">
+                                <tr v-for="(item,index) in saleItems" :key="index">
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash"></i></a>
+                                    </td>
                                     <td>
-                                        <h6 class="title text-truncate">{{ item.Name }}</h6>
+                                        <strong>{{ item.Name }}</strong> {{ item.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}
                                         <input type="hidden" v-model="item.ProductId" :name="'SaleItems[' + index + '].ProductId'" />
+                                        <input type="hidden" v-model="item.UnitPrice" :name="'SaleItems[' + index + '].UnitPrice'" />
                                     </td>
                                     <td class="text-center">
                                         {{ item.Quantity }} <input type="hidden" v-model="item.Quantity" :name="'SaleItems[' + index + '].Quantity'" />
                                     </td>
-                                    <td>
-                                        {{ item.UnitPrice }} <input type="hidden" v-model="item.UnitPrice" :name="'SaleItems[' + index + '].UnitPrice'" />
-                                    </td>
                                     <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash"></i></a>
+                                        {{ (item.UnitPrice * item.Quantity).toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -71,20 +78,22 @@
                     </div> <!-- card.// -->
                     <div class="box mt-3" style="font-size:large;">
                         <dl class="dlist-align">
-                            <dt>Discount:</dt>
-                            <dd class="text-right"><a href="#">0%</a></dd>
+                            <dt>Sub Total:</dt>
+                            <dd class="text-right">${{ total.total.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Sub Total:</dt>
-                            <dd class="text-right">$215</dd>
+                            <dt>Discount:</dt>
+                            <dd class="text-right">
+                                <input type="text" v-model="discount" style="text-align:right;border-color:transparent;width:100px" />%
+                            </dd>
                         </dl>
                         <dl class="dlist-align">
                             <dt>Total: </dt>
-                            <dd class="text-right h4 b"> $215 </dd>
+                            <dd class="text-right h4 b"> ${{ total.discounted.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }} </dd>
                         </dl>
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="#" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
+                                <a href="#" class="btn  btn-secondary btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
                             </div>
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </button>
@@ -109,7 +118,7 @@
                 <div class="modal-body">
                     <!-- Text input-->
                     <div class="form-group">
-                        <select v-model="SearchProductId" id="SearchProductId" class="form-control" autofocus required>
+                        <select v-model="searchProductId" id="searchProductId" class="form-control" autofocus required>
                             <option selected disabled>Select Product</option>
                             @foreach (var product in products)
                             {
@@ -120,7 +129,7 @@
                     <div class="form-group row">
                         <label for="Quantity" class="col-md-4 col-form-label">Quantity</label>
                         <div class="col-md-8">
-                            <input type="number" v-model="SearchQuantity" id="SearchQuantity" class="form-control" min="1" required>
+                            <input type="number" v-model="searchQuantity" id="searchQuantity" class="form-control" min="1" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -129,8 +138,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col" v-if="PictureFilename">
-                            <img :src="'/uploadedimages/' + PictureFilename" class="img-thumbnail">
+                        <div class="col" v-if="pictureFilename">
+                            <img :src="'/uploadedimages/' + pictureFilename" class="img-thumbnail">
                         </div>
                     </div>
                 </div>
@@ -149,7 +158,7 @@
         // https://github.com/brianvoe/slim-select
         import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
         var selectProduct = new SlimSelect({
-            select: '#SearchProductId',
+            select: '#searchProductId',
             settings: { searchPlaceholder: 'Search for the good stuff!' }
         });
 
@@ -172,27 +181,38 @@
 
             // For product manual search
             arrProductLookup: @(Html.Raw(arrProductLookup)),
-            SearchProductId: null,
-            SearchQuantity: 1, 
-            SaleItems: [],
-            newItem: { },
-            addItem() {
-                var product = this.arrProductLookup.find(x => x.Id === this.SearchProductId); 
+            searchProductId: null,
+            searchQuantity: 1, 
+            discount: 0,
+            saleItems: [],
+            newItem: {},
+            addItem() {                
                 this.newItem = {
-                    ProductId: product.Id,
-                    Name: product.Name,
-                    UnitPrice: product.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 }),
-                    Quantity: 1
+                    ProductId: this.product.Id,
+                    Name: this.product.Name,
+                    UnitPrice: this.product.UnitPrice,
+                    Quantity: this.searchQuantity
                 };
-                this.SaleItems.push({ ...this.newItem });
+                this.saleItems.push({ ...this.newItem });
                 selectProduct.setSelected(null)
-                this.SearchProductId = null;
-                this.SearchQuantity = 1;
+                this.searchProductId = null;
+                this.searchQuantity = 1;
                 $('#addItemModal').modal('hide');
             },
-            get PictureFilename() {
-                var product = this.arrProductLookup.find(x => x.Id === this.SearchProductId); 
-                return product ? product.PictureFilename : '';
+            get product() {
+                return this.arrProductLookup.find(x => x.Id == this.searchProductId); 
+            },
+            get pictureFilename() {
+                return this.product ? this.product.PictureFilename : '';
+            },
+            get total() {                
+                var total = 0.00;
+                var discounted = 0.00;
+                this.saleItems.forEach(item => {     
+                    total += (item.UnitPrice * item.Quantity);
+                    discounted += (item.UnitPrice * item.Quantity) * (1 - this.discount / 100);                 
+                });
+                return { total, discounted }
             }
         };
         createApp(app).mount();
