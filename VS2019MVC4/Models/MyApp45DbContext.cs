@@ -21,7 +21,7 @@ namespace ASPNETWebApp45.Models
         // POS
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<SaleDetail> SaleDetails { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
     }
 
 

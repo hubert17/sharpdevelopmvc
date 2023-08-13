@@ -14,12 +14,14 @@ namespace ASPNETWebApp45.Models
 
         public DateTime SaleDate { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
         public string Notes { get; set; }
 
         [NotMapped]
         public decimal Total
         {
-            get { return SaleDetails != null ? SaleDetails.Sum(t => t.Amount) : 0; }
+            get { return SaleItems != null ? SaleItems.Sum(t => t.Amount) : 0; }
         }
 
         public decimal Cash { get; set; }
@@ -30,7 +32,7 @@ namespace ASPNETWebApp45.Models
             get { return Cash - Total; }
         }
 
-        public List<SaleDetail> SaleDetails { get; set; }
+        public List<SaleItem> SaleItems { get; set; }
         
     }
 }

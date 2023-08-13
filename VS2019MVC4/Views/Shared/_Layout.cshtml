@@ -114,7 +114,7 @@
 
 
     <div id="footer-flush-bottom-wrap">
-        <div id="footer-flush-bottom-main" class="container clear-top body-content">
+        <div id="footer-flush-bottom-main" class="@(ViewBag.Title != null && ViewBag.Title.ToString().Contains("POS") ? "" : "container") clear-top body-content">
             @if (ViewBag.Title != null && ViewBag.Title.ToString() != "Home")
             {
                 <h2>@ViewBag.Title</h2>
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <footer id="footer-flush-bottom-container" class="container">
+    <footer id="footer-flush-bottom-container" class="@(ViewBag.Title != null && ViewBag.Title.ToString().Contains("POS") ? "" : "container") ">
         <hr />
         <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
     </footer>

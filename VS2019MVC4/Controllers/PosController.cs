@@ -14,25 +14,35 @@ namespace ASPNETWebApp45.Controllers
         // GET: Pos
         public ActionResult Index()
         {
-            var newSale = new Sale();
-            newSale.SaleDate = DateTime.Now;
-            newSale.UserId = User.Identity.Name ?? "unknown-cashier";
+            var model = new Dictionary<string, object>
+            {
+                { "ProductLookup", _db.Products.OrderBy(x => x.Name).ToList() },
+                { "SaleDate", DateTime.Now },
+                { "UserId", User.Identity.Name ?? "unknown-cashier" },
+            };
 
-            _db.Sales.Add(newSale);
-            _db.SaveChanges();
-
-            ViewBag.SaleId = newSale.Id;
-
-            return View();
+            return View(model);
         }
 
-        public ActionResult Add(List<SaleDetail> saleDetails)
+        [HttpPost]
+        public ActionResult Add(Sale sale)
         {
-            _db.SaleDetails.AddRange(saleDetails);
+            sale.CreateDate = DateTime.Now;
+
+            _db.Sales.Add(sale);
             _db.SaveChanges();
 
             TempData["alert-box"] = "Transaction has been saved.";
 
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SeedSampleData()
+        {
+            _db.Products.AddRange(Product.GetSampleData());
+            _db.SaveChanges();
+
+            TempData["alertbox"] = "Product table has been successfully seeded with sample data.";
             return RedirectToAction("Index");
         }
     }

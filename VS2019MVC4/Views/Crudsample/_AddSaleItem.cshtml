@@ -1,0 +1,107 @@
+﻿﻿@model Dictionary<string, object>
+
+@{
+    var products = Model["ProductLookup"] as List<Product>;
+    var priceLookup = products.Select(s => new { s.Id, s.UnitPrice, s.PictureFilename }).ToList();
+    var arrPriceLookup = Newtonsoft.Json.JsonConvert.SerializeObject(priceLookup);
+}
+
+<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addItemModal">+ Add Item</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addItemModal" data-backdrop="static" data-keyboard="false" aria-labelledby="addItemModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <form action="/order/CreateItem" method="post" class="form-horizontal" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Order Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <select v-model="ProductId" id="ProductId" name="ProductId" class="form-control" @@change="GetProductPrice()" autofocus required>
+                            <option value="" selected disabled>Select Product</option>
+                            @foreach (var product in products)
+                            {
+                                <option value="@product.Id">@product.Name - ₱@product.UnitPrice.ToString("N2")/@product.Unit</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Quantity" class="col-md-4 col-form-label">Quantity</label>
+                        <div class="col-md-8">
+                            <input type="number" v-model="Quantity" id="Quantity" name="Quantity" class="form-control" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="UnitPrice" class="col-md-4 col-form-label">Retail Price</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₱</span>
+                                </div>
+                                <input type="text" v-model="UnitPrice" id="UnitPrice" name="UnitPrice" class="form-control" readonly required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Amount" class="col-md-4 col-form-label">Amount</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₱</span>
+                                </div>
+                                <input type="text" v-model="Amount" id="Amount" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/Content/Util/slimselect.min.css" />
+<script type="module">
+    // https://github.com/brianvoe/slim-select
+    import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
+    new SlimSelect({
+        select: '#ProductId',
+        settings: { searchPlaceholder: 'Search for the good stuff!' }
+    });
+</script>
+
+<script type="module">
+    // https://github.com/vuejs/petite-vue
+    import { createApp } from "/Scripts/petite-vue.es.js";
+    const app = {
+        //data
+        ProductId: null,
+        Quantity: 1,
+        UnitPrice: null,
+        //methods
+        GetProductPrice() {
+            let product = @(Html.Raw(arrPriceLookup)).find(x => x.Id == this.ProductId); // Html.Raw(arrPriceLookup)) [{"Id":6,"UnitPrice":"190.00"},{"Id":10,"UnitPrice":"30.00"},{"Id":4,"UnitPrice":"75.00"}]
+            this.UnitPrice = product.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 });
+
+            //fetch('/Order/GetProductPrice/' + this.ProductId)
+            //    .then(response => response.json())
+            //    .then((data) => {
+            //        this.UnitPrice = data;
+            //    });
+        },
+        //computed
+        get Amount() {
+            return (this.Quantity * this.UnitPrice).toLocaleString('en-PH', { minimumFractionDigits: 2 });
+        }
+    };
+    createApp(app).mount();
+</script>

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ASPNETWebApp45.Models
 {
-    public class SaleDetail
+    public class SaleItem
     {
         public int Id { get; set; }
 

@@ -235,7 +235,7 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\MyApp45DbContext.cs" />
     <Compile Include="Models\Sale.cs" />
-    <Compile Include="Models\SaleDetail.cs" />
+    <Compile Include="Models\SaleItem.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\WeatherForecast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -252,6 +252,7 @@
     <None Include="Global.asax" />
     <None Include="packages.config" />
     <Content Include="Content\Account.css" />
+    <Content Include="Content\Util\slimselect.min.css" />
     <Content Include="Scripts\bootbox.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
     <None Include="Scripts\bootstrap.min.js" />
@@ -260,6 +261,7 @@
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Scripts\Util\bs-modal-auto-height.js" />
+    <Content Include="Scripts\Util\slimselect.es.min.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
@@ -269,6 +271,7 @@
     <None Include="Views\Crudsample\Index.cshtml" />
     <None Include="Views\Crudsample\Manage.cshtml" />
     <Content Include="Views\Crudsample\_Create.cshtml" />
+    <Content Include="Views\Crudsample\_AddSaleItem.cshtml" />
     <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />

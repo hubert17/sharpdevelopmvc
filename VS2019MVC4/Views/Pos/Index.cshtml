@@ -1,10 +1,18 @@
-﻿
+﻿﻿@model Dictionary<string, object>
+
 @{
-    ViewBag.Title = "POS - " + ViewBag.SaleId;
+    ViewBag.Title = "`POS";
+
+    var saleDate = (DateTime)Model["SaleDate"];
+
+
+    var products = Model["ProductLookup"] as List<Product>;
+    var arrProductLookup = Newtonsoft.Json.JsonConvert.SerializeObject(products);
 }
 
 @section head
 {
+    <link rel="stylesheet" href="~/Content/Util/slimselect.min.css" />
     <style>
         @@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     </style>
@@ -18,7 +26,8 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <div style="width: 500px" id="reader"></div>
+                        <div class="mb-3" style="width: 500px" id="reader"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addItemModal">Search Product</button>
                     </div>
                 </div> <!-- card.// -->
             </div>
@@ -30,9 +39,9 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="card">
-                    <span id="cart">
-                        <table class="table table-hover shopping-cart-wrap">
+                <form action="/pos/Add" method="post">
+                    <div class="card">
+                        <table class="table table-hover">
                             <thead class="text-muted">
                                 <tr>
                                     <th scope="col">Item</th>
@@ -42,176 +51,114 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="(item,index) in SaleItems" :key="index">
                                     <td>
-                                        <figure class="media">
-                                            <div class="img-wrap"><img src="assets/images/items/1.jpg" class="img-thumbnail img-xs"></div>
-                                            <figcaption class="media-body">
-                                                <h6 class="title text-truncate">Product name </h6>
-                                            </figcaption>
-                                        </figure>
+                                        <h6 class="title text-truncate">{{ item.Name }}</h6>
+                                        <input type="hidden" v-model="item.ProductId" :name="'SaleItems[' + index + '].ProductId'" />
                                     </td>
                                     <td class="text-center">
-                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
-                                            <button type="button" class="m-btn btn btn-default" disabled>3</button>
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
-                                        </div>
+                                        {{ item.Quantity }} <input type="hidden" v-model="item.Quantity" :name="'SaleItems[' + index + '].Quantity'" />
                                     </td>
                                     <td>
-                                        <div class="price-wrap">
-                                            <var class="price">$145</var>
-                                        </div> <!-- price-wrap .// -->
+                                        {{ item.UnitPrice }} <input type="hidden" v-model="item.UnitPrice" :name="'SaleItems[' + index + '].UnitPrice'" />
                                     </td>
                                     <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <figure class="media">
-                                            <div class="img-wrap"><img src="assets/images/items/5.jpg" class="img-thumbnail img-xs"></div>
-                                            <figcaption class="media-body">
-                                                <h6 class="title text-truncate">Product name  </h6>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
-                                            <button type="button" class="m-btn btn btn-default" disabled>1</button>
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">$35</var>
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <figure class="media">
-                                            <div class="img-wrap"><img src="assets/images/items/4.jpg" class="img-thumbnail img-xs"></div>
-                                            <figcaption class="media-body">
-                                                <h6 class="title text-truncate">Product name  </h6>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
-                                            <button type="button" class="m-btn btn btn-default" disabled>5</button>
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">$45</var>
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <figure class="media">
-                                            <div class="img-wrap"><img src="assets/images/items/2.jpg" class="img-thumbnail img-xs"></div>
-                                            <figcaption class="media-body">
-                                                <h6 class="title text-truncate">Product name  </h6>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
-                                            <button type="button" class="m-btn btn btn-default" disabled>2</button>
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">$45</var>
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <figure class="media">
-                                            <div class="img-wrap"><img src="assets/images/items/3.jpg" class="img-thumbnail img-xs"></div>
-                                            <figcaption class="media-body">
-                                                <h6 class="title text-truncate">Product name  </h6>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
-                                            <button type="button" class="m-btn btn btn-default" disabled>1</button>
-                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">$45</var>
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
+                                        <a href="" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </span>
-                </div> <!-- card.// -->
-                <div class="box">
-                    <dl class="dlist-align">
-                        <dt>Tax: </dt>
-                        <dd class="text-right">12%</dd>
-                    </dl>
-                    <dl class="dlist-align">
-                        <dt>Discount:</dt>
-                        <dd class="text-right"><a href="#">0%</a></dd>
-                    </dl>
-                    <dl class="dlist-align">
-                        <dt>Sub Total:</dt>
-                        <dd class="text-right">$215</dd>
-                    </dl>
-                    <dl class="dlist-align">
-                        <dt>Total: </dt>
-                        <dd class="text-right h4 b"> $215 </dd>
-                    </dl>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="#" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
+                    </div> <!-- card.// -->
+                    <div class="box mt-3" style="font-size:large;">
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-right"><a href="#">0%</a></dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Sub Total:</dt>
+                            <dd class="text-right">$215</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total: </dt>
+                            <dd class="text-right h4 b"> $215 </dd>
+                        </dl>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="#" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </button>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <a href="#" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
-                        </div>
-                    </div>
-                </div> <!-- box.// -->
+                    </div> <!-- box.// -->
+
+                </form>
             </div>
         </div>
     </div><!-- container //  -->
+
+    <div class="modal fade" id="addItemModal" data-backdrop="static" data-keyboard="false" aria-labelledby="addItemModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Search Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <select v-model="SearchProductId" id="SearchProductId" class="form-control" autofocus required>
+                            <option selected disabled>Select Product</option>
+                            @foreach (var product in products)
+                            {
+                                <option value="@product.Id">@product.Name - ₱@product.UnitPrice.ToString("N2")/@product.Unit</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Quantity" class="col-md-4 col-form-label">Quantity</label>
+                        <div class="col-md-8">
+                            <input type="number" v-model="SearchQuantity" id="SearchQuantity" class="form-control" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" @@click="addItem()">Add Item</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col" v-if="PictureFilename">
+                            <img :src="'/uploadedimages/' + PictureFilename" class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </section>
+
 
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script type="module">
+        // https://github.com/brianvoe/slim-select
+        import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
+        var selectProduct = new SlimSelect({
+            select: '#SearchProductId',
+            settings: { searchPlaceholder: 'Search for the good stuff!' }
+        });
+
         // https://github.com/vuejs/petite-vue
         import { createApp } from "/Scripts/petite-vue.es.js";
         const app = {
+            // For QR scanner
             html5QrcodeScanner: null,
             barcodeText: '',
-            // methods
             onScanSuccess(decodedText, decodedResult) {
                 console.log(`Scan result: ${decodedText}`, decodedResult);
                 this.barcodeText = decodedText;
@@ -221,9 +168,36 @@
                     "reader",
                     { fps: 10, qrbox: 250 }
                 ).render(this.onScanSuccess);
+            },
+
+            // For product manual search
+            arrProductLookup: @(Html.Raw(arrProductLookup)),
+            SearchProductId: null,
+            SearchQuantity: 1, 
+            SaleItems: [],
+            newItem: { },
+            addItem() {
+                var product = this.arrProductLookup.find(x => x.Id === this.SearchProductId); 
+                this.newItem = {
+                    ProductId: product.Id,
+                    Name: product.Name,
+                    UnitPrice: product.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 }),
+                    Quantity: 1
+                };
+                this.SaleItems.push({ ...this.newItem });
+                selectProduct.setSelected(null)
+                this.SearchProductId = null;
+                this.SearchQuantity = 1;
+                $('#addItemModal').modal('hide');
+            },
+            get PictureFilename() {
+                var product = this.arrProductLookup.find(x => x.Id === this.SearchProductId); 
+                return product ? product.PictureFilename : '';
             }
         };
         createApp(app).mount();
 
     </script>
 }
+
+
