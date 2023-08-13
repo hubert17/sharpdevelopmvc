@@ -117,5 +117,14 @@ namespace ASPNETWebApp45.Controllers
 
 			return RedirectToAction("Manage");
 		}
+
+		public ActionResult SeedSampleData()
+		{
+			_db.Products.AddRange(Product.GetSampleData());
+			_db.SaveChanges();
+
+			TempData["alertbox"] = "Product table has been successfully seeded with sample data.";
+			return RedirectToAction("Manage");
+		}
 	}
 }
