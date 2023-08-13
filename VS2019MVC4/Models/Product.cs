@@ -10,7 +10,7 @@ namespace ASPNETWebApp45.Models
     {
         public Product() { }
 
-        public Product(string name, decimal price, string description, string unit)
+        public Product(string name, decimal price, string description = "", string unit = "")
         {
             Name = name;
             Description = description;
@@ -29,6 +29,11 @@ namespace ASPNETWebApp45.Models
         public string Unit { get; set; }
         
         public string PictureFilename { get; set; } // Save as image file on disk
+
+        public string SKU { get; set; }
+
+        public string UPC { get; set; }
+
 
         public static List<Product> GetSampleData()
         {

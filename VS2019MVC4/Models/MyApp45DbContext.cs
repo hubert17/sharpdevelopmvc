@@ -9,7 +9,7 @@ namespace ASPNETWebApp45.Models
     // [DbConfigurationType(typeof(MySqlEFConfiguration))] // Uncomment when using MySQL data provider
     public class MyApp45DbContext : DbContext
     {
-        public MyApp45DbContext() : base("MyApp45Db") // name_of_dbconnection_string
+        public MyApp45DbContext() : base("PosAccessDb") // name_of_dbconnection_string
         {
         }
 
@@ -17,9 +17,11 @@ namespace ASPNETWebApp45.Models
         public DbSet<UserAccount> Users { get; set; }
 
         public DbSet<Song> Songs { get; set; }
-        public DbSet<Product> Products { get; set; }
-        
 
+        // POS
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleDetail> SaleDetails { get; set; }
     }
 
 
