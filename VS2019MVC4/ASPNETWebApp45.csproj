@@ -273,6 +273,7 @@
     <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Pos\Index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\WeatherForecast\Index.cshtml" />
@@ -282,9 +283,7 @@
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Pos\" />
-  </ItemGroup>
+  <ItemGroup />
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)web.config')" />
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />

@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "POS - " + ViewBag.SaleId;
+}
+
+@section head
+{
+    <style>
+        @@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+    </style>
+}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y-sm bg-default " @@vue:mounted="setupScanner()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div style="width: 500px" id="reader"></div>
+                    </div>
+                </div> <!-- card.// -->
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    some content here 2
+                </div> <!-- card.// -->
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <span id="cart">
+                        <table class="table table-hover shopping-cart-wrap">
+                            <thead class="text-muted">
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col" width="120">Qty</th>
+                                    <th scope="col" width="120">Price</th>
+                                    <th scope="col" class="text-right" width="200">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap"><img src="assets/images/items/1.jpg" class="img-thumbnail img-xs"></div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate">Product name </h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="m-btn btn btn-default" disabled>3</button>
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">$145</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap"><img src="assets/images/items/5.jpg" class="img-thumbnail img-xs"></div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate">Product name  </h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="m-btn btn btn-default" disabled>1</button>
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">$35</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap"><img src="assets/images/items/4.jpg" class="img-thumbnail img-xs"></div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate">Product name  </h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="m-btn btn btn-default" disabled>5</button>
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">$45</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap"><img src="assets/images/items/2.jpg" class="img-thumbnail img-xs"></div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate">Product name  </h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="m-btn btn btn-default" disabled>2</button>
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">$45</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap"><img src="assets/images/items/3.jpg" class="img-thumbnail img-xs"></div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title text-truncate">Product name  </h6>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="m-btn btn btn-default" disabled>1</button>
+                                            <button type="button" class="m-btn btn btn-default"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">$45</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger btn-round"> <i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </span>
+                </div> <!-- card.// -->
+                <div class="box">
+                    <dl class="dlist-align">
+                        <dt>Tax: </dt>
+                        <dd class="text-right">12%</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Discount:</dt>
+                        <dd class="text-right"><a href="#">0%</a></dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Sub Total:</dt>
+                        <dd class="text-right">$215</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Total: </dt>
+                        <dd class="text-right h4 b"> $215 </dd>
+                    </dl>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="#" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
+                        </div>
+                    </div>
+                </div> <!-- box.// -->
+            </div>
+        </div>
+    </div><!-- container //  -->
+</section>
+
+@section scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script type="module">
+        // https://github.com/vuejs/petite-vue
+        import { createApp } from "/Scripts/petite-vue.es.js";
+        const app = {
+            html5QrcodeScanner: null,
+            barcodeText: '',
+            // methods
+            onScanSuccess(decodedText, decodedResult) {
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                this.barcodeText = decodedText;
+            },
+            setupScanner() {
+                this.html5QrcodeScanner = new Html5QrcodeScanner(
+                    "reader",
+                    { fps: 10, qrbox: 250 }
+                ).render(this.onScanSuccess);
+            }
+        };
+        createApp(app).mount();
+
+    </script>
+}
