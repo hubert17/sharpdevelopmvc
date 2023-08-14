@@ -159,10 +159,10 @@
         import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
         var selectProduct = new SlimSelect({
             select: '#searchProductId',
-            settings: { searchPlaceholder: 'Search for the good stuff!' },
+            settings: { searchPlaceholder: 'Search for product name or SKU' },
             events: {
                 searchFilter: (option, search) => {
-                    return option.text.toLowerCase().substr(0, search.length) === search.toLowerCase()
+                    return option.text.toLowerCase().includes(search.toLowerCase())
                         || ( option.data.sku && option.data.sku.toLowerCase() === search.toLowerCase() )
                 }
             }
