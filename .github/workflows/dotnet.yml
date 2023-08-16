@@ -37,9 +37,9 @@ jobs:
     - name: 📂 Publish to somee.com
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: "{{ secrets.SOMEE_SITENAME }}.somee.com"
+        server: ${{ secrets.SOMEE_SITENAME + '.somee.com' }}
         username: "${{ secrets.SOMEE_USERNAME }}"
         password: "${{ secrets.SOMEE_PASSWORD }}"
-        local-dir: "./SharpDevelopMVC4/_publish/"
+        local-dir: ./SharpDevelopMVC4/_publish/
         server-dir: "www.${{ secrets.SOMEE_SITENAME }}.somee.com/"
         
