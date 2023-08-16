@@ -40,6 +40,6 @@ jobs:
         server: ${{ secrets.SOMEE_SITENAME && secrets.SOMEE_SITENAME != '' ? secrets.SOMEE_SITENAME + '.somee.com' : secrets.SOMEE_USERNAME + '.somee.com' }}
         username: "${{ secrets.SOMEE_USERNAME }}"
         password: "${{ secrets.SOMEE_PASSWORD }}"
-        local-dir: ./SharpDevelopMVC4/_publish/
+        local-dir: "./SharpDevelopMVC4/_publish/"
         server-dir: "www.${{ secrets.SOMEE_USERNAME }}.somee.com/"
         
