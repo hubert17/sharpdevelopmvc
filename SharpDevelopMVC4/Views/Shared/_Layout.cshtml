@@ -177,7 +177,7 @@
     </script>   
 
     @* This is to remove the overlay ad in Somee.com *@
-    @if ((Request.Url != null ? Request.Url.Host : "").Equals("somee.com", StringComparison.OrdinalIgnoreCase))
+    @if ((Request.Url != null ? Request.Url.Host : "").Contains("somee.com", StringComparison.OrdinalIgnoreCase))
     {
         <script>
             $(document).ready(function () {

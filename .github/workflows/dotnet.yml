@@ -43,3 +43,5 @@ jobs:
         local-dir: ./SharpDevelopMVC4/_publish/
         server-dir: "www.${{ secrets.SOMEE_SITENAME }}.somee.com/"
         
+    - name: Ping my somee.com site
+      uses: actions/is-my-site-up@v1.1 with: site: '${{ secrets.SOMEE_SITENAME }}.somee.com'

@@ -1,9 +1,12 @@
 
+
 # SharpDevelopMVC5
 
 A lightweight, solid starting point for developing ASP.NET MVC and Web API applications in [portable](https://portable.info.pl/sharpdevelop-portable/) [SharpDevelop](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA). Great for student learning and small to medium-sized projects!
 
 ![SharpDevelop](https://portable.info.pl/wp-content/uploads/2017/10/SharpDevelop_Softables.png)
+
+See the [Demo](https://mega.nz/file/sJIHBbyY#O80dgllefCf07TIesoM1IMxsTqomVhLVt6_t9WG-hXA).
 
 ## Features and Libraries
 
@@ -77,12 +80,13 @@ Run `Rebuild` to generate publish files. See the _publish folder. *Make sure to 
 - [Somee.com](https://somee.com/FreeAspNetHosting.aspx)
 - [Smarterasp.net](https://www.smarterasp.net/secured_signup?plantype=FREE)
 - [myasp.net](https://www.myasp.net/freeaspnethosting)
-- [Azure For Students](https://azure.microsoft.com/en-us/free/students/) (Requires a school .edu email address)
+- [Azure](https://azure.microsoft.com/en-us/free/students/) (Requires a school .edu email address for students, or an ATM/Debit Card)
 - Local hosting with [Ngrok](https://github.com/hubert17/ngrok-redirector)
 
 ### Github Actions (CD/CI to Somee.com)
 
-Autodeploy your web app to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) (Settings > Secrets) and supply your Somee username and password: 
+Autodeploy your web app to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) [(Settings > Secrets)](https://github.com/aspdotnetgabs/sharpdevelopmvc/settings/secrets/actions) and supply your Somee sitename, username and password: 
+- SOMEE_SITENAME
 - SOMEE_USERNAME
 - SOMEE_PASSWORD
 
