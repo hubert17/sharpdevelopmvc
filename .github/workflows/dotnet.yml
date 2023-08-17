@@ -37,14 +37,14 @@ jobs:
     - name: 📂 Publish to somee.com
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: "${{ SOMEE_SITENAME }}.somee.com"
+        server: "${{ vars.SOMEE_SITENAME }}.somee.com"
         username: "${{ secrets.SOMEE_USERNAME }}"
         password: "${{ secrets.SOMEE_PASSWORD }}"
         local-dir: "./SharpDevelopMVC4/_publish/"
-        server-dir: "www.${{ SOMEE_SITENAME }}.somee.com/"
+        server-dir: "www.${{ vars.SOMEE_SITENAME }}.somee.com/"
       
     - name: Check the site
       uses: srt32/uptime@master
       with:
-        url-to-hit: "${{ SOMEE_SITENAME }}.somee.com"  
+        url-to-hit: "${{ vars.SOMEE_SITENAME }}.somee.com"  
         expected-statuses: "200,301"       
