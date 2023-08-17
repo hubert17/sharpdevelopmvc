@@ -163,10 +163,10 @@
 		$("form").submit((function(){var e=$(this).find(":submit");var s=e.text();e.prop("disabled",true);e.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');setTimeout((function(){e.text(s);e.prop("disabled",false)}),1e4)}));        
     </script>   
 
-    @* This is to remove the overlay ad in Somee.com *@
-    
+      
     @if (Request.Url != null && !Request.Url.IsLoopback)
     {
+    	@* This is to remove the overlay ad in Somee.com *@  
 		string[] hostParts = Request.Url.Host.Split('.');
 		string topLevelDomain = string.Join(".", hostParts[hostParts.Length - 2], hostParts[hostParts.Length - 1]);
 		if (topLevelDomain.Equals("somee.com", StringComparison.OrdinalIgnoreCase))
