@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASPNETWebApp45.Models
 {
-    [Table("OF_Products")] // Sets the name of the table in the database
+    // [Table("OF_Products")] // Sets the name of the table in the database
     public class Product
     {
         public int Id { get; set; }

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle ("ASPNETWebApp45")]
-[assembly: AssemblyDescription ("")]
+[assembly: AssemblyDescription ("SharpDevelopMVC5 - A lightweight, solid starting point for developing ASP.NET MVC and Web API applications in portable SharpDevelop. Great for student learning and small to medium-sized projects!")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("")]
+[assembly: AssemblyCompany ("Bernard Gabon")]
 [assembly: AssemblyProduct ("ASPNETWebApp45")]
 [assembly: AssemblyCopyright ("Copyright 2019")]
 [assembly: AssemblyTrademark ("")]

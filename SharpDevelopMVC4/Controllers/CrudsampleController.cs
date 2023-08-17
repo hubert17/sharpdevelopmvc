@@ -25,6 +25,8 @@ namespace ASPNETWebApp45.Controllers
 			if (page > 0)
 				items = items.Skip(pageSize * (page - 1)).Take(pageSize);
             
+			ViewBag.SearchQry = searchQry;
+			
 			return View(items.ToList());
             
 		}
