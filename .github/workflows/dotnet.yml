@@ -40,8 +40,10 @@ jobs:
         server: "${{ secrets.SOMEE_SITENAME }}.somee.com"
         username: "${{ secrets.SOMEE_USERNAME }}"
         password: "${{ secrets.SOMEE_PASSWORD }}"
-        local-dir: ./SharpDevelopMVC4/_publish/
+        local-dir: "./SharpDevelopMVC4/_publish/"
         server-dir: "www.${{ secrets.SOMEE_SITENAME }}.somee.com/"
         
     - name: Ping my somee.com site
-      uses: actions/is-my-site-up@v1.1 with: site: '${{ secrets.SOMEE_SITENAME }}.somee.com'
+      uses: actions/is-my-site-up@v1.1
+      with:
+        site: "${{ secrets.SOMEE_SITENAME }}.somee.com"
