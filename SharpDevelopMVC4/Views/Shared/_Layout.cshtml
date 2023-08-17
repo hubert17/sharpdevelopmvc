@@ -114,10 +114,6 @@
   
 <div id="footer-flush-bottom-wrap">
     <div id="footer-flush-bottom-main" class="container clear-top body-content">
-        @if (ViewBag.Title != null && ViewBag.Title.ToString() != "Home")
-        {
-            <h2>@ViewBag.Title</h2>
-        }
         @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
         {
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -163,33 +159,23 @@
     @RenderSection("scripts", required: false)
     
     <script>
-        $('form').submit(function () {
-            // prevent duplicate form submissions
-            var btn = $(this).find(':submit');
-            var btnText = btn.text();
-            btn.prop('disabled', true);
-            btn.html('<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"><\/span>'); 
-            setTimeout(function () {
-                btn.text(btnText);
-                btn.prop('disabled', false);
-	        }, 10000);
-        });
+		// prevent duplicate form submissions
+		$("form").submit((function(){var e=$(this).find(":submit");var s=e.text();e.prop("disabled",true);e.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');setTimeout((function(){e.text(s);e.prop("disabled",false)}),1e4)}));        
     </script>   
 
     @* This is to remove the overlay ad in Somee.com *@
-    @if ((Request.Url != null ? Request.Url.Host : "").Contains("somee.com", StringComparison.OrdinalIgnoreCase))
+    
+    @if (Request.Url != null && !Request.Url.IsLoopback)
     {
-        <script>
-            $(document).ready(function () {
-                var checkExist = setInterval(function () {
-                    if ($('#nextAll').nextAll().length) {
-                        clearInterval(checkExist);
-                        $('#nextAll').nextAll().remove();
-                    }
-                }, 500);
-            });
-        </script>
-        <hr id="nextAll" style="display:none;" />
+		string[] hostParts = Request.Url.Host.Split('.');
+		string topLevelDomain = string.Join(".", hostParts[hostParts.Length - 2], hostParts[hostParts.Length - 1]);
+		if (topLevelDomain.Equals("somee.com", StringComparison.OrdinalIgnoreCase))
+	    {
+	        <script>
+				$(document).ready((function(){var e=setInterval((function(){if($("#nextAll").nextAll().length){clearInterval(e);$("#nextAll").nextAll().remove()}}),500)}));
+	        </script>
+	        <hr id="nextAll" style="display:none;" />
+	    }		
     }
     
 </body>
