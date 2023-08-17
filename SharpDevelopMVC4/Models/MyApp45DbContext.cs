@@ -8,7 +8,7 @@ namespace ASPNETWebApp45.Models
 {
     public class MyApp45DbContext : DbContext
     {
-        public MyApp45DbContext() : base("SdMvcSomeeDb") // name_of_dbconnection_string
+        public MyApp45DbContext() : base("MyAccessDb") // name_of_dbconnection_string
         {
         }
 

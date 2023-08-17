@@ -85,7 +85,7 @@ Run `Rebuild` to generate publish files. See the _publish folder. *Make sure to 
 
 ### Github Actions (CD/CI to Somee.com)
 
-Autodeploy your web app to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) [(Settings > Secrets)](https://github.com/aspdotnetgabs/sharpdevelopmvc/settings/secrets/actions) and supply your Somee sitename, username and password: 
+Autodeploy your web app to Somee.com. Just create these [Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets) [(Settings > Secrets)](https://github.com/aspdotnetgabs/sharpdevelopmvc/settings/secrets/actions) and Variables, and supply your Somee sitename, username and password: 
 - SOMEE_SITENAME
 - SOMEE_USERNAME
 - SOMEE_PASSWORD
