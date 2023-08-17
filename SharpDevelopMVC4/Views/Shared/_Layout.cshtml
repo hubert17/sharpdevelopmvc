@@ -4,7 +4,7 @@
 <html>
 <head>
   	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.5, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application</title>
     <meta name="Name" content="@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application" />
     <meta name="Description" content="Site Description" />
@@ -33,7 +33,7 @@
             @if (Request.IsAuthenticated)
             {
 	            <form class="form-inline d-block d-md-none ml-5" action="/account/ChangePassword" method="get">
-			      	<button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit" > 👤 </button> &nbsp;&nbsp;
+			      	<a href="#" class="btn btn-outline-secondary btn-sm my-2 my-sm-0" onclick="$(this).closest('form').submit();"> 👤 </a> &nbsp;&nbsp;
 			    </form>
             }
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
