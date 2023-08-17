@@ -42,8 +42,9 @@ jobs:
         password: "${{ secrets.SOMEE_PASSWORD }}"
         local-dir: "./SharpDevelopMVC4/_publish/"
         server-dir: "www.${{ secrets.SOMEE_SITENAME }}.somee.com/"
-        
-    - name: Ping my somee.com site
-      uses: actions/is-my-site-up@v1.1
+      
+    - name: Check the site
+      uses: srt32/uptime@master
       with:
-        site: "${{ secrets.SOMEE_SITENAME }}.somee.com"
+        url-to-hit: "${{ secrets.SOMEE_SITENAME }}.somee.com"  
+        expected-statuses: "200,301"       
