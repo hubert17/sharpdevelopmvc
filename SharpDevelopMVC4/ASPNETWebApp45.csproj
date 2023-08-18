@@ -245,6 +245,7 @@
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap.min.css" />
     <None Include="Content\Site.css" />
+    <None Include="Content\Util\slimselect.min.css" />
     <None Include="Documentation\CanonicalFunctions.txt" />
     <None Include="Documentation\DbFirstImplementation.txt" />
     <None Include="Documentation\JetSQL.txt" />
@@ -260,6 +261,7 @@
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Scripts\Util\bs-modal-auto-height.js" />
+    <None Include="Scripts\Util\slimselect.es.min.js" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
@@ -282,6 +284,7 @@
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Util" />
     <Folder Include="Scripts\Util" />
   </ItemGroup>
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
@@ -328,7 +331,8 @@
           <IISUrl>http://localhost:55353/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
