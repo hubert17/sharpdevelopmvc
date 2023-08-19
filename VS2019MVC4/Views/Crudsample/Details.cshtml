@@ -20,19 +20,20 @@
       <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
-          <div class="card mt-4">
-              @if (!string.IsNullOrEmpty(Model.PictureFilename))
-              {
-                  <img class="card-img-top img-fluid" src="/uploadedimages/@Model.PictureFilename">
-              }
-              <div class="card-body">
-                  <h3 class="card-title">@Model.Name</h3>
-                  <h4>$24.99</h4>
-                  <p class="card-text">@Model.Description</p>
-                  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                  4.0 stars
-              </div>
+
+        <div class="card mt-4">
+          @if(!string.IsNullOrEmpty(Model.PictureFilename))
+          {
+          	<img class="card-img-top img-fluid" src="/uploadedimages/@Model.PictureFilename">
+          }
+          <div class="card-body">
+            <h3 class="card-title">@Model.Name</h3>
+            <h4>$24.99</h4>
+            <p class="card-text">@Model.Description</p>
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+            4.0 stars
           </div>
+        </div>
         <!-- /.card -->
 
         <div class="card card-outline-secondary my-4">

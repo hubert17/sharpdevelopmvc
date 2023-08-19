@@ -5,29 +5,29 @@
 
 
 <div class="card fat">
-    <div class="card-body">
+    <div class="card-body zoom">
         <h4 class="card-title">Register</h4>
         <form v-cloak action="/account/Register" method="post">
             @Html.AntiForgeryToken()
 
             <div class="form-group">
-                <label for="name"> Name </label>
-                <input type="text" id="name" name="name" class="form-control" required autofocus />
+                <label for="name" class="col-form-label col-form-label-lg-mobile"> Name </label>
+                <input type="text" id="name" name="name" class="form-control form-control-lg-mobile" required autofocus />
             </div>
 
             <div class="form-group">
-                <label for="username"> Email </label>
-                <input type="text" id="username" name="username" class="form-control" required />
+                <label for="username" class="col-form-label col-form-label-lg-mobile"> Email </label>
+                <input type="text" id="username" name="username" class="form-control form-control-lg-mobile" required />
             </div>
 
             <div class="form-group">
-                <label for="password"> Password </label>
-                <input v-model="password" type="password" id="password" name="password" class="form-control" required data-eye />
+                <label for="password" class="col-form-label col-form-label-lg-mobile"> Password </label>
+                <input v-model="password" type="password" id="password" name="password" class="form-control form-control-lg-mobile" required data-eye />
             </div>
 
             <div class="form-group">
-                <label for="retypePassword">Re-type Password</label>
-                <input v-model="retypePassword" type="password" id="retypePassword" name="retypePassword" class="form-control" required>
+                <label for="retypePassword" class="col-form-label col-form-label-lg-mobile">Re-type Password</label>
+                <input v-model="retypePassword" type="password" id="retypePassword" name="retypePassword" class="form-control form-control-lg-mobile" required>
                 <span v-if="retypePassword && btnDisabled()" class="form-text text-danger small">Password does not match</span>
             </div>
 
@@ -39,7 +39,7 @@
             </div>
 
             <div class="form-group m-0">
-                <button type="submit" class="btn btn-primary btn-block" :disabled="btnDisabled()">
+                <button type="submit" class="btn btn-primary btn-block btn-lg-mobile" :disabled="btnDisabled()" >
                     Register
                 </button>
             </div>

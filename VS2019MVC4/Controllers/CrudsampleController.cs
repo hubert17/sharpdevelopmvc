@@ -7,9 +7,12 @@ using ASPNETWebApp45.Models;
 
 namespace ASPNETWebApp45.Controllers
 {
+	/// <summary>
+	/// Description of ProductsController.
+	/// </summary>
 	public class CrudsampleController : Controller
 	{
-		private readonly MyApp45DbContext _db = new MyApp45DbContext();
+		MyApp45DbContext _db = new MyApp45DbContext();
 
 		// GET: Products
 		public ActionResult Index(string searchQry, int page = 0, int pageSize = 6)
@@ -22,8 +25,9 @@ namespace ASPNETWebApp45.Controllers
 			if (page > 0)
 				items = items.Skip(pageSize * (page - 1)).Take(pageSize);
 
-			return View(items.ToList());
+			ViewBag.SearchQry = searchQry;
 
+			return View(items.ToList());
 		}
 
 		// [Authorize(Roles = "staff")]
@@ -48,6 +52,7 @@ namespace ASPNETWebApp45.Controllers
 			return View(product);
 		}
 
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(Product product, HttpPostedFileBase fileUpload)
@@ -62,14 +67,12 @@ namespace ASPNETWebApp45.Controllers
 
 			}
 			else
-			{
 				// ModelState.AddModelError("", "There are some validation errors. Please check.");
 				TempData["alertcard"] = "There are some validation errors. Please check and try again.";
-			}
-
 
 			return RedirectToAction("Manage");
 		}
+
 
 		// GET: Products/Edit/5
 		// [Authorize(Roles = "staff")]
@@ -113,17 +116,10 @@ namespace ASPNETWebApp45.Controllers
 				_db.SaveChanges();
 			}
 			else
+			{
 				TempData["alertbox"] = "Product not found";
+			}
 
-			return RedirectToAction("Manage");
-		}
-
-		public ActionResult SeedSampleData()
-		{
-			_db.Products.AddRange(Product.GetSampleData());
-			_db.SaveChanges();
-
-			TempData["alertbox"] = "Product table has been successfully seeded with sample data.";
 			return RedirectToAction("Manage");
 		}
 	}

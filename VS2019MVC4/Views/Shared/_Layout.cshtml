@@ -3,38 +3,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, user-scalable=yes">
     <title>@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application</title>
     <meta name="Name" content="@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application" />
     <meta name="Description" content="Site Description" />
     <meta property="og:title" content="@ViewBag.Title@ViewBag.TitleBar - My ASP.NET Application" />
     <meta property="og:description" content="Site Description" />
-
+	  
     @if (TempData["alert"] != null)
     {
         <script>
             alert('@TempData["alert"]')
         </script>
-    }
+    }	  
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/Site.css" />
-
-    @RenderSection("head", required: false)
+    
+    @RenderSection("head", required: false)    
 </head>
 <body>
-    <!-- Navigation -->
+  <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">My ASP.NET Webapp</a>
             @if (Request.IsAuthenticated)
             {
-                <form class="form-inline d-block d-md-none ml-5" action="/account/ChangePassword" method="get">
-                    <button class="btn btn-outline-secondary btn-sm my-2 my-sm-0" type="submit"> 👤 </button> &nbsp;&nbsp;
-                </form>
+	            <form class="form-inline d-block d-md-none ml-5" action="/account/ChangePassword" method="get">
+			      	<a href="#" class="btn btn-outline-secondary btn-sm my-2 my-sm-0" onclick="$(this).closest('form').submit();"> 👤 </a> &nbsp;&nbsp;
+			    </form>
             }
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -96,7 +96,6 @@
                         </li>
                     }
                 </ul>
-
                 @if (IsSectionDefined("Searchbar"))
                 {
                     @RenderSection("Searchbar")
@@ -110,34 +109,30 @@
                 }
             </div>
         </div>
-    </nav>
+</nav>
 
-
-    <div id="footer-flush-bottom-wrap">
-        <div id="footer-flush-bottom-main" class="container clear-top body-content">
-            @if (ViewBag.Title != null && ViewBag.Title.ToString() != "Home")
-            {
-                <h2>@ViewBag.Title</h2>
-            }
-            @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
-            {
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    @Html.ValidationSummary(true)
-                    @TempData["alertcard"]
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            }
-            @RenderBody()
-        </div>
+  
+<div id="footer-flush-bottom-wrap">
+    <div id="footer-flush-bottom-main" class="container clear-top body-content">
+        @if ((ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0) || TempData["alertcard"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Html.ValidationSummary(true)
+                @TempData["alertcard"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @RenderBody()
     </div>
+</div>
 
-    <footer id="footer-flush-bottom-container" class="container">
-        <hr />
-        <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
-    </footer>
-
+<footer id="footer-flush-bottom-container" class="container">
+   <hr />
+   <p>&copy; @DateTime.Now.Year - Bernard Gabon</p>
+</footer>
+   
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     @if (Request.Url != null && Request.Url.IsLoopback)
     {
@@ -162,22 +157,26 @@
     }
 
     @RenderSection("scripts", required: false)
+    
+    <script>
+		// prevent duplicate form submissions
+		$("form").submit((function(){var e=$(this).find(":submit");var s=e.text();e.prop("disabled",true);e.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');setTimeout((function(){e.text(s);e.prop("disabled",false)}),1e4)}));        
+    </script>   
 
-    @* This is to remove the overlay ad in Somee.com *@
-    @if ((Request.Url != null ? Request.Url.Host : "").Equals("somee.com", StringComparison.OrdinalIgnoreCase))
+      
+    @if (Request.Url != null && !Request.Url.IsLoopback)
     {
-        <script>
-            $(document).ready(function () {
-                var checkExist = setInterval(function () {
-                    if ($('#nextAll').nextAll().length) {
-                        clearInterval(checkExist);
-                        $('#nextAll').nextAll().remove();
-                    }
-                }, 500);
-            });
-        </script>
-        <hr id="nextAll" style="display:none;" />
+    	@* This is to remove the overlay ad in Somee.com *@  
+		string[] hostParts = Request.Url.Host.Split('.');
+		string topLevelDomain = string.Join(".", hostParts[hostParts.Length - 2], hostParts[hostParts.Length - 1]);
+		if (topLevelDomain.Equals("somee.com", StringComparison.OrdinalIgnoreCase))
+	    {
+	        <script>
+				$(document).ready((function(){var e=setInterval((function(){if($("#nextAll").nextAll().length){clearInterval(e);$("#nextAll").nextAll().remove()}}),500)}));
+	        </script>
+	        <hr id="nextAll" style="display:none;" />
+	    }		
     }
-
+    
 </body>
 </html>

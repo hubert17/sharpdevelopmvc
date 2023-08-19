@@ -7,14 +7,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle ("ASPNETWebApp45")]
-[assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("")]
-[assembly: AssemblyProduct ("ASPNETWebApp45")]
-[assembly: AssemblyCopyright ("Copyright 2019")]
-[assembly: AssemblyTrademark ("")]
-[assembly: AssemblyCulture ("")]
+[assembly: AssemblyTitle("ASPNETWebApp45")]
+[assembly: AssemblyDescription("SharpDevelopMVC5 - A lightweight, solid starting point for developing ASP.NET MVC and Web API applications in portable SharpDevelop. Great for student learning and small to medium-sized projects!")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Bernard Gabon")]
+[assembly: AssemblyProduct("ASPNETWebApp45")]
+[assembly: AssemblyCopyright("Copyright 2019")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 // This sets the default COM visibility of types in the assembly to invisible.
 // If you need to expose a type to COM, use [ComVisible(true)] on that type.
 [assembly: ComVisible (false)]
