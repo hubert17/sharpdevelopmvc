@@ -27,8 +27,7 @@ namespace ASPNETWebApp45.Controllers
             
 			ViewBag.SearchQry = searchQry;
 			
-			return View(items.ToList());
-            
+			return View(items.ToList());            
 		}
 		
 		// [Authorize(Roles = "staff")]

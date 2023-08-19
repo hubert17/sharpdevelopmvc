@@ -6,7 +6,7 @@ A lightweight, solid starting point for developing ASP.NET MVC and Web API appli
 
 ![SharpDevelop](https://portable.info.pl/wp-content/uploads/2017/10/SharpDevelop_Softables.png)
 
-See the [Demo](http://sharpdevelopmvc.somee.com).
+See the [Demo](http://sharpdevelopmvc.somee.com)
 
 ## Features and Libraries
 

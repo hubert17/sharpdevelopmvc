@@ -78,7 +78,6 @@
     display: none; /* Avoid flash rendering which happen until petite-vue is loaded */
 }
 
-
 .zoom {
     zoom: 1.2;
     -moz-transform: scale(1.2);
