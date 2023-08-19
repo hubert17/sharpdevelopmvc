@@ -246,10 +246,6 @@
     <None Include="Content\bootstrap.min.css" />
     <None Include="Content\Site.css" />
     <None Include="Content\Util\slimselect.min.css" />
-    <None Include="Documentation\CanonicalFunctions.txt" />
-    <None Include="Documentation\DbFirstImplementation.txt" />
-    <None Include="Documentation\JetSQL.txt" />
-    <None Include="Documentation\JetSQLFunctions.txt" />
     <None Include="Global.asax" />
     <None Include="packages.config" />
     <None Include="Scripts\bootbox.min.js" />
