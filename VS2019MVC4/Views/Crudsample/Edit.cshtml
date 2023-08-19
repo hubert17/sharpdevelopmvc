@@ -5,6 +5,8 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Edit Product - @Model.Name</h2>
+
 <form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal zoom-3">
 	@Html.AntiForgeryToken()
 
