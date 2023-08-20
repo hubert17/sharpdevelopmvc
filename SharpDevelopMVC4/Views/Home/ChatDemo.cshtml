@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "ChatDemo";
+}
+
+@section head
+{
+    <style>
+        #chat-demo input {
+            max-width: none;
+        }
+
+        ::-webkit-scrollbar-track {
+            width: 5px;
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            width: 1em;
+            background-color: #ddd;
+            outline: 1px solid slategrey;
+            border-radius: 1rem;
+        }
+
+        .text-small {
+            font-size: 0.9rem;
+        }
+
+        .messages-box,
+        .chat-box {
+            height: 510px;
+            overflow-y: scroll;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        #chat-demo .form-control::placeholder {
+            font-size: 0.9rem;
+            color: royalblue;
+        }
+
+        .text-x-small {
+            font-size: .7em;
+        }
+    </style>
+}
+
+<h2>ChatDemo <small>with SignalR and Petite-vue</small></h2>
+
+<div id="chat-demo" class="container py-5 px-4" v-cloak @@vue:mounted="mounted()">
+    <div class="row rounded-lg overflow-hidden shadow">
+        <!-- Users box-->
+        <div class="col-5 px-0 d-none d-sm-block">
+            <div class="bg-white">
+
+                <div class="bg-gray px-4 py-2 bg-light">
+                    <p class="h5 mb-0 py-1">Recent</p>
+                </div>
+
+                <div class="messages-box">
+                    <div class="list-group rounded-0">
+
+                        <a class="list-group-item list-group-item-action active text-white rounded-0">
+                            <div class="media">
+                                <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+                                    </div>
+                                    <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0" v-for="index in 10" :key="index">
+                            <div class="media">
+                                <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">14 Dec</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Chat Box-->
+        <div class="col-7 px-0">
+            <div class="px-4 py-5 chat-box bg-white" v-effect="if(messages.length) $el.scrollTop = $el.scrollHeight">
+
+                <div v-for="(msg,index) in messages" :key="index">
+                    <!-- Reciever Message-->
+                    <div class="media w-50 mb-3" v-if="myMsg.name !== msg.name">
+                        <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" :title="msg.name" width="50" class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-muted">{{msg.message}}</p>
+                            </div>
+                            <p class="text-x-small text-muted">{{msg.name}} | 12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
+                    <!-- Sender Message-->
+                    <div class="media w-50 ml-auto mb-3" v-else>
+                        <div class="media-body">
+                            <div class="bg-primary rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-white">{{msg.message}}</p>
+                            </div>
+                            <p class="text-x-small text-muted">Me | 12:00 PM | Aug 13</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Typing area -->
+            <form action="#" class="normal-submit bg-light">
+                <div class="input-group">
+                    <input type="text" v-model="myMsg.message" v-effect="if(messages.length) $el.focus()" :placeholder="myMsg.name + ': Type a message'" class="form-control rounded-0 border-0 py-4 bg-light">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-light" @@click="send"> Send </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    <script src="/Scripts/jquery.signalR-1.2.2.min.js"></script>
+    <script src="/Signalr/hubs"></script>
+
+    <script type="module">
+        import { createApp } from "/Scripts/petite-vue.es.js";
+        const app = {
+            //data
+            hub: null,
+            baseUrl: '@Request.Url.Scheme://@Request.Url.Authority', // 'http://localhost:55353',
+            myMsg: { name: '', message: ''},
+            messages: [],
+            //methods
+            mounted() {
+                $.connection.hub.url = this.baseUrl + '/signalr';
+                // // Proxy created on the fly
+                this.hub = $.connection.chatHub;
+                // Get the user name and store it to prepend to messages.
+                this.myMsg.name = prompt('Enter your name:', '')
+                this.myMsg.message = this.myMsg.name + " has joined the chat..."
+                // Declare a function on the chat hub so the server can invoke it
+                this.hub.client.broadcastMessage = this.broadcastMessage;
+                // Start the connection
+                $.connection.hub.start().done(this.send);
+            },
+            send() {
+                this.hub.server.send(this.myMsg.name, this.myMsg.message);
+                this.myMsg.message = '';
+            },
+            broadcastMessage(_name, _message) {
+                let _msg = { name: _name, message: _message };
+                this.messages.push(_msg);
+            }
+        };
+        createApp(app).mount();
+    </script>
+
+}
+

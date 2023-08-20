@@ -14,6 +14,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json.Serialization;
 using Hangfire.MemoryStorage;
 using System.Web.Http;
@@ -55,6 +56,11 @@ namespace ASPNETWebApp45
 			var config = System.Web.Http.GlobalConfiguration.Configuration;
 
 			config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+			
+			RouteTable.Routes.MapHubs(new HubConfiguration
+			{
+				EnableCrossDomain = true
+			});			
 
 			config.MapHttpAttributeRoutes();
 

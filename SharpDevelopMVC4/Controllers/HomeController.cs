@@ -15,6 +15,11 @@ namespace ASPNETWebApp45.Controllers
 		{
 			return View();
 		}
+		
+        public ActionResult ChatDemo()
+        {
+            return View();
+        }    		
 
 		[OutputCache(Duration = 300, VaryByParam = "none")] //cached for 300 seconds  
 		[AllowAnonymous]
