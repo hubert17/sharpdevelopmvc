@@ -21,6 +21,11 @@
             overflow-y: scroll;
         }
     </style>
+
+    @foreach (var product in products.Where(x => !string.IsNullOrEmpty(x.PictureFilename)))
+    {
+        <link rel="preload" href="/uploadedimages/@product.PictureFilename" as="image">
+    }
 }
 
 
@@ -39,26 +44,29 @@
 
             <div class="col-lg-4">
                 <div class="card">
-                    some content here 2
+                    <div class="col" v-if="previewImg">
+                        <img :src="'/uploadedimages/' + previewImg" class="img-thumbnail">
+                    </div>
                 </div> <!-- card.// -->
             </div>
 
             <div class="col-lg-4">
                 <form action="/pos/Add" method="post">
-                    <div class="card scroll-box" v-effect="if(saleItems.length) $el.scrollTop = $el.scrollHeight">
-                        <table class="table">
-                            <thead class="text-muted">
-                                <tr>
+                    <div class="card">
+                        <div style="overflow-y: scroll;">
+                            <table class="table">
+                                <tr class="text-muted">
                                     <th width="20">&nbsp;</th>
                                     <th>Item</th>
                                     <th width="20" class="text-center">Qty</th>
                                     <th width="100" class="text-right">Amount</th>
-
                                 </tr>
-                            </thead>
-                            <tbody>
+                            </table>
+                        </div>
+                        <div class="scroll-box" v-effect="if(saleItems.length) $el.scrollTop = $el.scrollHeight">
+                            <table class="table">
                                 <tr v-for="(item,index) in saleItems" :key="index">
-                                    <td class="text-center">
+                                    <td width="20" d class="text-center">
                                         <a href="" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash"></i></a>
                                     </td>
                                     <td>
@@ -66,16 +74,18 @@
                                         <input type="hidden" v-model="item.ProductId" :name="'SaleItems[' + index + '].ProductId'" />
                                         <input type="hidden" v-model="item.UnitPrice" :name="'SaleItems[' + index + '].UnitPrice'" />
                                     </td>
-                                    <td class="text-center">
+                                    <td width="20" class="text-center">
                                         {{ item.Quantity }} <input type="hidden" v-model="item.Quantity" :name="'SaleItems[' + index + '].Quantity'" />
                                     </td>
-                                    <td class="text-right">
+                                    <td width="100" class="text-right">
                                         {{ (item.UnitPrice * item.Quantity).toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </table>
+                        </div> <!-- card.// -->
+
                     </div> <!-- card.// -->
+
                     <div class="box mt-3" style="font-size:large;">
                         <dl class="dlist-align">
                             <dt>Sub Total:</dt>
@@ -174,9 +184,15 @@
             // For QR scanner
             html5QrcodeScanner: null,
             barcodeText: '',
+            previewImg: '',
             onScanSuccess(decodedText, decodedResult) {
-                console.log(`Scan result: ${decodedText}`, decodedResult);
-                this.barcodeText = decodedText;
+                if (decodedText !== this.barcodeText) {
+                    console.log(`Scan result: ${decodedText}`, decodedResult);
+                    this.barcodeText = decodedText;
+                    this.searchProductId = decodedText.replace('@ViewBag.StoreItemPrefix', '');
+                    this.previewImg = this.product ? this.product.PictureFilename : '';
+                    this.addItem();
+                }
             },
             setupScanner() {
                 this.html5QrcodeScanner = new Html5QrcodeScanner(
@@ -188,11 +204,11 @@
             // For product manual search
             arrProductLookup: @(Html.Raw(arrProductLookup)),
             searchProductId: null,
-            searchQuantity: 1, 
+            searchQuantity: 1,
             discount: 0,
             saleItems: [],
             newItem: {},
-            addItem() {                
+            addItem() {
                 this.newItem = {
                     ProductId: this.product.Id,
                     Name: this.product.Name,
@@ -206,17 +222,17 @@
                 $('#addItemModal').modal('hide');
             },
             get product() {
-                return this.arrProductLookup.find(x => x.Id == this.searchProductId); 
+                return this.arrProductLookup.find(x => x.Id == this.searchProductId);
             },
             get pictureFilename() {
                 return this.product ? this.product.PictureFilename : '';
             },
-            get total() {                
+            get total() {
                 var total = 0.00;
                 var discounted = 0.00;
-                this.saleItems.forEach(item => {     
+                this.saleItems.forEach(item => {
                     total += (item.UnitPrice * item.Quantity);
-                    discounted += (item.UnitPrice * item.Quantity) * (1 - this.discount / 100);                 
+                    discounted += (item.UnitPrice * item.Quantity) * (1 - this.discount / 100);
                 });
                 return { total, discounted }
             }

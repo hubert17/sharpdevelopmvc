@@ -10,6 +10,7 @@ namespace ASPNETWebApp45.Controllers
     public class PosController : Controller
     {
         MyApp45DbContext _db = new MyApp45DbContext();
+        private string storeItemPrefix = "MYSTOREITEM";
 
         // GET: Pos
         public ActionResult Index()
@@ -21,6 +22,7 @@ namespace ASPNETWebApp45.Controllers
                 { "UserId", User.Identity.Name ?? "unknown-cashier" },
             };
 
+            ViewBag.StoreItemPrefix = storeItemPrefix;
             return View(model);
         }
 
@@ -37,13 +39,12 @@ namespace ASPNETWebApp45.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SeedSampleData()
+        public ActionResult PrintQrcode()
         {
-            _db.Products.AddRange(Product.GetSampleData());
-            _db.SaveChanges();
-
-            TempData["alertbox"] = "Product table has been successfully seeded with sample data.";
-            return RedirectToAction("Index");
+            var products = _db.Products.ToList();
+            ViewBag.StoreItemPrefix = storeItemPrefix;
+            return View(products);
         }
+
     }
 }
