@@ -34,7 +34,7 @@ namespace ASPNETWebApp45.Controllers
             _db.Sales.Add(sale);
             _db.SaveChanges();
 
-            TempData["alert-box"] = "Transaction has been saved.";
+            TempData["alertbox"] = "Transaction has been saved.";
 
             return RedirectToAction("Index");
         }

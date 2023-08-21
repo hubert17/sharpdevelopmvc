@@ -43,18 +43,16 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="card">
-                    <div class="col" v-if="previewImg">
-                        <img :src="'/uploadedimages/' + previewImg" class="img-thumbnail">
-                    </div>
-                </div> <!-- card.// -->
+                <div class="col" v-if="previewImg">
+                    <img :src="'/uploadedimages/' + previewImg" class="img-thumbnail">
+                </div>
             </div>
 
             <div class="col-lg-4">
                 <form action="/pos/Add" method="post">
                     <div class="card">
                         <div style="overflow-y: scroll;">
-                            <table class="table">
+                            <table class="table table-sm">
                                 <tr class="text-muted">
                                     <th width="20">&nbsp;</th>
                                     <th>Item</th>
