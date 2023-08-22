@@ -3,25 +3,24 @@
 @{
     ViewBag.Title = "`POS";
 
-    var saleDate = (DateTime)Model["SaleDate"];
-
-
+    var saleDate = (DateTime)Model["SaleDate"];   
+    var userId = Model["UserId"];
     var products = Model["ProductLookup"] as List<Product>;
     var arrProductLookup = Newtonsoft.Json.JsonConvert.SerializeObject(products);
 }
 
 @section head
 {
-    <link rel="stylesheet" href="~/Content/Util/slimselect.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/Content/Util/slimselect.min.css" />
     <style>
-        @@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
         .scroll-box {
             height: 310px;
             overflow-y: scroll;
         }
     </style>
 
+    @* Preload the product images for faster preview. *@
     @foreach (var product in products.Where(x => !string.IsNullOrEmpty(x.PictureFilename)))
     {
         <link rel="preload" href="/uploadedimages/@product.PictureFilename" as="image">
@@ -43,18 +42,20 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="col" v-if="previewImg">
-                    <img :src="'/uploadedimages/' + previewImg" class="img-thumbnail">
+                <div class="col" v-if="productImgPath">
+                    <img :src="'/uploadedimages/' + productImgPath" class="img-thumbnail">
                 </div>
             </div>
 
             <div class="col-lg-4">
                 <form action="/pos/Add" method="post">
+                    <input type="hidden" name="SaleDate" value="@saleDate" />
+                    <input type="hidden" name="UserId" value="@userId" />
                     <div class="card">
-                        <div style="overflow-y: scroll;">
-                            <table class="table table-sm">
+                        <div style="overflow-y:scroll;">
+                            <table class="table table-striped" style="margin-bottom: 0;">
                                 <tr class="text-muted">
-                                    <th width="20">&nbsp;</th>
+                                    <th width="20" class="text-center pr-0"><button class="btn btn-sm" style="visibility:hidden"> <i class="fa fa-trash"></i></button></th>
                                     <th>Item</th>
                                     <th width="20" class="text-center">Qty</th>
                                     <th width="100" class="text-right">Amount</th>
@@ -64,11 +65,11 @@
                         <div class="scroll-box" v-effect="if(saleItems.length) $el.scrollTop = $el.scrollHeight">
                             <table class="table">
                                 <tr v-for="(item,index) in saleItems" :key="index">
-                                    <td width="20" d class="text-center">
+                                    <td width="20" class="text-center pr-0">
                                         <a href="" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash"></i></a>
                                     </td>
                                     <td>
-                                        <strong>{{ item.Name }}</strong> {{ item.UnitPrice.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}
+                                        <strong>{{ item.Name }}</strong> {{ item.UnitPrice.toFixed(2) }}
                                         <input type="hidden" v-model="item.ProductId" :name="'SaleItems[' + index + '].ProductId'" />
                                         <input type="hidden" v-model="item.UnitPrice" :name="'SaleItems[' + index + '].UnitPrice'" />
                                     </td>
@@ -76,7 +77,7 @@
                                         {{ item.Quantity }} <input type="hidden" v-model="item.Quantity" :name="'SaleItems[' + index + '].Quantity'" />
                                     </td>
                                     <td width="100" class="text-right">
-                                        {{ (item.UnitPrice * item.Quantity).toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}
+                                        {{ (item.UnitPrice * item.Quantity).toFixed(2) }}
                                     </td>
                                 </tr>
                             </table>
@@ -87,7 +88,7 @@
                     <div class="box mt-3" style="font-size:large;">
                         <dl class="dlist-align">
                             <dt>Sub Total:</dt>
-                            <dd class="text-right">${{ total.total.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }}</dd>
+                            <dd class="text-right">${{ total.total.toFixed(2) }}</dd>
                         </dl>
                         <dl class="dlist-align">
                             <dt>Discount:</dt>
@@ -97,7 +98,7 @@
                         </dl>
                         <dl class="dlist-align">
                             <dt>Total: </dt>
-                            <dd class="text-right h4 b"> ${{ total.discounted.toLocaleString('en-PH', { minimumFractionDigits: 2 }) }} </dd>
+                            <dd class="text-right h4 b"> ${{ total.discounted.toFixed(2) }} </dd>
                         </dl>
                         <div class="row">
                             <div class="col-md-6">
@@ -146,8 +147,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col" v-if="pictureFilename">
-                            <img :src="'/uploadedimages/' + pictureFilename" class="img-thumbnail">
+                        <div class="col" v-if="productImgPath">
+                            <img :src="'/uploadedimages/' + productImgPath" class="img-thumbnail">
                         </div>
                     </div>
                 </div>
@@ -161,7 +162,7 @@
 
 @section scripts
 {
-    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="/Scripts/html5-qrcode.min.js"></script>
     <script type="module">
         // https://github.com/brianvoe/slim-select
         import SlimSelect from '/Scripts/Util/slimselect.es.min.js'
@@ -182,28 +183,23 @@
             // For QR scanner
             html5QrcodeScanner: null,
             barcodeText: '',
-            previewImg: '',
             onScanSuccess(decodedText, decodedResult) {
-                if (decodedText !== this.barcodeText) {
-                    console.log(`Scan result: ${decodedText}`, decodedResult);
-                    this.barcodeText = decodedText;
-                    this.searchProductId = decodedText.replace('@ViewBag.StoreItemPrefix', '');
-                    this.previewImg = this.product ? this.product.PictureFilename : '';
-                    this.addItem();
-                }
+                if (decodedText === this.barcodeText) return;
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+                this.barcodeText = decodedText;
+                this.searchProductId = decodedText.replace('@ViewBag.StoreItemPrefix', '');
+                this.addItem();
             },
-            setupScanner() {
-                this.html5QrcodeScanner = new Html5QrcodeScanner(
-                    "reader",
-                    { fps: 10, qrbox: 250 }
-                ).render(this.onScanSuccess);
+            setupScanner() { //vue:mounted
+                this.html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }).render(this.onScanSuccess);
             },
 
-            // For product manual search
+            // For product search
             arrProductLookup: @(Html.Raw(arrProductLookup)),
             searchProductId: null,
             searchQuantity: 1,
             discount: 0,
+            productImgPath: '',
             saleItems: [],
             newItem: {},
             addItem() {
@@ -220,17 +216,17 @@
                 $('#addItemModal').modal('hide');
             },
             get product() {
-                return this.arrProductLookup.find(x => x.Id == this.searchProductId);
-            },
-            get pictureFilename() {
-                return this.product ? this.product.PictureFilename : '';
+                var product = this.arrProductLookup.find(x => x.Id == this.searchProductId);
+                this.productImgPath = product ? product.PictureFilename : '';
+                return product;
             },
             get total() {
                 var total = 0.00;
                 var discounted = 0.00;
                 this.saleItems.forEach(item => {
-                    total += (item.UnitPrice * item.Quantity);
-                    discounted += (item.UnitPrice * item.Quantity) * (1 - this.discount / 100);
+                    var amount = item.UnitPrice * item.Quantity;
+                    total += amount;
+                    discounted += amount * (1 - this.discount / 100);
                 });
                 return { total, discounted }
             }

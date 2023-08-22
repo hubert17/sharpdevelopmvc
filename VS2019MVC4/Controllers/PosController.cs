@@ -19,7 +19,7 @@ namespace ASPNETWebApp45.Controllers
             {
                 { "ProductLookup", _db.Products.OrderBy(x => x.Name).ToList() },
                 { "SaleDate", DateTime.Now },
-                { "UserId", User.Identity.Name ?? "unknown-cashier" },
+                { "UserId", string.IsNullOrEmpty(User.Identity.Name) ? "unknown-cashier" : User.Identity.Name},
             };
 
             ViewBag.StoreItemPrefix = storeItemPrefix;
@@ -30,11 +30,10 @@ namespace ASPNETWebApp45.Controllers
         public ActionResult Add(Sale sale)
         {
             sale.CreateDate = DateTime.Now;
-
             _db.Sales.Add(sale);
             _db.SaveChanges();
 
-            TempData["alertbox"] = "Transaction has been saved.";
+            TempData["alertbox"] = "Transaction #" + sale.Id + "  has been saved.";
 
             return RedirectToAction("Index");
         }
