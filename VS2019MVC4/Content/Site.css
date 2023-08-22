@@ -56,7 +56,7 @@ html, body {
 	padding-top:1px;
 }
 
-button[type="submit"] {
+button[type="submit"]:not(.no-min-width) {
 	min-width: 100px;
 }
 
