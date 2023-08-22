@@ -6,7 +6,7 @@
 
 <div class="card fat">
     <div class="card-body zoom">
-        <h4 class="card-title">Login</h4>
+        <h4 class="card-title text-center">Login</h4>
         <form action="/account/Login" method="post">
             @Html.AntiForgeryToken()
             @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
