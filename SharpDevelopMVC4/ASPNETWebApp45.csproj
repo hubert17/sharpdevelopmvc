@@ -72,7 +72,10 @@
       <HintPath>packages\CsvHelper.9.2.3\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
-      <HintPath>packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <HintPath>packages\Dapper.SharpDevelop.1.60.2\lib\net452\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib">
+      <HintPath>packages\Dapper.Contrib.SharpDevelop.1.60.2\lib\net452\Dapper.Contrib.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>packages\EntityFramework.SharpDevelop.6.0.2\lib\net45\EntityFramework.dll</HintPath>
