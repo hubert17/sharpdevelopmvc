@@ -12,7 +12,7 @@ See the [Demo](http://sharpdevelopmvc.somee.com)
 
 - Bootstrap 4.6 with bonus [Bootswatch](https://bootswatch.com/4/) themes and [Bootbox.js](https://bootboxjs.com/examples.html)
 - EntityFramework.SharpDevelop (SQL Server, now with MS Access MDB support!)
-- Dapper
+- Dapper / Dapper.Contrib
 - [EFUtilities.SharpDevelop](https://github.com/MikaelEliasson/EntityFramework.Utilities)
 - Simple Forms Authentication
 - AutoMapper
