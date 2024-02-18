@@ -22,7 +22,7 @@ using System.Linq;
 using Hangfire;
 using System.Net.Http;
 
-namespace ASPNETWebApp45
+namespace ASPNETWebApp48
 {
 	public class MvcApplication : HttpApplication
 	{
@@ -47,7 +47,7 @@ namespace ASPNETWebApp45
 					action = "Index",
 					id = UrlParameter.Optional,
 				},
-				new string[] { "ASPNETWebApp45.Controllers" });
+				new string[] { "ASPNETWebApp48.Controllers" });
 
 		}
 

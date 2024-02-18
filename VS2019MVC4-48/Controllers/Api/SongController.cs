@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
-using ASPNETWebApp45.Models;
+using ASPNETWebApp48.Models;
 using X.PagedList;
 
-namespace ASPNETWebApp45.Controllers.Api
+namespace ASPNETWebApp48.Controllers.Api
 {
 	/// <summary>
 	/// Description of SongController.
 	/// </summary>
 	public class SongController : ApiController
 	{
-		private readonly MyApp45DbContext _db = new MyApp45DbContext();
+		private readonly MyApp48DbContext _db = new MyApp48DbContext();
 
 		[HttpGet]
 		public IHttpActionResult GetAll(int page = 1, int pageSize = 100, string search = "", string artist = "", int? year = null, int? peak = null)

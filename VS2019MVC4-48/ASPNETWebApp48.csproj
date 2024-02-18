@@ -12,9 +12,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>ASPNETWebApp45</RootNamespace>
-    <AssemblyName>ASPNETWebApp45</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ASPNETWebApp48</RootNamespace>
+    <AssemblyName>ASPNETWebApp48</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
     <UseIISExpress>true</UseIISExpress>
@@ -241,7 +241,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Models\MyApp45DbContext.cs" />
+    <Compile Include="Models\MyApp48DbContext.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\WeatherForecast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -259,6 +259,7 @@
     <None Include="packages.config" />
     <Content Include="Content\Account.css" />
     <Content Include="Content\Util\slimselect.min.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\bootbox.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
     <None Include="Scripts\bootstrap.min.js" />
@@ -331,9 +332,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>55353</DevelopmentServerPort>
+          <DevelopmentServerPort>55356</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55353/</IISUrl>
+          <IISUrl>https://localhost:44356/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

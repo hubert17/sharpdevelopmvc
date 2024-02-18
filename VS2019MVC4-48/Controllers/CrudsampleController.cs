@@ -3,16 +3,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ASPNETWebApp45.Models;
+using ASPNETWebApp48.Models;
 
-namespace ASPNETWebApp45.Controllers
+namespace ASPNETWebApp48.Controllers
 {
 	/// <summary>
 	/// Description of ProductsController.
 	/// </summary>
 	public class CrudsampleController : Controller
 	{
-		MyApp45DbContext _db = new MyApp45DbContext();
+		MyApp48DbContext _db = new MyApp48DbContext();
 
 		// GET: Products
 		public ActionResult Index(string searchQry, int page = 0, int pageSize = 6)

@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace ASPNETWebApp45.Controllers
+namespace ASPNETWebApp48.Controllers
 {
 	public class AccountController : Controller
 	{

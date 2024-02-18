@@ -13,9 +13,9 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using ASPNETWebApp45.Models;
+using ASPNETWebApp48.Models;
 
-namespace ASPNETWebApp45.Controllers.Api
+namespace ASPNETWebApp48.Controllers.Api
 {
     /// <summary>
     /// Description of SampleController.

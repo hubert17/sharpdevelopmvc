@@ -1,19 +1,19 @@
-namespace ASPNETWebApp45.Migrations
+namespace ASPNETWebApp48.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using ASPNETWebApp45.Models;
+    using ASPNETWebApp48.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MyApp45DbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MyApp48DbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(MyApp45DbContext context)
+        protected override void Seed(MyApp48DbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

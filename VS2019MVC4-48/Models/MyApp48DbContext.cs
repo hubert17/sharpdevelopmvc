@@ -4,12 +4,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace ASPNETWebApp45.Models
+namespace ASPNETWebApp48.Models
 {
     // [DbConfigurationType(typeof(MySqlEFConfiguration))] // Uncomment when using MySQL data provider
-    public class MyApp45DbContext : DbContext
+    public class MyApp48DbContext : DbContext
     {
-        public MyApp45DbContext() : base("MyApp45Db") // name_of_dbconnection_string
+        public MyApp48DbContext() : base("MyApp48Db") // name_of_dbconnection_string
         {
         }
 

@@ -7,7 +7,7 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using EntityFramework.Utilities;
 
-namespace ASPNETWebApp45.Models
+namespace ASPNETWebApp48.Models
 {
     public class Song
     {
@@ -27,7 +27,7 @@ namespace ASPNETWebApp45.Models
             var csvFile = GetBillboardCsvFile();
             if (File.Exists(csvFile))
             {
-                using (var _db = new MyApp45DbContext())
+                using (var _db = new MyApp48DbContext())
                 {
                     if(clearSongTable)
                         _db.Database.ExecuteSqlCommand("DELETE FROM [" + nameof(Song) + "s]");
@@ -69,7 +69,7 @@ namespace ASPNETWebApp45.Models
 
         public static void InsertAllNormal(List<Song> songs)
         {
-            using (var _db = new MyApp45DbContext())
+            using (var _db = new MyApp48DbContext())
             {
                 //_db.Songs.AddRange(songs);
                 songs.ForEach(song =>

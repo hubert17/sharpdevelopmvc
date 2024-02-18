@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ASPNETWebApp45.Models
+namespace ASPNETWebApp48.Models
 {
     public class WeatherForecast
     {

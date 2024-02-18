@@ -1,4 +1,4 @@
-﻿using ASPNETWebApp45.Models;
+﻿using ASPNETWebApp48.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ public partial class UserAccount
     // Change this to your desired default admin login and password
     public const string DEFAULT_ADMIN_LOGIN = "admin";
     // Change this to your DbContext class
-    private static MyApp45DbContext _db = new MyApp45DbContext();
+    private static MyApp48DbContext _db = new MyApp48DbContext();
 
 
     #region UserAccountRepository

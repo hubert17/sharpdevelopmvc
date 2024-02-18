@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ASPNETWebApp45.Models
+namespace ASPNETWebApp48.Models
 {
     // [Table("OF_Products")] // Sets the name of the table to "OF_Product" in the database
     public class Product
