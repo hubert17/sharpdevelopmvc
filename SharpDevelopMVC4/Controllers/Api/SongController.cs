@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using ASPNETWebApp45.Models;
+using JWTAuth;
 using X.PagedList;
 
 namespace ASPNETWebApp45.Controllers.Api
@@ -67,6 +68,7 @@ namespace ASPNETWebApp45.Controllers.Api
 			
 		}
 		
+		[ApiAuthorize]
 		[HttpPost]
 		public IHttpActionResult Create([FromBody]Song song)
 		{			
@@ -75,6 +77,7 @@ namespace ASPNETWebApp45.Controllers.Api
 			return Ok(song.Id);
 		}
 		
+		[ApiAuthorize]
 		[HttpPut]
 		public IHttpActionResult Update([FromBody]Song updatedSong)
 		{
