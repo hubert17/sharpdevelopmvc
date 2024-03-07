@@ -10,12 +10,13 @@ using Newtonsoft.Json;
 namespace ASPNETWebApp45.Controllers
 {
 	public class HomeController : Controller
-	{
+	{		
 		public ActionResult Index()
 		{
 			return View();
 		}
 
+		[OutputCache(Duration = 300, VaryByParam = "none")] //cached for 300 seconds  
 		[AllowAnonymous]
 		public ActionResult About()
 		{
@@ -46,12 +47,16 @@ namespace ASPNETWebApp45.Controllers
 
 			return View("About");
 		}
-
-		// DONT DELETE
-		public ActionResult Pinger()
-		{
-			return Content(DateTime.Now.ToString());
-		}
-                
+            
 	}
+	
+    // DONT DELETE
+    public class PingerController : Controller
+    {
+        public ActionResult Index()
+        {
+            return Content(DateTime.Now.ToString());
+        }
+
+    }	
 }

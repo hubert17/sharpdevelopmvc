@@ -11,7 +11,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>True</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -72,7 +72,10 @@
       <HintPath>packages\CsvHelper.9.2.3\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
-      <HintPath>packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <HintPath>packages\Dapper.SharpDevelop.1.60.2\lib\net452\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib">
+      <HintPath>packages\Dapper.Contrib.SharpDevelop.1.60.2\lib\net452\Dapper.Contrib.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>packages\EntityFramework.SharpDevelop.6.0.2\lib\net45\EntityFramework.dll</HintPath>
@@ -94,6 +97,9 @@
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="JetEntityFrameworkProvider">
+      <HintPath>packages\JetEntityFrameworkProvider.SharpDevelop.1.0.0\lib\JetEntityFrameworkProvider.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -137,6 +143,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -152,6 +159,7 @@
     </Reference>
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
@@ -244,30 +252,26 @@
     <None Include="App_Data\MyAccessDb.mdb" />
     <None Include="Content\Account.css" />
     <None Include="Content\bootstrap-grid.css" />
-    <None Include="Content\bootstrap-grid.css.map" />
     <None Include="Content\bootstrap-grid.min.css" />
-    <None Include="Content\bootstrap-grid.min.css.map" />
     <None Include="Content\bootstrap-reboot.css" />
-    <None Include="Content\bootstrap-reboot.css.map" />
     <None Include="Content\bootstrap-reboot.min.css" />
-    <None Include="Content\bootstrap-reboot.min.css.map" />
     <None Include="Content\bootstrap.css" />
-    <None Include="Content\bootstrap.css.map" />
     <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\bootstrap.min.css.map" />
     <None Include="Content\Site.css" />
+    <None Include="Content\Util\slimselect.min.css" />
     <None Include="Global.asax" />
     <None Include="packages.config" />
     <None Include="Scripts\bootbox.min.js" />
     <None Include="Scripts\bootstrap.bundle.min.js" />
-    <None Include="Scripts\bootstrap.bundle.min.js.map" />
     <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\bootstrap.min.js.map" />
+    <None Include="Scripts\jquery-1.12.4.min.js" />
     <None Include="Scripts\jquery-3.5.1.min.js" />
     <None Include="Scripts\jquery-3.5.1.slim.min.js" />
     <None Include="Scripts\petite-vue.es.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <None Include="Scripts\Util\bs-modal-auto-height.js" />
+    <None Include="Scripts\Util\slimselect.es.min.js" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\ManageUsers.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
@@ -289,7 +293,10 @@
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Util" />
+    <Folder Include="Scripts\Util" />
+  </ItemGroup>
   <Target Name="RestorePackages" BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="$(ProjectDir)_web.config" DestinationFiles="$(ProjectDir)web.config" Condition="!Exists('$(ProjectDir)web.config')" />
     <Exec Command="nuget restore" Condition="!Exists('$(ProjectDir)\packages')" />
@@ -325,13 +332,13 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>8086</DevelopmentServerPort>
+          <DevelopmentServerPort>55353</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8086/</IISUrl>
+          <IISUrl>http://localhost:55353/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

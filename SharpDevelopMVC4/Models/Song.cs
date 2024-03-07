@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace ASPNETWebApp45.Models
                 using (var _db = new MyApp45DbContext())
                 {
                     if(clearSongTable)
-                    	_db.Database.ExecuteSqlCommand("DELETE FROM [" + ((new Song()).GetType().Name) + "s]");
+                        _db.Database.ExecuteSqlCommand("DELETE FROM [" + "Song" + "s]");
 
                     if (!_db.Songs.Any())
                     {
@@ -42,8 +42,17 @@ namespace ASPNETWebApp45.Models
                         using (var reader = new StreamReader(csvFile))
                         using (var csv = new CsvReader(reader, config))
                         {
-                            var songs = csv.GetRecords<Song>().ToList();
-                            EFBatchOperation.For(_db, _db.Songs).InsertAll(songs);
+                            var songs = csv.GetRecords<Song>().ToList();                            
+                            try
+                            {
+                                EFBatchOperation.For(_db, _db.Songs).InsertAll(songs);
+                            }
+                            catch (InvalidOperationException)
+                            {
+                                Hangfire.BackgroundJob.Enqueue(() => InsertAllNormal(songs));
+                                //throw new Exception(iopEx.Message + " Seeding song the normal way and this will take sometime but will be processed in the background.");
+                            }
+                            
                         }
                     }
                     else
@@ -56,6 +65,20 @@ namespace ASPNETWebApp45.Models
         {
             const string BILLBOARD_CSV_FILE = @"BillboardTo2013.csv";
             return Path.IsPathRooted(BILLBOARD_CSV_FILE) ? BILLBOARD_CSV_FILE : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", BILLBOARD_CSV_FILE);
+        }
+
+        public static void InsertAllNormal(List<Song> songs)
+        {
+            using (var _db = new MyApp45DbContext())
+            {
+                //_db.Songs.AddRange(songs);
+                songs.ForEach(song =>
+                {
+                    _db.Songs.Add(song);
+                    _db.SaveChanges();
+                });
+                
+            }
         }
 
     }

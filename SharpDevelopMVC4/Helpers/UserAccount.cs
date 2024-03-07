@@ -1,4 +1,5 @@
 ﻿using ASPNETWebApp45.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,32 +16,43 @@ public partial class UserAccount
 
 
     #region UserAccountRepository
-    public int Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
     //Login info
     [Required]
-    [StringLength(254)]
+    [StringLength(50)]
     public string UserName { get; set; }
+    [JsonIgnore]
     public byte[] PasswordHash { get; set; }
+    [JsonIgnore]
     public byte[] PasswordSalt { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime? LastLogin { get; set; }
     public bool IsActive { get; set; }
     public string Roles { get; set; } // comma-separated
 
+    public const string DEFAULT_ADMIN_ROLENAME = "admin";
 
     private static UserAccount CurrentUser = null;
+
+    private static UserAccount GetSingleUser(string userName)
+    {
+        return _db.Users.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+    }
 
     public static bool Authenticate(string userName, string userPassword)
     {
         CreateAdmin(); // Comment out this line if you already have admin account
 
-        if(userName.Contains("@") && userName.StartsWith("admin"))
-        	userName = "admin";
-        
+        if (userName.Contains("@"))
+            if (userName.Split('@')[0].ToLower().Equals(DEFAULT_ADMIN_LOGIN.ToLower()))
+                userName = DEFAULT_ADMIN_LOGIN;
+
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(userPassword))
             return false;
 
-        var user = _db.Users.Where(x => x.UserName == userName.Trim().ToLower()).FirstOrDefault();
+        var user = GetSingleUser(userName);
         if (user == null)
             return false;
         if (!user.IsActive)
@@ -75,17 +87,20 @@ public partial class UserAccount
         return true;
     }
 
-    public static int? Create(string userName, string userPassword, string userRoles = "", bool requiresActivation = false)
+    public static Guid? Create(string userName, string userPassword, string userRoles = "", bool requiresActivation = false)
     {
         if (string.IsNullOrWhiteSpace(userPassword))
             return null;
         if (string.IsNullOrWhiteSpace(userName) || userName.Any(Char.IsWhiteSpace))
             return null;
 
-        var user = new UserAccount();
-        user.UserName = userName.Trim().ToLower();
+        var user = new UserAccount
+        {
+            Id = Guid.NewGuid(),
+            UserName = userName.Trim().ToLower()
+        };        
 
-        var userExists = _db.Users.Where(x => x.UserName == user.UserName).Count() > 0;
+        var userExists = _db.Users.Any(x => x.UserName == user.UserName);
         if (userExists)
             return null;
 
@@ -108,10 +123,10 @@ public partial class UserAccount
 
     private static void CreateAdmin()
     {
-        var hasAdmin = _db.Users.Where(x => x.Roles == DEFAULT_ADMIN_LOGIN).Any();
+        var hasAdmin = _db.Users.Any(x => x.Roles == DEFAULT_ADMIN_ROLENAME);
         if (!hasAdmin)
         {
-            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN);
+            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_ROLENAME);
         }
     }
 
@@ -123,10 +138,9 @@ public partial class UserAccount
         if (forceChange == false && string.IsNullOrWhiteSpace(userPassword))
             return false;
 
-        var user = _db.Users.Where(x => x.UserName == userName.Trim()).FirstOrDefault();
+        var user = GetSingleUser(userName);
         if (user == null)
             return false;
-
 
         var validPassword = !forceChange ? VerifyPasswordHash(userPassword, user.PasswordSalt, user.PasswordHash) : true;
         if (validPassword)
@@ -137,29 +151,39 @@ public partial class UserAccount
                 user.PasswordSalt = hmac.Key;
                 user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(newPassword));
             }
-            
-	        _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-	        _db.SaveChanges();
-	        return true;            
+
+            _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
+            return true;
         }
-		else
-			return false;
+        else
+            return false;
 
     }
 
     public static List<UserAccount> GetAll()
     {
         var users = _db.Users.ToList();
+        users.ForEach(x =>
+        {
+            x.PasswordHash = null;
+            x.PasswordSalt = null;
+        });
         return users;
     }
 
     public static List<UserAccount> GetAllUsersInRole(string role)
     {
-        var users = _db.Users.ToList().Where(x => x.Roles.Split(',').Contains(role)).ToList();
+        var users = _db.Users.Where(x => x.Roles.Split(',').Contains(role)).ToList();
+        users.ForEach(x =>
+        {
+            x.PasswordHash = null;
+            x.PasswordSalt = null;
+        });
         return users;
     }
 
-    public static UserAccount GetUserById(int userId)
+    public static UserAccount GetUserById(Guid userId)
     {
         var user = _db.Users.Find(userId);
         return user;
@@ -167,11 +191,11 @@ public partial class UserAccount
 
     public static UserAccount GetUserByUserName(string userName)
     {
-        if(userName.Contains("@") && userName.StartsWith("admin"))
-        	userName = "admin";
-        
-    	var user = _db.Users.Where(x => x.UserName.ToLower() == userName.ToLower()).FirstOrDefault();
-        return user;
+        if (userName.Contains("@"))
+            if (userName.Split('@')[0].ToLower().Equals(DEFAULT_ADMIN_LOGIN.ToLower()))
+                userName = DEFAULT_ADMIN_LOGIN;
+
+        return GetSingleUser(userName);
     }
 
     public static UserAccount GetCurrentUser()
@@ -179,7 +203,7 @@ public partial class UserAccount
         return CurrentUser;
     }
 
-    public static string[] GetUserRoles(int userId)
+    public static string[] GetUserRoles(Guid userId)
     {
         var user = GetUserById(userId);
         if (user != null)
@@ -194,35 +218,20 @@ public partial class UserAccount
         return GetUserRoles(user.Id);
     }
 
-    public static UserAccount Deactivate(string userName)
+    public static string SetUserActivation(string userName, bool isActive)
     {
-        var user = _db.Users.Where(x => x.UserName == userName).FirstOrDefault();
+        var user = GetSingleUser(userName);
         if (user != null)
         {
-            user.IsActive = false;
+            user.IsActive = isActive;
             _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
-            return user;
+            return "success";
         }
         else
-            return null;
-
+            return "failed";
     }
-
-    public static UserAccount Activate(string userName)
-    {
-        var user = _db.Users.Where(x => x.UserName == userName).FirstOrDefault();
-        if (user != null)
-        {
-            user.IsActive = true;
-            _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _db.SaveChanges();
-            return user;
-        }
-        else
-            return null;
-
-    }
+    
     #endregion
 
 }

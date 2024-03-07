@@ -12,21 +12,22 @@ namespace ASPNETWebApp45.Controllers
 	/// </summary>
 	public class CrudsampleController : Controller
 	{
-		private readonly MyApp45DbContext _db = new MyApp45DbContext();
+		MyApp45DbContext _db = new MyApp45DbContext();
 
 		// GET: Products
-		public ActionResult Index(string searchString, int page = 0, int pageSize = 6)
+		public ActionResult Index(string searchQry, int page = 0, int pageSize = 6)
 		{
 			var items = _db.Products.AsQueryable();
 
-			if (!String.IsNullOrEmpty(searchString))
-				items = items.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+			if (!String.IsNullOrEmpty(searchQry))
+				items = items.Where(s => s.Name.ToLower().Contains(searchQry.ToLower()));
             
 			if (page > 0)
 				items = items.Skip(pageSize * (page - 1)).Take(pageSize);
             
-			return View(items.ToList());
-            
+			ViewBag.SearchQry = searchQry;
+			
+			return View(items.ToList());            
 		}
 		
 		// [Authorize(Roles = "staff")]
@@ -59,7 +60,7 @@ namespace ASPNETWebApp45.Controllers
 			if (ModelState.IsValid) 
 			{
 				if (fileUpload != null)
-					product.PictureFilename = fileUpload.SaveAsJpegFile(product.Name);
+					product.PictureFilename = fileUpload.SaveAsImageFile(product.Name);
 				
 				_db.Products.Add(product);
 				_db.SaveChanges();
@@ -94,7 +95,7 @@ namespace ASPNETWebApp45.Controllers
 			_db.Entry(updatedProduct).State = EntityState.Modified;
 
 			if (fileUpload != null) // Update picture
-                updatedProduct.PictureFilename = fileUpload.SaveAsJpegFile(updatedProduct.Name);
+                updatedProduct.PictureFilename = fileUpload.SaveAsImageFile(updatedProduct.Name);
 			else // Retain the current picture
                 _db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
 

@@ -5,10 +5,10 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master-disabled
+      - master
   pull_request:
     branches:
-      - master-disabled
+      - master
 jobs:
   build:
     runs-on: windows-latest
@@ -32,26 +32,14 @@ jobs:
       run: nuget restore .\SharpDevelopMVC4\ASPNETWebApp45.sln
 
     - name: 🚧 Build Solution
-      run: msbuild.exe .\SharpDevelopMVC4\ASPNETWebApp45.sln /t:Rebuild
-                
-    - name: Create Build Directory
-      run: |
-        cd SharpDevelopMVC4
-        mkdir _build        
-        xcopy /E /Y bin _build\bin\
-        xcopy /E /Y App_Data _build\App_Data\
-        xcopy /E /Y Content _build\Content\
-        xcopy /E /Y Scripts _build\Scripts\
-        xcopy /E /Y Views _build\Views\
-        xcopy /Y Global.asax _build
-        xcopy /Y web.config _build
+      run: msbuild.exe .\SharpDevelopMVC4\ASPNETWebApp45.sln /t:Rebuild               
               
     - name: 📂 Publish to somee.com
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: ${{ secrets.SOMEE_SITENAME && secrets.SOMEE_SITENAME != '' ? secrets.SOMEE_SITENAME + '.somee.com' : secrets.SOMEE_USERNAME + '.somee.com' }}
+        server: "${{ vars.SOMEE_SITENAME }}.somee.com"
         username: "${{ secrets.SOMEE_USERNAME }}"
         password: "${{ secrets.SOMEE_PASSWORD }}"
-        local-dir: ./SharpDevelopMVC4/_build/
-        server-dir: "www.${{ secrets.SOMEE_USERNAME }}.somee.com/"
-        
+        local-dir: "./SharpDevelopMVC4/_publish/"
+        server-dir: "www.${{ vars.SOMEE_SITENAME }}.somee.com/"
+          

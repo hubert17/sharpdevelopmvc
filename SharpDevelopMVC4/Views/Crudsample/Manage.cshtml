@@ -1,18 +1,18 @@
 ﻿@model List<ASPNETWebApp45.Models.Product>
 
 @{
-	ViewBag.Title = "Manage";
+	ViewBag.Title = "Manage Products";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Manage Products</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="float-right">
 	@Html.Partial("_Create")
 </p>
 
 <div class="table-responsive">
-	<table class="table table-hover">
+	<table class="table table-hover text-nowrap">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -32,11 +32,15 @@
 					<td>@product.UnitPrice</td>
 					<td>@product.Unit</td>
 					<td>
-						<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+						@if (!string.IsNullOrEmpty(product.PictureFilename))
+						{
+							<img src="/uploadedimages/thumb/@product.PictureFilename" class="img-rounded" title="@product.Description" />
+						}
 					</td>
 					<td>
 						<a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>
 						<a href="/crudsample/Delete/@product.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+
 					</td>
 				</tr>
 			}

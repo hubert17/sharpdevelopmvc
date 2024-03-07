@@ -1,15 +1,14 @@
 ﻿@model ASPNETWebApp45.Models.Product
 
 @{
-	ViewBag.Title = "Edit";
+	ViewBag.Title = "Edit Product";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Product</h2>
+<h2>Edit Product - @Model.Name</h2>
 
-<form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal">
+<form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal mt-3 zoom-3">
 	@Html.AntiForgeryToken()
-
 	<!-- Text input-->
 	<div class="form-group row">
 		<label for="Id" class="col-sm-2 col-form-label">Id:</label>
@@ -20,13 +19,13 @@
 	<div class="form-group row">
 		<label for="Name" class="col-sm-2 col-form-label">Name:</label>
 		<div class="col-sm-10">
-			<input id="Name" name="Name" type="text" value="@Model.Name" class="form-control" required="required">
+			<input id="Name" name="Name" type="text" value="@Model.Name" class="form-control" required>
 		</div>
 	</div>
 	<div class="form-group row">
-		<label for="UnitPrice" class="col-sm-2 col-form-label">Unit Pric:e</label>
+		<label for="UnitPrice" class="col-sm-2 col-form-label">Unit Price:</label>
 		<div class="col-sm-10">
-			<input id="UnitPrice" name="UnitPrice" type="text" value="@Model.UnitPrice" class="form-control" required="required">
+			<input id="UnitPrice" name="UnitPrice" type="text" value="@Model.UnitPrice" class="form-control" required>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -43,12 +42,15 @@
 			<input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="form-control-file">
 		</div>
 	</div>
-	<div class="form-group row">
-		<label class="col-sm-2 col-form-label">Photo:</label>
-		<div class="col-sm-10">
-			<img src="/uploadedimages/@Model.PictureFilename" class="img-thumbnail" alt="@Model.Name Photo">
+	@if (!string.IsNullOrEmpty(Model.PictureFilename))
+	{
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Photo:</label>
+			<div class="col-sm-10">
+				<img src="/uploadedimages/@Model.PictureFilename" class="img-thumbnail" alt="@Model.Name Photo">
+			</div>
 		</div>
-	</div>
+	}
 
 	<!-- Button -->
 	<div class="form-group row">

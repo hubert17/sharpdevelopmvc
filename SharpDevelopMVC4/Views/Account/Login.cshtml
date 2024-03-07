@@ -5,19 +5,19 @@
 
 
 <div class="card fat">
-    <div class="card-body">
-        <h4 class="card-title">Login</h4>
+    <div class="card-body zoom">
+        <h4 class="card-title text-center">Login</h4>
         <form action="/account/Login" method="post">
             @Html.AntiForgeryToken()
             @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
             <div class="form-group">
-                <label for="username"> Email </label>
-                <input type="text" id="username" name="username" class="form-control" required autofocus />
+                <label for="username" class="col-form-label col-form-label-lg-mobile"> Email </label>
+                <input type="text" id="username" name="username" class="form-control form-control-lg-mobile" required autofocus />
             </div>
 
             <div class="form-group">
-                <label for="password"> Password <a href="#" class="float-right" style="display:none;"> Forgot Password? </a> </label>
-                <input type="password" id="password" name="password" class="form-control" required data-eye />
+                <label for="password" class="col-form-label col-form-label-lg-mobile"> Password <a href="#" class="float-right" style="display:none;"> Forgot Password? </a> </label>
+                <input type="password" id="password" name="password" class="form-control form-control-lg-mobile" required data-eye />
             </div>
 
             <div class="form-group">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-group m-0">
-                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                <button type="submit" class="btn btn-primary btn-block btn-lg-mobile"> Login </button>
             </div>
             <div class="mt-4 text-center">
                 Don't have an account? <a href="/account/register">Create One</a>

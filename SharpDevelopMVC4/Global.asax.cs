@@ -75,6 +75,9 @@ namespace ASPNETWebApp45
 			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 			config.EnsureInitialized();
+			
+		    ViewEngines.Engines.Clear();  
+    		ViewEngines.Engines.Add(new RazorViewEngine());  
 
 			// Configure Hangfire www.hangfire.io            
 			HangfireBootstrapper.Instance.Start();
@@ -133,7 +136,7 @@ namespace ASPNETWebApp45
 			public static void KeepAliveHangfire(string siteUrl = null, int minuteInterval = 5)
 			{
 				if (!string.IsNullOrEmpty(siteUrl))
-					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/home/pinger"), string.Format("*/{0} * * * *", minuteInterval));
+					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/pinger"), string.Format("*/{0} * * * *", minuteInterval));
 			}
 			
 			static readonly System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
