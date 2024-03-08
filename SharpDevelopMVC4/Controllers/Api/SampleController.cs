@@ -44,7 +44,8 @@ namespace ASPNETWebApp45.Controllers.Api
 			{
 				Id = 1,
 				Name = "Ariel",
-				Price = 7.50M
+				Price = 7.50M,
+				Username = User.Identity.Name
 			};
         	
 			return Ok(product);
