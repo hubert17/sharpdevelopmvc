@@ -24,9 +24,14 @@ namespace JWTAuth
 			DateTime expires = DateTime.UtcNow.AddMinutes(expireMinutes);
 		
 			var tokenHandler = new JwtSecurityTokenHandler();
+			
+			// Make jwt payload compatible with newer .NET Web API
+			tokenHandler.OutboundClaimTypeMap[ClaimTypes.NameIdentifier] = "sub";			
+			tokenHandler.OutboundClaimTypeMap[ClaimTypes.Name] = "name";
 		  
 			//create an identity and add claims to the user which we want to log in  
 			var claims = new List<Claim>();
+			claims.Add(new Claim(ClaimTypes.NameIdentifier, username));
 			claims.Add(new Claim(ClaimTypes.Name, username));
 			if (roles != null) 
 			{
@@ -37,8 +42,8 @@ namespace JWTAuth
 			}     	    
 	        
 			var claimsIdentity = new ClaimsIdentity(claims);        
-			var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
-			var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);		
+			var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
+			var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);		
 		
 			//create the jwt
 			var token = tokenHandler.CreateJwtSecurityToken(
