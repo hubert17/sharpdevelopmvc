@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using ASPNETWebApp45.Models;
+using JWTAuth;
 using X.PagedList;
 
 namespace ASPNETWebApp45.Controllers.Api
@@ -75,19 +76,17 @@ namespace ASPNETWebApp45.Controllers.Api
 			return Ok(song.Id);
 		}
 		
+		[ApiAuthorize]
 		[HttpPut]
 		public IHttpActionResult Update([FromBody]Song updatedSong)
 		{
-			var song = _db.Songs.Find(updatedSong.Id);
-			if(song != null)
+			var exists = _db.Songs.Any(x => x.Id == updatedSong.Id);
+			if(exists)
 			{
-				song.Artist = updatedSong.Artist;
-				song.Title = updatedSong.Title;
-				song.Genre = updatedSong.Genre;
-				_db.Entry(song).State = EntityState.Modified;
+				_db.Entry(updatedSong).State = EntityState.Modified;
 				_db.SaveChanges();
 				
-				return Ok(song);			
+				return Ok(updatedSong);			
 			}
 			else
 			{
@@ -96,6 +95,7 @@ namespace ASPNETWebApp45.Controllers.Api
 
 		}
 			
+		[ApiAuthorize]
 		[HttpDelete]
 		public IHttpActionResult Delete(int Id)
 		{
@@ -112,6 +112,7 @@ namespace ASPNETWebApp45.Controllers.Api
 			}
 		}
 
+		[ApiAuthorize]
 		[HttpGet]
 		[Route("api/Song/seed")]
 		public IHttpActionResult Seed(bool clearSongTable = false)

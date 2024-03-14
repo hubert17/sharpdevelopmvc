@@ -72,7 +72,15 @@ namespace JWTAuth
 				};
 
 				SecurityToken securityToken;
-				var tokenHandler = new JwtSecurityTokenHandler();				
+				var tokenHandler = new JwtSecurityTokenHandler();
+				// Make jwt payload compatible with newer .NET Web API
+				tokenHandler.InboundClaimTypeMap = new Dictionary<string, string>
+					{
+					    { "name", System.Security.Claims.ClaimTypes.Name },
+					    { "sub", System.Security.Claims.ClaimTypes.NameIdentifier },
+					    { "role", System.Security.Claims.ClaimTypes.Role },
+					};
+			
 				var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
 
 				return principal;
