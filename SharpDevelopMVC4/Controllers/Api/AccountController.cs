@@ -43,7 +43,7 @@ namespace ASPNETWebApp45.Controllers.Api
             {
                 var principal = JWTAuth.TokenManager.GetPrincipalFromExpiredToken(token);
                 var username = principal.Identity.Name;
-                var userRoles = principal.FindAll(System.Security.Claims.ClaimTypes.Role).Select(s => s.Value).ToArray();
+                var userRoles = principal.Claims.Where(x => x.Type == System.Security.Claims.ClaimTypes.Role).Select(s => s.Value).ToArray();
 
                 if (JWTAuth.RefreshTokenManager.IsValid(username, refreshToken))
                 {

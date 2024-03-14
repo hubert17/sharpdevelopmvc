@@ -68,7 +68,6 @@ namespace ASPNETWebApp45.Controllers.Api
 			
 		}
 		
-		[ApiAuthorize]
 		[HttpPost]
 		public IHttpActionResult Create([FromBody]Song song)
 		{			
@@ -81,16 +80,13 @@ namespace ASPNETWebApp45.Controllers.Api
 		[HttpPut]
 		public IHttpActionResult Update([FromBody]Song updatedSong)
 		{
-			var song = _db.Songs.Find(updatedSong.Id);
-			if(song != null)
+			var exists = _db.Songs.Any(x => x.Id == updatedSong.Id);
+			if(exists)
 			{
-				song.Artist = updatedSong.Artist;
-				song.Title = updatedSong.Title;
-				song.Genre = updatedSong.Genre;
-				_db.Entry(song).State = EntityState.Modified;
+				_db.Entry(updatedSong).State = EntityState.Modified;
 				_db.SaveChanges();
 				
-				return Ok(song);			
+				return Ok(updatedSong);			
 			}
 			else
 			{
@@ -99,6 +95,7 @@ namespace ASPNETWebApp45.Controllers.Api
 
 		}
 			
+		[ApiAuthorize]
 		[HttpDelete]
 		public IHttpActionResult Delete(int Id)
 		{
@@ -115,6 +112,7 @@ namespace ASPNETWebApp45.Controllers.Api
 			}
 		}
 
+		[ApiAuthorize]
 		[HttpGet]
 		[Route("api/Song/seed")]
 		public IHttpActionResult Seed(bool clearSongTable = false)
