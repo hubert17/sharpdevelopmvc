@@ -5,6 +5,10 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+
+</style>
+
 <h2>@ViewBag.Title</h2>
 
 <p class="float-right">
@@ -38,8 +42,8 @@
 						}
 					</td>
 					<td>
-						<a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>
-						<a href="/crudsample/Delete/@product.Id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+						<a href="/crudsample/Edit/@product.Id" class="btn btn-warning btn-sm action-button" title="Edit">🖉</a>
+						<a href="/crudsample/Delete/@product.Id" class="btn btn-danger btn-sm action-button" onclick="return confirm('Are you sure?')" title="Delete">🗙</a>
 
 					</td>
 				</tr>

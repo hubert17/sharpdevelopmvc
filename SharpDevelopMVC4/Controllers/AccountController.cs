@@ -21,10 +21,11 @@ namespace ASPNETWebApp45.Controllers
 		[HttpPost]	        
         [ValidateAntiForgeryToken]		
 		public ActionResult Login(string username, string password, bool rememberme = false, string returnUrl = "/")
-		{				
-			var user = UserAccountCSV.Authenticate(username, password);
-			if(user != null) // If not null then it's a valid login
-		    {							
+		{
+			var valid = UserAccount.Authenticate(username, password);
+			if (valid)
+			{
+				var user = UserAccount.GetCurrentUser();
 				var authTicket = new FormsAuthenticationTicket(
 				    1,                             	// version
 				    user.UserName,               	// user name
@@ -40,22 +41,23 @@ namespace ASPNETWebApp45.Controllers
 				System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
 				
 				Session["user"] = user.UserName;
-				
-				if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
+
+				if (username.ToLower() == UserAccount.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccount.DEFAULT_ADMIN_LOGIN.ToLower())
 					return RedirectToAction("ChangePassword");
 				else
 					return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
 		    }
 		    
 		    // invalid username or password
-		     TempData["alert"] = "Invalid username or password";
+		    TempData["alert"] = "Invalid username or password";
 			return RedirectToAction("Login", new { ReturnUrl = returnUrl });
 		}
 		
 		public ActionResult Logoff()
 		{
 		    FormsAuthentication.SignOut();
-		    return RedirectToAction("Index", "Home");
+			Session.Abandon();
+			return RedirectToAction("Index", "Home");
 		}
 
 		[Authorize]
@@ -66,9 +68,10 @@ namespace ASPNETWebApp45.Controllers
 
 		[HttpPost]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public ActionResult ChangePassword(string currentPassword, string newPassword)
 		{
-			bool success = UserAccountCSV.ChangePassword(User.Identity.Name, currentPassword, newPassword);
+			bool success = UserAccount.ChangePassword(User.Identity.Name, currentPassword, newPassword);
 			if (success)
 				TempData["alertbox"] = "Password changed successfully.";
 			else
@@ -87,8 +90,8 @@ namespace ASPNETWebApp45.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Register(string username, string password, string role = "")
 		{
-			if(role.ToLower() == UserAccountCSV.DEFAULT_ADMIN_ROLENAME) role = "user"; // Prevent unauthorized creation of admin account			
-			var result = UserAccountCSV.Create(username, password, role);
+			if(role.ToLower().Contains(UserAccount.DEFAULT_ADMIN_ROLENAME)) role = "user"; // Prevent unauthorized creation of admin account			
+			var result = UserAccount.Create(username, password, role);
 			if (result != null)
 			{
 				TempData["alert"] = String.Format("Account successfully created. Welcome {0}!", username);
@@ -106,7 +109,7 @@ namespace ASPNETWebApp45.Controllers
 		{		
 			return View();
 		}
-		
+
 		// /Account/Deactivate?username=user01
 		[Authorize(Roles = "admin")]
 		public ActionResult Deactivate(string username)
@@ -115,19 +118,12 @@ namespace ASPNETWebApp45.Controllers
 				TempData["alert"] = "Admin account cannot be deactivated.";
 			else
 			{
-				UserAccountCSV.SetUserActivation(username, false);
+				UserAccount.SetUserActivation(username, false);
 				TempData["alertbox"] = username + " is now deactivated.";
 			}
 
 			return RedirectToAction("Index", "Home");
 		}
-		
-		[Authorize(Roles="admin")]
-		[Route("/account.csv")]
-		public ActionResult GetUsersCSV()
-		{
-			var file = UserAccountCSV.GetCsvFile();
-			return File(file, "text/csv");	
-		}
+
 	}
 }

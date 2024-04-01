@@ -171,3 +171,10 @@ button[type="submit"]:not(.no-min-width) {
 	    border-radius: .3rem;
 	}			
 }
+
+tr .action-button {
+    visibility: hidden;
+}
+tr:hover .action-button {
+    visibility: visible;
+}
