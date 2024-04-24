@@ -63,6 +63,23 @@ namespace ASPNETWebApp45.Controllers.Api
             return BadRequest("Invalid Token or Refresh Token");
         }
         
+        [HttpPost]
+        [Route("TOKENLOGOUT")]
+        public IHttpActionResult SignOutToken(string token = "")
+        {
+            try
+            {
+                var principal = JWTAuth.TokenManager.GetPrincipalFromExpiredToken(token);
+            	var username = principal.Identity.Name;
+
+                if (JWTAuth.RefreshTokenManager.Remove(username))
+					return Ok("Refresh Token successfully removed. Account has been signed out.");
+            }
+            catch { }
+
+            return BadRequest("Invalid Token");
+        }  
+        
 		[HttpPost]
 		[Route("api/account/register")]
 		public IHttpActionResult RegisterUser(string username, string password, string role = "") // You can add more parameter here ex LastName, FirstName etc

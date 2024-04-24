@@ -54,6 +54,24 @@ namespace JWTAuth
 			}
 			catch { }
 		}
+		
+		public static bool Remove(string username)
+		{
+			try
+			{
+				var requestTokens = Read();
+				var tokenToRemove = requestTokens.Single(x => x.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+				if (tokenToRemove != null)
+				{
+					requestTokens.Remove(tokenToRemove);
+					Write(requestTokens);
+					return true;
+				}
+			}
+			catch { }
+			
+			return false;
+		}
 
 		private static List<RefreshTokenModel> Read()
 		{
