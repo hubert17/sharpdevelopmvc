@@ -25,6 +25,25 @@ namespace ASPNETWebApp45.Controllers.Api
     /// </summary>
     public class SampleController : ApiController
 	{
+    	// Wake up paused Azure database
+		[HttpGet]
+		[Route("api/sample/WakeUpAzureDb")]
+		public IHttpActionResult Get()
+		{
+			var dateQuery = new MyApp45DbContext().Database.SqlQuery<DateTime>("SELECT getdate()");
+			DateTime dbServerDate;
+			try
+			{
+				dbServerDate = dateQuery.First();
+			}
+			catch
+			{
+				dbServerDate = dateQuery.First();
+			}	
+			
+			return Ok(new { awaken = true, dbServerDate});
+		}
+		
 		// GET: WeatherForecast
 		[HttpGet]
 		[Route("api/sample/getWeather")]

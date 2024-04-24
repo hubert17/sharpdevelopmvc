@@ -64,6 +64,22 @@ namespace ASPNETWebApp45.Controllers.Api
 
             return BadRequest("Invalid Token or Refresh Token");
         }
+        
+        [HttpPost]
+        [Route("TOKENLOGOUT")]
+        public IHttpActionResult SignOutToken(string username, string refreshToken)
+        {
+            try
+            {
+                if (JWTAuth.RefreshTokenManager.Remove(username, refreshToken))
+                {
+                    return Ok("Refresh Token successfully removed. Account has been signed out.");
+                }
+            }
+            catch { }
+
+            return BadRequest("Invalid User or Refresh Token");
+        }        
 
 
         [HttpPost]
