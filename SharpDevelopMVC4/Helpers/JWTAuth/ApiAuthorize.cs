@@ -24,7 +24,7 @@ namespace JWTAuth
                 try
                 {
                     var now = DateTime.UtcNow;
-                    const string secret = JWTAuth.TokenManager.secret;
+                    string secret = JWTAuth.TokenManager.secret;
                     var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
 
                     SecurityToken securityToken;

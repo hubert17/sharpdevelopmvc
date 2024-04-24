@@ -55,12 +55,12 @@ namespace JWTAuth
 			catch { }
 		}
 		
-		public static bool Remove(string username, string refreshToken)
-        {
+		public static bool Remove(string username)
+		{
 			try
 			{
 				var requestTokens = Read();
-				var tokenToRemove = requestTokens.Single(x => x.UserName.Equals(username, StringComparison.OrdinalIgnoreCase) && x.Token == refreshToken);
+				var tokenToRemove = requestTokens.Single(x => x.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
 				if (tokenToRemove != null)
 				{
 					requestTokens.Remove(tokenToRemove);

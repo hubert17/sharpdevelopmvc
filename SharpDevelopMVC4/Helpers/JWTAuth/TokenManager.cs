@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using System.Configuration;
+using CsvHelper;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,11 @@ using System.Text;
 namespace JWTAuth
 {
 	public static class TokenManager
-	{
-		// YOU MUST CHANGE THIS WITH YOUR OWN SECRET!!!
-		public const string secret = "SEiL4IiTEq4EW155ySS1T25GtXo68VVUvSNbsUw8Vm53YI6rBao86Fpne5venhn";
-
+	{		
+		public static string secret = ConfigurationManager.AppSettings["APIsecret"];
+		
 		public static string CreateToken(string username, string[] roles = null, int expireMinutes = 20)
-		{
+		{		
 			//Set issued at date
 			DateTime issuedAt = DateTime.UtcNow;
 			//set the time when it expires

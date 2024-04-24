@@ -67,20 +67,22 @@ namespace ASPNETWebApp45.Controllers.Api
         
         [HttpPost]
         [Route("TOKENLOGOUT")]
-        public IHttpActionResult SignOutToken(string username, string refreshToken)
+        public IHttpActionResult SignOutToken(string token = "")
         {
             try
             {
-                if (JWTAuth.RefreshTokenManager.Remove(username, refreshToken))
+                var principal = JWTAuth.TokenManager.GetPrincipalFromExpiredToken(token);
+            	var username = principal.Identity.Name;
+
+                if (JWTAuth.RefreshTokenManager.Remove(username))
                 {
                     return Ok("Refresh Token successfully removed. Account has been signed out.");
                 }
             }
             catch { }
 
-            return BadRequest("Invalid User or Refresh Token");
-        }        
-
+            return BadRequest("Invalid Token");
+        }    
 
         [HttpPost]
         [Route("api/account/register")]
