@@ -6,6 +6,7 @@ using System;
 using Swashbuckle.Swagger;
 using System.Web.Http.Description;
 using System.Collections.Generic;
+using System.Linq;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -27,7 +28,25 @@ namespace ASPNETWebApp45
                     // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                     //
                     //c.RootUrl(req => GetRootUrlFromAppConfig());
-                    c.RootUrl(httpReq => string.Format("{0}://{1}", httpReq.RequestUri.Scheme, httpReq.RequestUri.Authority) );
+					c.RootUrl(req =>
+					{
+					    var scheme = req.Headers.Contains("X-Forwarded-Proto")
+					        ? req.Headers.GetValues("X-Forwarded-Proto").FirstOrDefault()
+					        : req.RequestUri.Scheme;
+					
+					    var host = req.Headers.Contains("X-Forwarded-Host")
+					        ? req.Headers.GetValues("X-Forwarded-Host").FirstOrDefault()
+					        : req.RequestUri.Authority;
+					
+					    // Preserve the port when running locally
+					    if (!host.StartsWith("localhost") && !host.StartsWith("127.") && host.Contains(":"))
+					    {
+					        host = host.Split(':')[0]; // Strip port only if not localhost
+					    }
+					
+					    return string.Format("{0}://{1}", scheme, host);
+					});
+
 
                     // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                     // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
