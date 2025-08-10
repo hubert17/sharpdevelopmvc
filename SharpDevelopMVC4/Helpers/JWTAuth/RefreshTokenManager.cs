@@ -71,7 +71,7 @@ namespace JWTAuth
 			catch { }
 			
 			return false;
-		}
+		}		
 
 		private static List<RefreshTokenModel> Read()
 		{
