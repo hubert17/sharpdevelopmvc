@@ -9,7 +9,7 @@ namespace ASPNETWebApp48.Models
     // [DbConfigurationType(typeof(MySqlEFConfiguration))] // Uncomment when using MySQL data provider
     public class MyApp48DbContext : DbContext
     {
-        public MyApp48DbContext() : base("MyApp48Db") // name_of_dbconnection_string
+        public MyApp48DbContext() : base("MyAccessDb") // name_of_dbconnection_string
         {
         }
 

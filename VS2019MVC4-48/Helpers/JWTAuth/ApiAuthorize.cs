@@ -24,11 +24,19 @@ namespace JWTAuth
                 try
                 {
                     var now = DateTime.UtcNow;
-                    const string secret = JWTAuth.TokenManager.secret;
+                    string secret = JWTAuth.TokenManager.secret;
                     var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
 
                     SecurityToken securityToken;
                     var tokenHandler = new JwtSecurityTokenHandler();
+
+                    // Make jwt payload compatible with newer .NET Web API
+                    tokenHandler.InboundClaimTypeMap = new Dictionary<string, string>
+                    {
+                        { "name", System.Security.Claims.ClaimTypes.Name },
+                        { "sub", System.Security.Claims.ClaimTypes.NameIdentifier },
+                    };
+
                     var validationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,

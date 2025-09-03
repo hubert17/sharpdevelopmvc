@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace ASPNETWebApp48.Controllers.Api
 {
     public class AccountController : ApiController
-	{    	
+    {
         [HttpPost]
         [Route("TOKEN")]
         public IHttpActionResult GetToken(string username, string password)
@@ -20,15 +20,15 @@ namespace ASPNETWebApp48.Controllers.Api
                 var user = UserAccount.GetCurrentUser();
                 if (username.Contains("@"))
                     if (username.Split('@')[0].ToLower().Equals(UserAccount.DEFAULT_ADMIN_LOGIN.ToLower()))
-                         return BadRequest("Please change your password");
+                        return BadRequest("Please change your password");
 
                 var userRoles = user.Roles.Split(',');
-                var data = new 
-                { 
-                	userId = user.UserName,
-                	userName = user.UserName,
-                	userRoles = userRoles,
-                	token = JWTAuth.TokenManager.CreateToken(username, userRoles),
+                var data = new
+                {
+                    userId = user.UserName,
+                    userName = user.UserName,
+                    userRoles = userRoles,
+                    token = JWTAuth.TokenManager.CreateToken(username, userRoles),
                     refreshToken = JWTAuth.RefreshTokenManager.GenerateRefreshToken(username)
                 };
                 return Ok(data);
@@ -45,7 +45,7 @@ namespace ASPNETWebApp48.Controllers.Api
             {
                 var principal = JWTAuth.TokenManager.GetPrincipalFromExpiredToken(token);
                 var username = principal.Identity.Name;
-                var userRoles = principal.FindAll(System.Security.Claims.ClaimTypes.Role).Select(s => s.Value).ToArray();
+                var userRoles = principal.Claims.Where(x => x.Type == System.Security.Claims.ClaimTypes.Role).Select(s => s.Value).ToArray();
 
                 if (JWTAuth.RefreshTokenManager.IsValid(username, refreshToken))
                 {
@@ -65,6 +65,24 @@ namespace ASPNETWebApp48.Controllers.Api
             return BadRequest("Invalid Token or Refresh Token");
         }
 
+        [HttpPost]
+        [Route("TOKENLOGOUT")]
+        public IHttpActionResult SignOutToken(string token = "")
+        {
+            try
+            {
+                var principal = JWTAuth.TokenManager.GetPrincipalFromExpiredToken(token);
+                var username = principal.Identity.Name;
+
+                if (JWTAuth.RefreshTokenManager.Remove(username))
+                {
+                    return Ok("Refresh Token successfully removed. Account has been signed out.");
+                }
+            }
+            catch { }
+
+            return BadRequest("Invalid Token");
+        }
 
         [HttpPost]
         [Route("api/account/register")]

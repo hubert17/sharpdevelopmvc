@@ -1,18 +1,9 @@
 ﻿using JWTAuth;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.Drawing.Printing;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using ASPNETWebApp48.Models;
 
 namespace ASPNETWebApp48.Controllers.Api
@@ -21,31 +12,50 @@ namespace ASPNETWebApp48.Controllers.Api
     /// Description of SampleController.
     /// </summary>
     public class SampleController : ApiController
-	{
-		// GET: WeatherForecast
-		[HttpGet]
-		[Route("api/sample/getWeather")]
-		public IHttpActionResult Get(int maxItem = 5)
-		{
+    {
+        // Wake up paused Azure database
+        [HttpGet]
+        [Route("api/sample/WakeUpAzureDb")]
+        public IHttpActionResult Get()
+        {
+            var dateQuery = new MyApp48DbContext().Database.SqlQuery<DateTime>("SELECT getdate()");
+            DateTime dbServerDate;
+            try
+            {
+                dbServerDate = dateQuery.First();
+            }
+            catch
+            {
+                dbServerDate = dateQuery.First();
+            }
+
+            return Ok(new { awaken = true, dbServerDate });
+        }
+
+        // GET: WeatherForecast
+        [HttpGet]
+        [Route("api/sample/getWeather")]
+        public IHttpActionResult Get(int maxItem = 5)
+        {
             var forecasts = WeatherForecast.SampleForecasts(maxItem);
 
-			return Ok(forecasts);
-		}
+            return Ok(forecasts);
+        }
 
-		[ApiAuthorize]
-		[HttpGet]
-		[Route("api/sample/getproduct")]
-		public IHttpActionResult GetProduct()
-		{
-			var product = new
-			{
-				Id = 1,
-				Name = "Ariel",
-				Price = 7.50M
-			};
-        	
-			return Ok(product);
-		}
+        [ApiAuthorize]
+        [HttpGet]
+        [Route("api/sample/getproduct")]
+        public IHttpActionResult GetProduct()
+        {
+            var product = new
+            {
+                Id = 1,
+                Name = "Ariel",
+                Price = 7.50M
+            };
+
+            return Ok(product);
+        }
 
         [HttpPost]
         [FileUpload.SwaggerForm()]
@@ -78,8 +88,6 @@ namespace ASPNETWebApp48.Controllers.Api
             var filePath = postedFile.SaveToFolder();
             return Ok(filePath);
         }
-
-
 
         [HttpPost]
         [Route("api/sample/sendmail")]
