@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,7 +25,7 @@ namespace JWTAuth
                 {
                     var now = DateTime.UtcNow;
                     string secret = JWTAuth.TokenManager.secret;
-                    var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
+                    var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secret));
 
                     SecurityToken securityToken;
                     var tokenHandler = new JwtSecurityTokenHandler();
@@ -48,8 +48,9 @@ namespace JWTAuth
                     };
 
                     //extract and assign the user of the jwt
-                    Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
-                    HttpContext.Current.User = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                    var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                    Thread.CurrentPrincipal = principal;
+                    HttpContext.Current.User = principal;
                     return true;
                 }
                 catch (SecurityTokenValidationException e)

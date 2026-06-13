@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +8,7 @@ using System.Web.Hosting;
 
 public static class SimpleLogger
 {
+    private static readonly object _lock = new object();
     public static string DatetimeFormat;
     public static string Filename;
 
@@ -29,7 +30,7 @@ public static class SimpleLogger
             (new FileInfo(Filename)).Directory.Create();
             // Log file header line
             string logHeader = Filename + " is created." + Environment.NewLine;
-            WriteLine(DateTime.Now.ToString(DatetimeFormat) + " " + logHeader, false);
+            WriteLine(DateTime.UtcNow.ToString(DatetimeFormat) + " " + logHeader, false);
         }
     }
 
@@ -52,12 +53,28 @@ public static class SimpleLogger
     }
 
     /// <summary>
+    /// Log an error message with exception details
+    /// </summary>
+    public static void LogError(string text, Exception ex)
+    {
+        WriteFormattedLog(LogLevel.ERROR, text + (ex != null ? Environment.NewLine + ex.ToString() : ""));
+    }
+
+    /// <summary>
     /// Log a fatal error message
     /// </summary>
     /// <param name="text">Message</param>
     public static void LogFatal(string text)
     {
         WriteFormattedLog(LogLevel.FATAL, text);
+    }
+
+    /// <summary>
+    /// Log a fatal error message with exception details
+    /// </summary>
+    public static void LogFatal(string text, Exception ex)
+    {
+        WriteFormattedLog(LogLevel.FATAL, text + (ex != null ? Environment.NewLine + ex.ToString() : ""));
     }
 
     /// <summary>
@@ -119,14 +136,17 @@ public static class SimpleLogger
     {
         if (!string.IsNullOrEmpty(text))
         {
-            try
+            lock (_lock)
             {
-                if (append)
-                    File.AppendAllText(Filename, text);
-                else
-                    File.WriteAllText(Filename, text);
+                try
+                {
+                    if (append)
+                        File.AppendAllText(Filename, text);
+                    else
+                        File.WriteAllText(Filename, text);
+                }
+                catch { }
             }
-            catch { }
         }
     }
 

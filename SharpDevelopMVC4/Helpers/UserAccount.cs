@@ -1,4 +1,4 @@
-﻿using ASPNETWebApp45.Models;
+using ASPNETWebApp45.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,6 @@ public partial class UserAccount
 {
     // Change this to your desired default admin login and password
     public const string DEFAULT_ADMIN_LOGIN = "admin";
-    // Change this to your DbContext class
-    private static MyApp45DbContext _db = new MyApp45DbContext();
-
 
     #region UserAccountRepository
     [Key]
@@ -34,11 +31,9 @@ public partial class UserAccount
 
     public const string DEFAULT_ADMIN_ROLENAME = "admin";
 
-    private static UserAccount CurrentUser = null;
-
-    private static UserAccount GetSingleUser(string userName)
+    private static UserAccount GetSingleUser(MyApp45DbContext db, string userName)
     {
-        return _db.Users.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+        return db.Users.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
     }
 
     public static bool Authenticate(string userName, string userPassword)
@@ -52,20 +47,22 @@ public partial class UserAccount
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(userPassword))
             return false;
 
-        var user = GetSingleUser(userName);
-        if (user == null)
-            return false;
-        if (!user.IsActive)
-            return false;
-
-        bool valid = VerifyPasswordHash(userPassword, user.PasswordSalt, user.PasswordHash);
-        if (valid)
+        using (var db = new MyApp45DbContext())
         {
-            user.LastLogin = DateTime.Now;
-            _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _db.SaveChanges();
-            CurrentUser = user; // Set current user
-            return true;
+            var user = GetSingleUser(db, userName);
+            if (user == null)
+                return false;
+            if (!user.IsActive)
+                return false;
+
+            bool valid = VerifyPasswordHash(userPassword, user.PasswordSalt, user.PasswordHash);
+            if (valid)
+            {
+                user.LastLogin = DateTime.Now;
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
         }
 
         return false;
@@ -100,33 +97,39 @@ public partial class UserAccount
             UserName = userName.Trim().ToLower()
         };        
 
-        var userExists = _db.Users.Any(x => x.UserName == user.UserName);
-        if (userExists)
-            return null;
-
-        // Create PasswordHash
-        using (var hmac = new System.Security.Cryptography.HMACSHA512())
+        using (var db = new MyApp45DbContext())
         {
-            user.PasswordSalt = hmac.Key;
-            user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userPassword));
+            var userExists = db.Users.Any(x => x.UserName == user.UserName);
+            if (userExists)
+                return null;
+
+            // Create PasswordHash
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                user.PasswordSalt = hmac.Key;
+                user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(userPassword));
+            }
+
+            user.Roles = System.Text.RegularExpressions.Regex.Replace(userRoles, @"\s+", "");
+            user.CreatedOn = DateTime.Now;
+            user.IsActive = !requiresActivation;
+
+            db.Users.Add(user);
+            db.SaveChanges();
         }
-
-        user.Roles = System.Text.RegularExpressions.Regex.Replace(userRoles, @"\s+", "");
-        user.CreatedOn = DateTime.Now;
-        user.IsActive = !requiresActivation;
-
-        _db.Users.Add(user);
-        _db.SaveChanges();
 
         return user.Id;
     }
 
     private static void CreateAdmin()
     {
-        var hasAdmin = _db.Users.Any(x => x.Roles == DEFAULT_ADMIN_ROLENAME);
-        if (!hasAdmin)
+        using (var db = new MyApp45DbContext())
         {
-            Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_ROLENAME);
+            var hasAdmin = db.Users.Any(x => x.Roles == DEFAULT_ADMIN_ROLENAME);
+            if (!hasAdmin)
+            {
+                Create(DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_LOGIN, DEFAULT_ADMIN_ROLENAME);
+            }
         }
     }
 
@@ -138,55 +141,66 @@ public partial class UserAccount
         if (forceChange == false && string.IsNullOrWhiteSpace(userPassword))
             return false;
 
-        var user = GetSingleUser(userName);
-        if (user == null)
-            return false;
-
-        var validPassword = !forceChange ? VerifyPasswordHash(userPassword, user.PasswordSalt, user.PasswordHash) : true;
-        if (validPassword)
+        using (var db = new MyApp45DbContext())
         {
-            // Overwrite with new PasswordHash
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                user.PasswordSalt = hmac.Key;
-                user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(newPassword));
-            }
+            var user = GetSingleUser(db, userName);
+            if (user == null)
+                return false;
 
-            _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _db.SaveChanges();
-            return true;
+            var validPassword = !forceChange ? VerifyPasswordHash(userPassword, user.PasswordSalt, user.PasswordHash) : true;
+            if (validPassword)
+            {
+                // Overwrite with new PasswordHash
+                using (var hmac = new System.Security.Cryptography.HMACSHA512())
+                {
+                    user.PasswordSalt = hmac.Key;
+                    user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(newPassword));
+                }
+
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
         }
-        else
-            return false;
+        return false;
 
     }
 
     public static List<UserAccount> GetAll()
     {
-        var users = _db.Users.ToList();
-        users.ForEach(x =>
+        using (var db = new MyApp45DbContext())
         {
-            x.PasswordHash = null;
-            x.PasswordSalt = null;
-        });
-        return users;
+            var users = db.Users.ToList();
+            users.ForEach(x =>
+            {
+                x.PasswordHash = null;
+                x.PasswordSalt = null;
+            });
+            return users;
+        }
     }
 
     public static List<UserAccount> GetAllUsersInRole(string role)
     {
-        var users = _db.Users.Where(x => x.Roles.Split(',').Contains(role)).ToList();
-        users.ForEach(x =>
+        using (var db = new MyApp45DbContext())
         {
-            x.PasswordHash = null;
-            x.PasswordSalt = null;
-        });
-        return users;
+            var users = db.Users.ToList().Where(x => x.Roles.Split(',').Contains(role)).ToList();
+            users.ForEach(x =>
+            {
+                x.PasswordHash = null;
+                x.PasswordSalt = null;
+            });
+            return users;
+        }
     }
 
     public static UserAccount GetUserById(Guid userId)
     {
-        var user = _db.Users.Find(userId);
-        return user;
+        using (var db = new MyApp45DbContext())
+        {
+            var user = db.Users.Find(userId);
+            return user;
+        }
     }
 
     public static UserAccount GetUserByUserName(string userName)
@@ -195,12 +209,10 @@ public partial class UserAccount
             if (userName.Split('@')[0].ToLower().Equals(DEFAULT_ADMIN_LOGIN.ToLower()))
                 userName = DEFAULT_ADMIN_LOGIN;
 
-        return GetSingleUser(userName);
-    }
-
-    public static UserAccount GetCurrentUser()
-    {
-        return CurrentUser;
+        using (var db = new MyApp45DbContext())
+        {
+            return GetSingleUser(db, userName);
+        }
     }
 
     public static string[] GetUserRoles(Guid userId)
@@ -215,25 +227,28 @@ public partial class UserAccount
     public static string[] GetUserRoles(string userName)
     {
         var user = GetUserByUserName(userName);
-        return GetUserRoles(user.Id);
+        if (user != null)
+            return GetUserRoles(user.Id);
+        else
+            return new string[] { string.Empty };
     }
 
     public static string SetUserActivation(string userName, bool isActive)
     {
-        var user = GetSingleUser(userName);
-        if (user != null)
+        using (var db = new MyApp45DbContext())
         {
-            user.IsActive = isActive;
-            _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _db.SaveChanges();
-            return "success";
+            var user = GetSingleUser(db, userName);
+            if (user != null)
+            {
+                user.IsActive = isActive;
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return "success";
+            }
         }
-        else
-            return "failed";
+        return "failed";
     }
     
     #endregion
 
 }
-
-

@@ -309,6 +309,7 @@ namespace ASPNETWebApp45
                     required = true,
                     type = "file"
                 });
+                operation.consumes = operation.consumes ?? new List<string>();
                 operation.consumes.Add("multipart/form-data");
             }
         }

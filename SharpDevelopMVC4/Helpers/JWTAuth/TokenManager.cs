@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using CsvHelper;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,7 +14,7 @@ namespace JWTAuth
 {
 	public static class TokenManager
 	{		
-		public static string secret = ConfigurationManager.AppSettings["APIsecret"];
+		public static string secret = "f848bcae3399961afba711f8ced6fc3c"; //ConfigurationManager.AppSettings["APIsecret"];
 		
 		public static string CreateToken(string username, string[] roles = null, int expireMinutes = 20)
 		{		
@@ -42,7 +42,7 @@ namespace JWTAuth
 			}     	    
 	        
 			var claimsIdentity = new ClaimsIdentity(claims);        
-			var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret));
+			var securityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secret));
 			var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);		
 		
 			//create the jwt
@@ -68,7 +68,7 @@ namespace JWTAuth
 					ValidateAudience = false,
 					ValidateLifetime = false,
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secret))
+					IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secret))
 				};
 
 				SecurityToken securityToken;

@@ -1,4 +1,4 @@
-﻿using CsvHelper;
+using CsvHelper;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,17 +13,20 @@ namespace JWTAuth
 {
 	public static class RefreshTokenManager
     {
+		private static readonly object _fileLock = new object();
+
 		// All about Refresh Token
 		public static string GenerateRefreshToken(string username)
 		{
-			const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-
 			using (var rng = RandomNumberGenerator.Create())
 			{
 				var randomBytes = new byte[32]; // tokenLength
 				rng.GetBytes(randomBytes);
 
-				var rToken = new string(randomBytes.Select(b => allowedChars[b % allowedChars.Length]).ToArray());
+				var rToken = Convert.ToBase64String(randomBytes)
+					.Replace("+", "")
+					.Replace("/", "")
+					.Replace("=", "");
 
 				Save(username, rToken);
 
@@ -41,15 +44,12 @@ namespace JWTAuth
 			try
 			{
 				var requestTokens = Read();
-				if (requestTokens.Any(a => a.UserName.Equals(username, StringComparison.OrdinalIgnoreCase)))
-					requestTokens.Single(x => x.UserName == username).Token = refreshToken;
+				var existing = requestTokens.FirstOrDefault(a => a.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+				if (existing != null)
+					existing.Token = refreshToken;
 				else
 					requestTokens.Add(new RefreshTokenModel(username, refreshToken));
 
-				//requestTokens.Where(x => x.UserName == username).ToList().ForEach(x =>
-				//{
-				//	x.Token = rToken;
-				//});
 				Write(requestTokens);
 			}
 			catch { }
@@ -60,7 +60,7 @@ namespace JWTAuth
 			try
 			{
 				var requestTokens = Read();
-				var tokenToRemove = requestTokens.Single(x => x.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+				var tokenToRemove = requestTokens.FirstOrDefault(x => x.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
 				if (tokenToRemove != null)
 				{
 					requestTokens.Remove(tokenToRemove);
@@ -75,26 +75,32 @@ namespace JWTAuth
 
 		private static List<RefreshTokenModel> Read()
 		{
-			var csvFile = GetRefreshTokenCsvFile();
-			if (File.Exists(csvFile))
+			lock (_fileLock)
 			{
-				using (var reader = new StreamReader(csvFile))
-				using (var csv = new CsvReader(reader))
+				var csvFile = GetRefreshTokenCsvFile();
+				if (File.Exists(csvFile))
 				{
-					return csv.GetRecords<RefreshTokenModel>().ToList();
+					using (var reader = new StreamReader(csvFile))
+					using (var csv = new CsvReader(reader))
+					{
+						return csv.GetRecords<RefreshTokenModel>().ToList();
+					}
 				}
-			}
 
-			return new List<RefreshTokenModel>();
+				return new List<RefreshTokenModel>();
+			}
 		}
 
 		private static void Write(List<RefreshTokenModel> records)
 		{
-			var csvFile = GetRefreshTokenCsvFile();
-			using (var writer = new StreamWriter(csvFile))
-			using (var csv = new CsvWriter(writer))
+			lock (_fileLock)
 			{
-				csv.WriteRecords(records);
+				var csvFile = GetRefreshTokenCsvFile();
+				using (var writer = new StreamWriter(csvFile))
+				using (var csv = new CsvWriter(writer))
+				{
+					csv.WriteRecords(records);
+				}
 			}
 		}
 

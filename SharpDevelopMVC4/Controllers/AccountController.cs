@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -44,7 +44,13 @@ namespace ASPNETWebApp45.Controllers
 				if (username.ToLower() == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower() && password == UserAccountCSV.DEFAULT_ADMIN_LOGIN.ToLower())
 					return RedirectToAction("ChangePassword");
 				else
+				{
+					if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+					{
+						return Redirect(returnUrl);
+					}
 					return Redirect(FormsAuthentication.GetRedirectUrl(user.UserName, rememberme)); // auth succeed				
+				}
 		    }
 		    
 		    // invalid username or password
@@ -66,6 +72,7 @@ namespace ASPNETWebApp45.Controllers
 
 		[HttpPost]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public ActionResult ChangePassword(string currentPassword, string newPassword)
 		{
 			bool success = UserAccountCSV.ChangePassword(User.Identity.Name, currentPassword, newPassword);
@@ -77,6 +84,7 @@ namespace ASPNETWebApp45.Controllers
 			return RedirectToAction("Logoff");
 		}
 
+		[AllowAnonymous]
 		public ActionResult Register()
 		{
 			return View();
@@ -107,8 +115,10 @@ namespace ASPNETWebApp45.Controllers
 			return View();
 		}
 		
-		// /Account/Deactivate?username=user01
+		// /Account/Deactivate
+		[HttpPost]
 		[Authorize(Roles = "admin")]
+		[ValidateAntiForgeryToken]
 		public ActionResult Deactivate(string username)
 		{
 			if (username == "admin")

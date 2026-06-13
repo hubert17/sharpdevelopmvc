@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Created by SharpDevelop.
  * User: Gabs
  * Date: 19/07/2019
@@ -73,7 +73,7 @@ namespace ASPNETWebApp45
 			// Configure Hangfire www.hangfire.io            
 			Hangfire.GlobalConfiguration.Configuration.UseMemoryStorage();
 			_backgroundJobServer = new Hangfire.BackgroundJobServer();    
-			Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")			
+			//Pinger.KeepAliveHangfire(); // KeepAliveHangfire("https://mysite.com")			
 		}
         
         protected void Application_End(object sender, EventArgs e)
@@ -84,20 +84,24 @@ namespace ASPNETWebApp45
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
 		{
 			HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-			if (authCookie == null || authCookie.Value == "")
+			if (authCookie == null || string.IsNullOrEmpty(authCookie.Value))
 				return;
 
 			var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+			if (authTicket == null || authTicket.Expired)
+				return;
 
 			var formsIdentity = new FormsIdentity(authTicket);
 
 			var claimsIdentity = new ClaimsIdentity(formsIdentity);
 
-			var roles = authTicket.UserData.Split(',');
-
-			foreach (var role in roles)
+			if (!string.IsNullOrEmpty(authTicket.UserData))
 			{
-				claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+				var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (var role in roles)
+				{
+					claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role.Trim()));
+				}
 			}
 
 			var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -129,9 +133,19 @@ namespace ASPNETWebApp45
 			}
 			
 			static readonly System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
-			public static void Ping(string url)
+			public static async System.Threading.Tasks.Task Ping(string url)
 			{
-				client.GetAsync(url);
+				try
+				{
+					using (var response = await client.GetAsync(url).ConfigureAwait(false))
+					{
+						// Dispose handles cleaning up resources immediately
+					}
+				}
+				catch (Exception ex)
+				{
+					SimpleLogger.LogError("Pinger failed to hit URL: " + url, ex);
+				}
 			}
 		}
 

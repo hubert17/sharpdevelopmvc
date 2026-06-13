@@ -1,4 +1,4 @@
-﻿using JWTAuth;
+using JWTAuth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ASPNETWebApp45.Controllers.Api
             var valid = UserAccount.Authenticate(username, password);
             if (valid)
             {
-                var user = UserAccount.GetCurrentUser();
+                var user = UserAccount.GetUserByUserName(username);
                 if (username.Contains("@"))
                     if (username.Split('@')[0].ToLower().Equals(UserAccount.DEFAULT_ADMIN_LOGIN.ToLower()))
                          return BadRequest("Please change your password");

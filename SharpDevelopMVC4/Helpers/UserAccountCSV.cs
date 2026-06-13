@@ -1,4 +1,4 @@
-﻿using CsvHelper;
+using CsvHelper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +51,6 @@ public partial class UserAccountCSV
                 x.LastLogin = DateTime.Now;
             });
             WriteAccountCSV(accounts);
-            CurrentUser = user; // Set current user
             return user;
         }
 
@@ -161,10 +160,7 @@ public partial class UserAccountCSV
         return user;
     }
 
-    public static UserAccountCSV GetCurrentUser()
-    {
-        return CurrentUser;
-    }
+
 
     public static string[] GetUserRoles(string userName)
     {
@@ -201,7 +197,7 @@ public partial class UserAccountCSV
 
     #region private methods
     
-    private static UserAccountCSV CurrentUser = null;      
+
 
     private static List<UserAccountCSV> ReadAccountCSV()
     {
