@@ -7,15 +7,12 @@ using ASPNETWebApp45.Models;
 
 namespace ASPNETWebApp45.Controllers
 {
-	/// <summary>
-	/// Description of ProductsController.
-	/// </summary>
 	public class CrudsampleController : Controller
 	{
 		MyApp45DbContext _db = new MyApp45DbContext();
 
 		// GET: Products
-		public ActionResult Index(string searchQry, int page = 1, int pageSize = 6)
+		public ActionResult Index(string searchQry, int page = 1, int pageSize = 20)
 		{
 			var items = _db.Products.AsQueryable();
 

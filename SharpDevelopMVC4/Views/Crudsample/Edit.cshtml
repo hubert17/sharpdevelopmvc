@@ -1,64 +1,117 @@
-﻿@model ASPNETWebApp45.Models.Product
+@model ASPNETWebApp45.Models.Product
 
 @{
 	ViewBag.Title = "Edit Product";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Product - @Model.Name</h2>
+@section head {
+	<!-- FontAwesome for modern icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
 
-<form action="/crudsample/Edit" method="post" enctype="multipart/form-data" class="form-horizontal mt-3 zoom-3">
-	@Html.AntiForgeryToken()
-	<!-- Text input-->
-	<div class="form-group row">
-		<label for="Id" class="col-sm-2 col-form-label">Id:</label>
-		<div class="col-sm-10">
-			<input id="Id" name="Id" type="text" value="@Model.Id" class="form-control" readonly>
-		</div>
-	</div>
-	<div class="form-group row">
-		<label for="Name" class="col-sm-2 col-form-label">Name:</label>
-		<div class="col-sm-10">
-			<input id="Name" name="Name" type="text" value="@Model.Name" class="form-control" required>
-		</div>
-	</div>
-	<div class="form-group row">
-		<label for="UnitPrice" class="col-sm-2 col-form-label">Unit Price:</label>
-		<div class="col-sm-10">
-			<input id="UnitPrice" name="UnitPrice" type="text" value="@Model.UnitPrice" class="form-control" required>
-		</div>
-	</div>
-	<div class="form-group row">
-		<label for="Unit" class="col-sm-2 col-form-label">Unit:</label>
-		<div class="col-sm-10">
-			<input id="Unit" name="Unit" type="text" value="@Model.Unit" class="form-control">
-		</div>
-	</div>
+<div class="container py-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8 col-lg-6">
+			<div class="card shadow border-0 rounded-lg">
+				<div class="card-header bg-light border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+					<div>
+						<h4 class="card-title font-weight-bold text-dark mb-1">
+							<i class="fas fa-edit text-warning mr-2"></i>@ViewBag.Title
+						</h4>
+						<p class="text-muted small mb-0">Modify the details of this product below.</p>
+					</div>
+					<div>
+						<span class="badge badge-secondary px-3 py-2 rounded-pill">ID: #@Model.Id</span>
+					</div>
+				</div>
+				<div class="card-body px-4 py-3">
+					<form action="/crudsample/Edit" method="post" enctype="multipart/form-data">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="Id" value="@Model.Id" />
 
-	<!-- File Upload -->
-	<div class="form-group row">
-		<label for="fileUpload" class="col-sm-2 col-form-label">Upload Photo:</label>
-		<div class="col-sm-10">
-			<input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="form-control-file">
-		</div>
-	</div>
-	@if (!string.IsNullOrEmpty(Model.PictureFilename))
-	{
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Photo:</label>
-			<div class="col-sm-10">
-				<img src="/uploadedimages/@Model.PictureFilename" class="img-thumbnail" alt="@Model.Name Photo">
+						<!-- Name input -->
+						<div class="form-group mb-3">
+							<label for="Name" class="font-weight-bold text-secondary small text-uppercase">Product Name</label>
+							<input id="Name" name="Name" type="text" value="@Model.Name" class="form-control" placeholder="e.g. Tide Laundry Detergent" required>
+						</div>
+
+						<!-- Description input -->
+						<div class="form-group mb-3">
+							<label for="Description" class="font-weight-bold text-secondary small text-uppercase">Description</label>
+							<textarea id="Description" name="Description" class="form-control" rows="3" placeholder="Describe the product features and package contents...">@Model.Description</textarea>
+						</div>
+
+						<div class="row">
+							<!-- Unit Price input -->
+							<div class="col-md-6 form-group mb-3">
+								<label for="UnitPrice" class="font-weight-bold text-secondary small text-uppercase">Unit Price</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text bg-light text-muted"><i class="fas fa-tag"></i></span>
+									</div>
+									<input id="UnitPrice" name="UnitPrice" type="text" value="@Model.UnitPrice" class="form-control" placeholder="0.00" required>
+								</div>
+							</div>
+
+							<!-- Unit input -->
+							<div class="col-md-6 form-group mb-3">
+								<label for="Unit" class="font-weight-bold text-secondary small text-uppercase">Unit</label>
+								<input id="Unit" name="Unit" type="text" value="@Model.Unit" class="form-control" placeholder="e.g. bottle, pack, box">
+							</div>
+						</div>
+
+						<!-- Current Photo Preview -->
+						@if (!string.IsNullOrEmpty(Model.PictureFilename))
+						{
+							<div class="form-group mb-3">
+								<label class="font-weight-bold text-secondary small text-uppercase d-block">Current Photo</label>
+								<img src="/uploadedimages/thumb/@Model.PictureFilename" 
+									 class="img-thumbnail shadow-sm rounded mb-2" 
+									 style="max-height: 100px; object-fit: cover;" 
+									 alt="@Model.Name Photo" />
+							</div>
+						}
+
+						<!-- File Upload -->
+						<div class="form-group mb-4">
+							<label for="fileUpload" class="font-weight-bold text-secondary small text-uppercase">Upload New Photo</label>
+							<div class="custom-file">
+								<input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="custom-file-input">
+								<label class="custom-file-label text-muted" id="fileUploadLabel" for="fileUpload">Choose file...</label>
+							</div>
+							<small class="form-text text-muted">Selecting a new photo will replace the existing one.</small>
+						</div>
+
+						<!-- Action Buttons -->
+						<div class="d-flex justify-content-between border-top pt-4">
+							<a href="/crudsample/manage" class="btn btn-light text-secondary font-weight-bold px-4">
+								<i class="fas fa-arrow-left mr-1"></i> Back
+							</a>
+							<button type="submit" class="btn btn-primary font-weight-bold px-4">
+								<i class="fas fa-save mr-1"></i> Save Changes
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	}
-
-	<!-- Button -->
-	<div class="form-group row">
-		<label class="col-sm-2"></label>
-		<div class="col-sm-10">
-			<button type="submit" class="btn btn-primary btn-lg">Submit</button>
-			<a href="/crudsample/manage" class="btn btn-secondary btn-lg">Cancel</a>
-		</div>
 	</div>
-</form>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var fileInput = document.getElementById('fileUpload');
+		if (fileInput) {
+			fileInput.addEventListener('change', function (e) {
+				var fileName = e.target.files[0] ? e.target.files[0].name : "Choose file...";
+				var label = document.getElementById('fileUploadLabel');
+				if (label) {
+					label.innerText = fileName;
+					label.classList.remove('text-muted');
+				}
+			});
+		}
+	});
+</script>
 
