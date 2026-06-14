@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectGuid>{13972DB3-52D0-4AC2-8540-7F7AD4E8DE8D}</ProjectGuid>
@@ -236,11 +236,9 @@
     <!-- Core Configuration & Data -->
     <None Include="packages.config" />
     <None Include="App_Data\MyAccessDb.mdb" />
-
     <!-- Application Roots -->
     <Content Include="Global.asax" />
     <Content Include="web.config" />
-
     <!-- Stylesheets -->
     <Content Include="Content\Site.css" />
     <Content Include="Content\Account.css" />
@@ -251,7 +249,6 @@
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\Util\slimselect.min.css" />
-
     <!-- Scripts -->
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -263,7 +260,6 @@
     <Content Include="Scripts\petite-vue-csp.es.js" />
     <Content Include="Scripts\Util\bs-modal-auto-height.js" />
     <Content Include="Scripts\Util\slimselect.es.min.js" />
-
     <!-- Views -->
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -285,6 +281,7 @@
     <Content Include="Views\WeatherForecast\Index.cshtml" />
     <Content Include="Views\WeatherForecast\IndexMvc.cshtml" />
     <Content Include="Views\WeatherForecast\_ForecastsPartialView.cshtml" />
+    <None Include="Views\Home\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Util" />
@@ -334,7 +331,8 @@
           <IISUrl>http://localhost:55353/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

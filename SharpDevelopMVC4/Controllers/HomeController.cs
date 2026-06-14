@@ -31,6 +31,11 @@ namespace ASPNETWebApp45.Controllers
 
 			return View();
 		}
+		
+		public ActionResult Help()
+		{
+			return View();
+		}
         
 		[Authorize]
 		public ActionResult ForAuthUser()
@@ -46,8 +51,7 @@ namespace ASPNETWebApp45.Controllers
 			ViewBag.Message = "Authorized ADMIN page.";
 
 			return View("About");
-		}
-            
+		}  
 	}
 	
     // DONT DELETE

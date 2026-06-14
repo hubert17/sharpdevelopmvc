@@ -1,0 +1,352 @@
+@{
+	ViewBag.Title = "Help & Documentation";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+	<!-- FontAwesome for documentation icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+<div class="container py-4">
+	<!-- Page Header -->
+	<div class="border-bottom pb-3 mb-4">
+		<h1 class="font-weight-bold text-dark"><i class="fas fa-info-circle text-primary mr-2"></i>@ViewBag.Title</h1>
+		<p class="text-muted lead">Learn how this project is structured, how to resolve common setup issues, and how to get it running locally or in production.</p>
+	</div>
+
+	<div class="row">
+		<!-- Sidebar Navigation (Table of Contents) -->
+		<div class="col-lg-3 mb-4">
+			<div class="sticky-top" style="top: 80px; z-index: 100;">
+				<div class="card border-0 shadow-sm rounded-lg">
+					<div class="card-header bg-white border-bottom-0 pt-3 pb-0">
+						<h6 class="font-weight-bold text-uppercase text-muted small"><i class="fas fa-list-ul mr-2 text-primary"></i>On This Page</h6>
+					</div>
+					<div class="list-group list-group-flush pt-2 pb-2 small">
+						<a href="#overview" class="list-group-item list-group-item-action border-0 py-2 active font-weight-bold">Overview</a>
+						<a href="#features" class="list-group-item list-group-item-action border-0 py-2">Features &amp; Tech Stack</a>
+						<a href="#getting-started" class="list-group-item list-group-item-action border-0 py-2">Quick Start &amp; Fixes</a>
+						<a href="#iis-express" class="list-group-item list-group-item-action border-0 py-2">Running in IIS Express</a>
+						<a href="#database" class="list-group-item list-group-item-action border-0 py-2">Database Setup</a>
+						<a href="#publishing" class="list-group-item list-group-item-action border-0 py-2">Publishing &amp; Deploying</a>
+						<a href="#warnings" class="list-group-item list-group-item-action border-0 py-2 text-danger font-weight-bold">Important Constraints</a>
+						<a href="#resources" class="list-group-item list-group-item-action border-0 py-2 text-muted">Tutorials &amp; Slides</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Documentation Content -->
+		<div class="col-lg-9">
+			<!-- Section 1: Overview -->
+			<section id="overview" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Overview</h2>
+				<p>
+					<strong>SharpDevelopMVC5</strong> is a lightweight, solid starting point for developing robust ASP.NET MVC and Web API applications targeting 
+					<code>.NET Framework 4.5.2</code>. The project is designed specifically to run seamlessly in the lightweight and portable 
+					<a href="https://portable.info.pl/sharpdevelop-portable/" target="_blank">SharpDevelop IDE</a>. 
+					It is highly optimized for fast development cycles, student classrooms, and small-to-medium-sized web apps in a legacy constraint infrastructure.
+				</p>
+				<p class="text-muted">
+					Unlike traditional large boilerplate projects, this setup avoids heavy modules like OWIN and ASP.NET Identity, making compilation fast and leaving a tiny footprint.
+				</p>
+			</section>
+
+			<!-- Section 2: Features & Tech Stack -->
+			<section id="features" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Features &amp; Tech Stack</h2>
+				<p>This project comes integrated with a bundle of modern libraries to make enterprise-grade features simple to implement out-of-the-box:</p>
+				
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-primary"><i class="fas fa-laptop-code mr-2"></i>Frontend &amp; UI</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>Bootstrap 4.6</strong>: Styled responsive framework.</li>
+									<li><strong>Bootswatch</strong>: Integrated modern themes.</li>
+									<li><strong>Petite-Vue</strong>: A tiny 6KB subset of Vue optimized for progressive enhancements.</li>
+									<li><strong>Bootbox.js</strong>: Easy programmatic modal alerts.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-success"><i class="fas fa-database mr-2"></i>Data Access</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>Entity Framework 6</strong>: Code-First ORM mapping tables.</li>
+									<li><strong>MS Access (MDB) &amp; SQL Server</strong> support.</li>
+									<li><strong>Dapper &amp; Dapper.Contrib</strong>: High-speed micro-ORM queries.</li>
+									<li><strong>EFUtilities</strong>: Batch updates and fast bulk copy.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-info"><i class="fas fa-shield-alt mr-2"></i>Auth &amp; API</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>Forms Authentication</strong>: Lightweight web cookie session auth.</li>
+									<li><strong>JWT Authentication</strong>: JSON Web Tokens for API authorization.</li>
+									<li><strong>Swagger / Swashbuckle</strong>: Automatic interactive REST API docs.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-warning"><i class="fas fa-cogs mr-2"></i>Utility Services</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>Image / File Upload</strong>: Dynamic resizing, orientation fixes, and thumbnails.</li>
+									<li><strong>Hangfire Core</strong>: Background job tasks in memory storage.</li>
+									<li><strong>CsvHelper &amp; SimpleExcelImport</strong>: Excel/CSV parsing.</li>
+									<li><strong>SimpleLogger</strong>: Thread-safe daily rolling debug file logger.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 3: Quick Start & Common Fixes -->
+			<section id="getting-started" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Quick Start &amp; Common Fixes</h2>
+				
+				<div class="card border-0 shadow-sm mb-4">
+					<div class="card-body">
+						<h5 class="font-weight-bold text-dark">1. Generate Web.config</h5>
+						<p class="small text-muted mb-2">If <code>Web.config</code> is missing from the project directory, trigger a build, or manually copy and rename the template:</p>
+						<pre class="bg-dark text-light p-3 rounded small mb-0"><code>copy _web.config web.config</code></pre>
+					</div>
+				</div>
+
+				<div class="card border-0 shadow-sm mb-4">
+					<div class="card-body">
+						<h5 class="font-weight-bold text-dark">2. Fix NuGet &amp; Assembly Build Errors</h5>
+						<p class="small text-muted mb-3">If you encounter errors like <em>"Could not resolve reference..."</em> or <em>"The underlying connection was closed..."</em>, apply one of the following fixes:</p>
+						
+						<div class="list-group list-group-flush mb-0">
+							<div class="list-group-item px-0 py-2 border-top-0">
+								<strong>Option A (Recommended)</strong>: Run (merge) the registry fix <code class="bg-light px-1 text-dark rounded">nugetfix.reg</code> located in the project root to update TLS secure connection protocols.
+							</div>
+							<div class="list-group-item px-0 py-2">
+								<strong>Option B</strong>: Double-click and execute the <code class="bg-light px-1 text-dark rounded">nuget.bat</code> script.
+							</div>
+							<div class="list-group-item px-0 py-2">
+								<strong>Option C</strong>: Right-click the Solution in SharpDevelop and select <strong>Restore packages</strong>.
+							</div>
+							<div class="list-group-item px-0 py-2 pb-0">
+								<strong>Option D</strong>: Open your terminal and execute:
+								<pre class="bg-dark text-light p-3 rounded small mt-2 mb-0"><code>nuget restore ASPNETWebApp45.sln</code></pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 4: Running in IIS Express -->
+			<section id="iis-express" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Running in IIS Express</h2>
+				<p>To run and debug the web application locally inside SharpDevelop, follow these configuration steps:</p>
+				
+				<div class="card bg-light border-0 rounded-lg mb-4">
+					<div class="card-body p-4">
+						<ol class="mb-0 text-dark">
+							<li class="mb-2">Click the <strong>Project Menu</strong> at the top menu bar &gt; <strong>Project Options</strong>.</li>
+							<li class="mb-2">Navigate to the <strong>Web</strong> configuration tab.</li>
+							<li class="mb-2">Choose the option <strong>[Use IIS Express Web Server]</strong>.</li>
+							<li class="mb-2">Enter any open port number above 1024, for example: <code>55353</code>.</li>
+							<li class="mb-2">Click the <strong>[Create application/virtual directory]</strong> button to bind the app to the system host.</li>
+							<li>Save changes and press <kbd class="bg-secondary text-white">F5</kbd> to build and run!</li>
+						</ol>
+					</div>
+				</div>
+
+				<div class="alert alert-warning shadow-sm" role="alert">
+					<h6 class="alert-heading font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Duplicate site entry error?</h6>
+					<hr class="my-2">
+					<p class="small mb-0">
+						If IIS Express errors stating duplicate virtual directory entry conflicts exist: right-click and rename your project (e.g. from <code>ASPNETWebApp45</code> to a unique name), run a <strong>Clean Solution</strong>, and re-create the virtual directory in Step 5.
+					</p>
+				</div>
+
+				<div class="card border-0 shadow-sm">
+					<div class="card-body">
+						<h6 class="font-weight-bold text-dark"><i class="fas fa-lock text-primary mr-2"></i>Enabling Local HTTPS/SSL</h6>
+						<p class="small text-muted">Open <code>My Documents\IISExpress\config\applicationhost.config</code> and edit the bindings under your site node to include the secure port:</p>
+						<pre class="bg-dark text-light p-3 rounded small mb-0"><code>&lt;bindings&gt;
+    &lt;binding protocol="http" bindingInformation="*:55353:localhost" /&gt;
+    &lt;binding protocol="https" bindingInformation="*:44353:localhost" /&gt;
+&lt;/bindings&gt;</code></pre>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 5: Database Configuration -->
+			<section id="database" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Database Setup &amp; Browsing</h2>
+				<p>The application supports both <strong>Microsoft Access</strong> (<code>.mdb</code>) and <strong>SQL Server</strong> database connections out-of-the-box.</p>
+				
+				<div class="row">
+					<!-- MS Access -->
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-dark"><i class="fas fa-database text-primary mr-2"></i>Microsoft Access (MDB)</h6>
+								<p class="small text-muted mb-2">The default database file is located at:</p>
+								<pre class="bg-dark text-light p-2 rounded small mb-2"><code>App_Data/MyAccessDb.mdb</code></pre>
+								<p class="small text-muted mb-0">
+									Use the portable tool <a href="https://fishcodelib.com/Database.htm" target="_blank">Database.NET</a> to browse, query, and edit Access tables.
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- SQL Server -->
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-dark"><i class="fas fa-server text-success mr-2"></i>SQL Server / LocalDB</h6>
+								<p class="small text-muted mb-2">To run using SQL Server locally, download and install <strong>SQL Server Express LocalDB</strong> to target:</p>
+								<pre class="bg-dark text-light p-2 rounded small mb-2"><code>(LocalDB)\MSSQLLocalDB</code></pre>
+								<p class="small text-muted mb-0">
+									Browse and manage tables using SQL Server Management Studio (SSMS) or Database.NET.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 6: Deployment & Publishing -->
+			<section id="publishing" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Publishing &amp; Deploying</h2>
+				
+				<div class="card border-0 shadow-sm mb-4">
+					<div class="card-body">
+						<h6 class="font-weight-bold text-dark"><i class="fas fa-archive text-success mr-2"></i>Publishing Solution</h6>
+						<p class="small text-muted">
+							Run a <strong>Rebuild</strong> in your development environment. This automatically runs target scripts defined in your <code>.csproj</code> file to build, clean, and export files into the <code>_publish</code> directory. You can zip the contents of this folder directly to upload to your web host.
+						</p>
+						<div class="alert alert-info py-2 mb-0 small" role="alert">
+							<strong>Caution:</strong> Make sure to back up the <code>App_Data</code> folder on your production server before deploying fresh zips to avoid overwriting database files.
+						</div>
+					</div>
+				</div>
+
+				<div class="card border-0 shadow-sm">
+					<div class="card-body">
+						<h6 class="font-weight-bold text-dark"><i class="fab fa-github text-dark mr-2"></i>GitHub Actions (CI/CD to Somee.com)</h6>
+						<p class="small text-muted">Automate deployment directly to Somee.com on branch push. Go to <strong>Repository Settings &gt; Secrets and Variables &gt; Actions</strong> and add these variables:</p>
+						<div class="row text-center font-weight-bold small">
+							<div class="col-4"><div class="bg-light p-2 rounded">SOMEE_SITENAME</div></div>
+							<div class="col-4"><div class="bg-light p-2 rounded">SOMEE_USERNAME</div></div>
+							<div class="col-4"><div class="bg-light p-2 rounded">SOMEE_PASSWORD</div></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 7: Key Constraints & Warnings -->
+			<section id="warnings" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-danger border-bottom border-danger pb-2 mb-3">Important Constraints &amp; Rules</h2>
+				<p>To preserve code and compiler compatibility with portable SharpDevelop, follow these two critical restrictions:</p>
+				
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<div class="card border-left border-danger shadow-sm h-100">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-danger"><i class="fas fa-times-circle mr-2"></i>Do NOT Open in Visual Studio</h6>
+								<p class="small text-muted mb-0">
+									Loading the project in Visual Studio can alter `.csproj` files or add configurations that compile incorrectly under SharpDevelop's MSBuild version.
+								</p>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6 mb-3">
+						<div class="card border-left border-danger shadow-sm h-100">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-danger"><i class="fas fa-ban mr-2"></i>Do NOT Add .NET Standard Packages</h6>
+								<p class="small text-muted mb-0">
+									Avoid adding NuGet package dependencies targeting <strong>.NET Standard</strong> or .NET Core. Ensure any added packages support standard <strong>.NET Framework 4.5.2</strong>.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 8: Tutorials & Learning Slides -->
+			<section id="resources" class="mb-4 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Tutorials &amp; Slides</h2>
+				<p>Check the project folder for preloaded presentations and training slides covering core topics:</p>
+				
+				<div class="row small">
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 0a. Web Development Introduction
+					</div>
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 0b. Entity Framework Code-First
+					</div>
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 1a. ASP.NET MVC Essentials
+					</div>
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 1b. Form Basics
+					</div>
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 2. ASP.NET MVC Core Patterns
+					</div>
+					<div class="col-md-6 mb-2">
+						<i class="far fa-file-powerpoint text-danger mr-2"></i> 3. ASP.NET Web API &amp; JSON
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* Minimal styling helper only for smooth local anchor scrolling alignment offset */
+	.scroll-margin {
+		scroll-margin-top: 80px;
+	}
+	kbd {
+		font-family: inherit;
+		box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+	}
+</style>
+
+@section scripts {
+	<script>
+		// Highlight active navigation tab based on scrolling position
+		$(document).ready(function () {
+			var sections = $('section');
+			var navLinks = $('.list-group-item-action');
+
+			$(window).on('scroll', function () {
+				var currentPos = $(this).scrollTop() + 100;
+
+				sections.each(function () {
+					var top = $(this).offset().top;
+					var bottom = top + $(this).outerHeight();
+
+					if (currentPos >= top && currentPos <= bottom) {
+						var id = $(this).attr('id');
+						navLinks.removeClass('active font-weight-bold');
+						$('a[href="#' + id + '"]').addClass('active font-weight-bold');
+					}
+				});
+			});
+		});
+	</script>
+}
