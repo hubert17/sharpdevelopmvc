@@ -308,7 +308,7 @@
     </PropertyGroup>
     <MakeDir Directories="$(PublishFolder)" />
     <ItemGroup>
-      <AppDataFolder Include="$(ProjectDir)\App_Data\**\*.*" />
+      <AppDataFolder Include="$(ProjectDir)\App_Data\**\*.*" Exclude="$(ProjectDir)\App_Data\**\*.ldb;$(ProjectDir)\App_Data\**\*.laccdb" />
       <BinFolder Include="$(ProjectDir)\bin\**\*.*" />
       <ContentFolder Include="$(ProjectDir)\Content\**\*.*" />
       <ScriptsFolder Include="$(ProjectDir)\Scripts\**\*.*" />
