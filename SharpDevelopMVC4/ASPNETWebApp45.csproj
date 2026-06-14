@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectGuid>{13972DB3-52D0-4AC2-8540-7F7AD4E8DE8D}</ProjectGuid>
@@ -12,19 +12,16 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
     <UseIISExpress>True</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
+    <FileUpgradeFlags />
+    <UpgradeBackupLocation />
     <OldToolsVersion>4.0</OldToolsVersion>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp />
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -141,9 +138,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
@@ -189,9 +184,7 @@
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -240,49 +233,58 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Data\MyAccessDb.mdb" />
-    <None Include="Content\Account.css" />
-    <None Include="Content\bootstrap-grid.css" />
-    <None Include="Content\bootstrap-grid.min.css" />
-    <None Include="Content\bootstrap-reboot.css" />
-    <None Include="Content\bootstrap-reboot.min.css" />
-    <None Include="Content\bootstrap.css" />
-    <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\Site.css" />
-    <None Include="Content\Util\slimselect.min.css" />
-    <None Include="Global.asax" />
+    <!-- Core Configuration & Data -->
     <None Include="packages.config" />
-    <None Include="Scripts\bootbox.min.js" />
-    <None Include="Scripts\bootstrap.bundle.min.js" />
-    <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.12.4.min.js" />
-    <None Include="Scripts\jquery-3.5.1.min.js" />
-    <None Include="Scripts\jquery-3.5.1.slim.min.js" />
-    <None Include="Scripts\petite-vue.es.js" />
+    <None Include="App_Data\MyAccessDb.mdb" />
+
+    <!-- Application Roots -->
+    <Content Include="Global.asax" />
+    <Content Include="web.config" />
+
+    <!-- Stylesheets -->
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Account.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\Util\slimselect.min.css" />
+
+    <!-- Scripts -->
+    <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
+    <Content Include="Scripts\petite-vue.es.js" />
     <Content Include="Scripts\petite-vue-csp.es.js" />
+    <Content Include="Scripts\Util\bs-modal-auto-height.js" />
+    <Content Include="Scripts\Util\slimselect.es.min.js" />
+
+    <!-- Views -->
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
-    <None Include="Scripts\Util\bs-modal-auto-height.js" />
-    <None Include="Scripts\Util\slimselect.es.min.js" />
-    <None Include="Views\Account\Login.cshtml" />
-    <None Include="Views\Account\ManageUsers.cshtml" />
-    <None Include="Views\Account\Register.cshtml" />
-    <None Include="Views\Crudsample\Details.cshtml" />
-    <None Include="Views\Crudsample\Edit.cshtml" />
-    <None Include="Views\Crudsample\Index.cshtml" />
-    <None Include="Views\Crudsample\Manage.cshtml" />
-    <None Include="Views\Crudsample\_Create.cshtml" />
-    <None Include="Views\Home\About.cshtml" />
-    <None Include="Views\Home\Contact.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Shared\_AccountLayout.cshtml" />
-    <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ManageUsers.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Crudsample\Details.cshtml" />
+    <Content Include="Views\Crudsample\Edit.cshtml" />
+    <Content Include="Views\Crudsample\Index.cshtml" />
+    <Content Include="Views\Crudsample\Manage.cshtml" />
+    <Content Include="Views\Crudsample\_Create.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\WeatherForecast\Index.cshtml" />
     <Content Include="Views\WeatherForecast\IndexMvc.cshtml" />
     <Content Include="Views\WeatherForecast\_ForecastsPartialView.cshtml" />
-    <None Include="Views\Web.config" />
-    <None Include="Views\_ViewStart.cshtml" />
-    <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Util" />
