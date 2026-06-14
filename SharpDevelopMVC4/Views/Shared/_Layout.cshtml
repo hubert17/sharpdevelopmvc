@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@
     @if (TempData["alert"] != null)
     {
         <script>
-            alert('@TempData["alert"]')
+            alert('@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["alert"].ToString()))');
         </script>
     }	  
 
@@ -152,7 +152,7 @@
     @if (TempData["alertbox"] != null)
     {
         <script>
-            bootbox.alert('@TempData["alertbox"]');
+            bootbox.alert('@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["alertbox"].ToString()))');
         </script>
     }
 
