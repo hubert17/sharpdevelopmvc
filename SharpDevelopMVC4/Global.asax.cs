@@ -128,8 +128,10 @@ namespace ASPNETWebApp45
 		{
 			public static void KeepAliveHangfire(string siteUrl = null, int minuteInterval = 5)
 			{
+#pragma warning disable 4014
 				if (!string.IsNullOrEmpty(siteUrl))
 					Hangfire.RecurringJob.AddOrUpdate("keep-alive", () => Pinger.Ping(siteUrl + "/pinger"), string.Format("*/{0} * * * *", minuteInterval));
+#pragma warning restore 4014
 			}
 			
 			static readonly System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();

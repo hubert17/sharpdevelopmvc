@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 
 public static class FileUploadExtension
@@ -11,43 +9,57 @@ public static class FileUploadExtension
     /// <summary>
     /// Convert the file upload to byte array. [BernardGabon.com]
     /// </summary>
-    /// <param name="File">HttpPostedFileBase</param>
+    /// <param name="file">HttpPostedFileBase</param>
     /// <returns>byte[] data</returns>
-    public static byte[] ToFileByteArray(this HttpPostedFile File)
+    public static byte[] ToFileByteArray(this HttpPostedFileBase file)
     {
+        if (file == null) return null;
+
         try
         {
-            byte[] file = new byte[File.ContentLength];
-            File.InputStream.Read(file, 0, File.ContentLength);
-            return file;
+            byte[] fileBytes = new byte[file.ContentLength];
+            file.InputStream.Read(fileBytes, 0, file.ContentLength);
+            return fileBytes;
         }
         catch
         {
             return null;
         }
+    }
 
+    /// <summary>
+    /// Convert the file upload to byte array. [BernardGabon.com]
+    /// </summary>
+    /// <param name="file">HttpPostedFile</param>
+    /// <returns>byte[] data</returns>
+    public static byte[] ToFileByteArray(this HttpPostedFile file)
+    {
+        return file != null ? new HttpPostedFileWrapper(file).ToFileByteArray() : null;
     }
 
     /// <summary>
     /// Save the uploaded file to a folder. [BernardGabon.com]
     /// </summary>
-    /// <param name="File">Filename</param>
+    /// <param name="file">HttpPostedFileBase</param>
     /// <param name="strFileName">Filename</param>
     /// <param name="strFolder">Folder</param>
     /// <returns>string Filename</returns>
-    public static string SaveToFolder(this HttpPostedFile File, string strFileName = "", string strFolder = "")
+    public static string SaveToFolder(this HttpPostedFileBase file, string strFileName = "", string strFolder = "")
     {
+        if (file == null) return string.Empty;
+
         try
         {
-            var file = ToFileByteArray(File);
+            var fileBytes = file.ToFileByteArray();
+            if (fileBytes == null) return string.Empty;
 
             string folder = string.IsNullOrEmpty(strFolder) ? HttpContext.Current.Server.MapPath("~/" + FOLDER) : HttpContext.Current.Server.MapPath("~/" + strFolder);
-            string filename = string.IsNullOrEmpty(strFileName) ? Path.GetFileNameWithoutExtension(File.FileName) : strFileName;
-            string filenameExt = filename + "_" + GenerateUniqueChars() + Path.GetExtension(File.FileName);
+            string filename = string.IsNullOrEmpty(strFileName) ? Path.GetFileNameWithoutExtension(file.FileName) : strFileName;
+            string filenameExt = filename + "_" + GenerateUniqueChars() + Path.GetExtension(file.FileName);
             string path = Path.Combine(folder, filenameExt);
 
-            System.IO.Directory.CreateDirectory(folder);
-            System.IO.File.WriteAllBytes(path, file);
+            Directory.CreateDirectory(folder);
+            File.WriteAllBytes(path, fileBytes);
 
             return filenameExt;
         }
@@ -57,10 +69,21 @@ public static class FileUploadExtension
         }
     }
 
+    /// <summary>
+    /// Save the uploaded file to a folder. [BernardGabon.com]
+    /// </summary>
+    /// <param name="file">HttpPostedFile</param>
+    /// <param name="strFileName">Filename</param>
+    /// <param name="strFolder">Folder</param>
+    /// <returns>string Filename</returns>
+    public static string SaveToFolder(this HttpPostedFile file, string strFileName = "", string strFolder = "")
+    {
+        return file != null ? new HttpPostedFileWrapper(file).SaveToFolder(strFileName, strFolder) : string.Empty;
+    }
+
     private static string GenerateUniqueChars()
     {
         char[] padding = { '=' };
-        return Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd(padding).Replace('+', '-').Replace('/', '_'); ;
+        return Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd(padding).Replace('+', '-').Replace('/', '_');
     }
-
 }
