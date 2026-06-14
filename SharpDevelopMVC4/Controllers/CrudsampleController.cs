@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -15,19 +15,25 @@ namespace ASPNETWebApp45.Controllers
 		MyApp45DbContext _db = new MyApp45DbContext();
 
 		// GET: Products
-		public ActionResult Index(string searchQry, int page = 0, int pageSize = 6)
+		public ActionResult Index(string searchQry, int page = 1, int pageSize = 6)
 		{
 			var items = _db.Products.AsQueryable();
 
 			if (!String.IsNullOrEmpty(searchQry))
-				items = items.Where(s => s.Name.ToLower().Contains(searchQry.ToLower()));
+				items = items.Where(s => s.Name.Contains(searchQry));
             
-			if (page > 0)
-				items = items.Skip(pageSize * (page - 1)).Take(pageSize);
+			int totalItems = items.Count();
+			int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+			if (page < 1) page = 1;
+			if (page > totalPages && totalPages > 0) page = totalPages;
+
+			var pagedItems = items.OrderBy(p => p.Id).Skip(pageSize * (page - 1)).Take(pageSize).ToList();
             
 			ViewBag.SearchQry = searchQry;
+			ViewBag.CurrentPage = page;
+			ViewBag.TotalPages = totalPages;
 			
-			return View(items.ToList());            
+			return View(pagedItems);            
 		}
 		
 		// [Authorize(Roles = "staff")]
@@ -52,7 +58,6 @@ namespace ASPNETWebApp45.Controllers
 			return View(product);
 		}
 
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(Product product, HttpPostedFileBase fileUpload)
@@ -65,12 +70,19 @@ namespace ASPNETWebApp45.Controllers
 				_db.Products.Add(product);
 				_db.SaveChanges();
 				
+				TempData["alertbox"] = "Product '" + product.Name + "' created successfully.";
+				return RedirectToAction("Manage");
 			} 
-			else
-				// ModelState.AddModelError("", "There are some validation errors. Please check.");
-				TempData["alertcard"] = "There are some validation errors. Please check and try again.";
 			
-			return RedirectToAction("Manage");			
+			TempData["alertcard"] = "There are some validation errors. Please check and try again.";
+			foreach (var modelState in ModelState.Values)
+			{
+				foreach (var error in modelState.Errors)
+				{
+					ModelState.AddModelError("", error.ErrorMessage);
+				}
+			}
+			return View("Manage", _db.Products.ToList());			
 		}
 
 
@@ -92,16 +104,30 @@ namespace ASPNETWebApp45.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(Product updatedProduct, HttpPostedFileBase fileUpload)
 		{
-			_db.Entry(updatedProduct).State = EntityState.Modified;
+			if (ModelState.IsValid)
+			{
+				_db.Entry(updatedProduct).State = EntityState.Modified;
 
-			if (fileUpload != null) // Update picture
-                updatedProduct.PictureFilename = fileUpload.SaveAsImageFile(updatedProduct.Name);
-			else // Retain the current picture
-                _db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
+				if (fileUpload != null) // Update picture
+					updatedProduct.PictureFilename = fileUpload.SaveAsImageFile(updatedProduct.Name);
+				else // Retain the current picture
+					_db.Entry(updatedProduct).Property(x => x.PictureFilename).IsModified = false;
 
-			_db.SaveChanges();
+				_db.SaveChanges();
 
-			return RedirectToAction("Manage");
+				TempData["alertbox"] = "Product '" + updatedProduct.Name + "' updated successfully.";
+				return RedirectToAction("Manage");
+			}
+
+			TempData["alertcard"] = "There are some validation errors. Please check and try again.";
+			foreach (var modelState in ModelState.Values)
+			{
+				foreach (var error in modelState.Errors)
+				{
+					ModelState.AddModelError("", error.ErrorMessage);
+				}
+			}
+			return View(updatedProduct);
 		}
 
 		// GET: Products/Delete/5
@@ -110,13 +136,24 @@ namespace ASPNETWebApp45.Controllers
 		{
 			Product product = _db.Products.Find(id);
 			if (product != null) {
+				string name = product.Name;
 				_db.Products.Remove(product);
-				_db.SaveChanges();	           
+				_db.SaveChanges();
+				TempData["alertbox"] = "Product '" + name + "' deleted successfully.";
 			} else {
 				TempData["alertbox"] = "Product not found";
 			}
 
 			return RedirectToAction("Manage");
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_db.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 	}
 }
