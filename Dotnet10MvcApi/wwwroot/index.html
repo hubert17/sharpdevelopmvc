@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modernized .NET 10 MVC & API Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --accent-color: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative background blobs */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        body::before {
+            background-color: #3b82f6;
+            top: 10%;
+            left: 15%;
+        }
+        body::after {
+            background-color: #8b5cf6;
+            bottom: 10%;
+            right: 15%;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: #7dd3fc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-color);
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .badge-list {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .badge span {
+            color: var(--accent-color);
+        }
+
+        footer {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Modernized MVC & API</h1>
+        <p>This is a modernized .NET 10 project utilizing controller-based architecture, dynamic database providers (Entity Framework Core with Access DB), and secure JWT authentication. This landing page is served physically from the web root folder.</p>
+
+        <div class="btn-group">
+            <a href="/scalar/v1" class="btn btn-primary" id="btn-swagger">Explore API (Scalar)</a>
+            <a href="/api/sample/getWeather" class="btn btn-secondary" id="btn-weather">Test Weather API</a>
+        </div>
+
+        <div class="badge-list">
+            <div class="badge">Framework: <span>.NET 10.0</span></div>
+            <div class="badge">Auth: <span>JWT Bearer</span></div>
+            <div class="badge">Database: <span>MS Access (.mdb)</span></div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Modernized Project Phase 1. All rights reserved.
+    </footer>
+
+</body>
+</html>

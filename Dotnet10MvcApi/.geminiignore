@@ -1,0 +1,14 @@
+# Ignore compiled folders locally
+[Bb]in/
+[Oo]bj/
+
+# Ignore database and CSV logs locally
+App_Data/*.mdb
+App_Data/*.ldb
+App_Data/*.laccdb
+App_Data/*.csv
+App_Data/*.zip
+
+# Ignore user uploads locally
+UploadedFiles/
+wwwroot/UploadedImages/

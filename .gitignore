@@ -377,3 +377,14 @@ testem.log
 Thumbs.db
 
 /VS2019MVC4-48/web.config
+
+# MS Access lock files
+*.ldb
+*.laccdb
+
+# Unzipped Billboard CSV file (rely on compressed zip template)
+**/App_Data/BillboardTo2013.csv
+
+# Upload folders
+**/UploadedFiles/
+**/wwwroot/UploadedImages/

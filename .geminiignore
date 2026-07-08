@@ -1,0 +1,27 @@
+# Ignore Visual Studio & Rider folders
+.vs/
+.idea/
+.vscode/
+
+# Ignore compiled folders
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Ignore database and large data files
+*.mdb
+*.ldb
+*.laccdb
+*.csv
+*.zip
+
+# Ignore user upload directories
+**/UploadedFiles/
+**/wwwroot/UploadedImages/
+
+# Ignore packages and node modules
+**/packages/
+**/node_modules/
