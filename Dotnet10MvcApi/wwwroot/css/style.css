@@ -1,0 +1,15 @@
+header{
+    background-image:url(img/portfolio/background.jpeg);
+    background-size: cover;
+  }
+  nav{
+      background-color: rgb(36, 36, 36);
+  }
+  h2{
+    color: rgb(36, 36, 36);
+  }
+.section{
+    background-color: rgb(36, 36, 36);
+
+  }
+ 

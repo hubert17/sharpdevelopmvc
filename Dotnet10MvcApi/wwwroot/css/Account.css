@@ -1,0 +1,110 @@
+﻿html, body {
+    height: 100%;
+}
+
+    body.my-login-page {
+        background-color: #f7f9fb;
+        font-size: 14px;
+    }
+
+.my-login-page .brand {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+    position: relative;
+    z-index: 1;
+}
+
+    .my-login-page .brand img {
+        width: 100%;
+    }
+
+.my-login-page .card-wrapper {
+    width: 400px;
+}
+
+.my-login-page .card {
+    border-color: transparent;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+}
+
+    .my-login-page .card.fat {
+        padding: 10px;
+    }
+
+    .my-login-page .card .card-title {
+        margin-bottom: 30px;
+    }
+
+.my-login-page .form-control {
+    border-width: 2.3px;
+}
+
+.my-login-page .form-group label {
+    width: 100%;
+}
+
+.my-login-page .btn.btn-block {
+    padding: 12px 10px;
+}
+
+.my-login-page .footer {
+    margin: 40px 0;
+    color: #888;
+    text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+    .my-login-page .card-wrapper {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .my-login-page .card.fat {
+        padding: 0;
+    }
+
+        .my-login-page .card.fat .card-body {
+            padding: 15px;
+        }
+}
+
+[v-cloak] {
+    display: none; /* Avoid flash rendering which happen until petite-vue is loaded */
+}
+
+.zoom {
+    zoom: 1.2;
+    -moz-transform: scale(1.2);
+    -moz-transform-origin: 0 0;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+/* Apply form-control-lg only on small or mobile devices */
+@media (max-width: 768px) {		
+	.form-control-lg-mobile {
+	    height: calc(1.5em + 1rem + 2px);
+	    padding: .5rem 1rem;
+	    font-size: 1.25rem;
+	    line-height: 1.5;
+	    border-radius: .3rem;
+	}
+	.col-form-label-lg-mobile {
+	    padding-top: calc(.5rem + 1px);
+	    padding-bottom: calc(.5rem + 1px);
+	    font-size: 1.25rem;
+	    line-height: 1.5;
+	}			
+	.btn-lg-mobile {
+	    padding: .5rem 1rem;
+	    font-size: 1.25rem;
+	    line-height: 1.5;
+	    border-radius: .3rem;
+	}			
+}

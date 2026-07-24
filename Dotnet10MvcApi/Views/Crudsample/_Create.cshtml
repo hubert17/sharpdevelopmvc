@@ -1,0 +1,86 @@
+<button type="button" id="btnAddModal1" class="btn btn-primary shadow-sm px-3 font-weight-bold" data-toggle="modal" data-target="#addModal">
+	<i class="fas fa-plus mr-1"></i> Add Product
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content border-0 shadow-lg rounded-lg">
+			<form action="/crudsample/Create" method="post" enctype="multipart/form-data" class="form-horizontal">
+				<div class="modal-header bg-light border-bottom-0 pt-4 px-4">
+					<h5 class="modal-title font-weight-bold text-dark" id="addModalLabel">
+						<i class="fas fa-plus-circle text-primary mr-2"></i>New Product
+					</h5>
+					<button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body px-4 py-3">
+					@Html.AntiForgeryToken()
+
+					<!-- Name input -->
+					<div class="form-group mb-3">
+						<label for="Name" class="font-weight-bold text-secondary small text-uppercase">Product Name</label>
+						<input id="Name" name="Name" type="text" class="form-control" placeholder="e.g. Tide Laundry Detergent" required>
+					</div>
+
+					<!-- Description input -->
+					<div class="form-group mb-3">
+						<label for="Description" class="font-weight-bold text-secondary small text-uppercase">Description</label>
+						<textarea id="Description" name="Description" class="form-control" rows="3" placeholder="Describe the product features and package contents..."></textarea>
+					</div>
+
+					<div class="row">
+						<!-- Unit Price input -->
+						<div class="col-md-6 form-group mb-3">
+							<label for="UnitPrice" class="font-weight-bold text-secondary small text-uppercase">Unit Price</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-light text-muted"><i class="fas fa-tag"></i></span>
+								</div>
+								<input id="UnitPrice" name="UnitPrice" type="text" class="form-control" placeholder="0.00" required>
+							</div>
+						</div>
+
+						<!-- Unit input -->
+						<div class="col-md-6 form-group mb-3">
+							<label for="Unit" class="font-weight-bold text-secondary small text-uppercase">Unit</label>
+							<input id="Unit" name="Unit" type="text" class="form-control" placeholder="e.g. bottle, pack, box">
+						</div>
+					</div>
+
+					<!-- File Upload -->
+					<div class="form-group mb-2">
+						<label for="fileUpload" class="font-weight-bold text-secondary small text-uppercase">Product Photo</label>
+						<div class="custom-file">
+							<input type="file" accept="image/*" id="fileUpload" name="fileUpload" class="custom-file-input">
+							<label class="custom-file-label text-muted" id="fileUploadLabel" for="fileUpload">Choose file...</label>
+						</div>
+						<small class="form-text text-muted">Select an image to display as thumbnail.</small>
+					</div>
+
+				</div>
+				<div class="modal-footer border-top-0 px-4 pb-4 pt-0">
+					<button type="button" class="btn btn-light text-secondary font-weight-bold px-3 mr-2" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary font-weight-bold px-4">Create Product</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var fileInput = document.getElementById('fileUpload');
+		if (fileInput) {
+			fileInput.addEventListener('change', function (e) {
+				var fileName = e.target.files[0] ? e.target.files[0].name : "Choose file...";
+				var label = document.getElementById('fileUploadLabel');
+				if (label) {
+					label.innerText = fileName;
+					label.classList.remove('text-muted');
+				}
+			});
+		}
+	});
+</script>

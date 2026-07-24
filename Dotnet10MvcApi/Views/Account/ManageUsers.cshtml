@@ -1,0 +1,32 @@
+@{
+	ViewBag.Title = "Manage Users";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head{
+	<script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+	<link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+	<script src="https://jsuites.net/v4/jsuites.js"></script>
+	<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+}
+
+<div class="container py-4">
+	<h2 class="mb-4">Manage Users</h2>
+
+	<div id="spreadsheet1" class="mb-3"></div>
+	<p><button id="download" class="btn btn-outline-success"><i class="fas fa-file-csv mr-1"></i> Export my spreadsheet as CSV</button></p>
+</div>
+
+@section scripts{
+	<script>
+		var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet1'), {
+		    csv: '/account.csv',
+		    csvHeaders: true,
+		    tableOverflow: true
+		});
+		 
+		document.getElementById('download').onclick = function () {
+		    mySpreadsheet.download();
+		}
+	</script>
+}

@@ -1,0 +1,121 @@
+@model List<Dotnet10MvcApi.Models.Product>
+
+@{
+	ViewBag.Title = "Manage Products";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+	<!-- FontAwesome for modern icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+<div class="container-fluid py-4">
+	<div class="card shadow-sm border-0 rounded-lg">
+		<!-- Card Header with Title and Add Button -->
+		<div class="card-header bg-white border-0 pt-4 pb-0 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
+			<div class="mb-3 mb-sm-0">
+				<h3 class="card-title text-dark font-weight-bold mb-1">
+					<i class="fas fa-boxes text-primary mr-2"></i>@ViewBag.Title
+				</h3>
+				<p class="text-muted small mb-0">View, edit, or delete existing products in the store inventory.</p>
+			</div>
+			<div>
+				<partial name="_Create" />
+			</div>
+		</div>
+
+		<!-- Card Body with Table -->
+		<div class="card-body px-0 pb-0">
+			<div class="table-responsive">
+				<table class="table table-hover align-middle mb-0 text-nowrap">
+					<thead class="bg-light text-uppercase font-weight-bold text-muted small">
+						<tr>
+							<th class="pl-4 py-3 border-top-0" style="width: 80px;">Id</th>
+							<th class="py-3 border-top-0">Product Info</th>
+							<th class="py-3 border-top-0 text-right" style="width: 150px;">Unit Price</th>
+							<th class="py-3 border-top-0" style="width: 120px;">Unit</th>
+							<th class="py-3 border-top-0 text-center" style="width: 100px;">Photo</th>
+							<th class="pr-4 py-3 border-top-0 text-center" style="width: 180px;">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model == null || !Model.Any())
+						{
+							<tr>
+								<td colspan="6" class="text-center py-5 text-muted">
+									<i class="fas fa-box-open fa-3x mb-3 text-secondary"></i>
+									<p class="mb-0">No products found in the inventory.</p>
+								</td>
+							</tr>
+						}
+						else
+						{
+							foreach (var product in Model)
+							{
+								<tr>
+									<!-- ID Column -->
+									<td class="pl-4 font-weight-bold text-secondary align-middle">
+										#@product.Id
+									</td>
+									<!-- Product Info Column -->
+									<td class="align-middle">
+										<div class="font-weight-bold text-dark mb-0">@product.Name</div>
+										@if (!string.IsNullOrEmpty(product.Description))
+										{
+											<span class="text-muted small d-inline-block text-truncate" style="max-width: 300px;" title="@product.Description">
+												@product.Description
+											</span>
+										}
+										else
+										{
+											<span class="text-muted small font-italic">No description</span>
+										}
+									</td>
+									<!-- Unit Price Column -->
+									<td class="text-right font-weight-bold text-dark align-middle pr-3">
+										@string.Format("{0:C2}", product.UnitPrice)
+									</td>
+									<!-- Unit Column -->
+									<td class="align-middle">
+										<span class="badge badge-secondary px-3 py-2 rounded-pill font-weight-normal">
+											@product.Unit
+										</span>
+									</td>
+									<!-- Photo Column -->
+									<td class="text-center align-middle">
+										@if (!string.IsNullOrEmpty(product.PictureFilename))
+										{
+											<img src="/uploadedimages/thumb/@product.PictureFilename" 
+												 class="img-thumbnail shadow-sm rounded" 
+												 style="width: 44px; height: 44px; object-fit: cover;" 
+												 title="@product.Description" 
+												 alt="@product.Name" />
+										}
+										else
+										{
+											<div class="d-inline-flex align-items-center justify-content-center bg-light text-secondary rounded shadow-sm" style="width: 44px; height: 44px;">
+												<i class="fas fa-image text-muted"></i>
+											</div>
+										}
+									</td>
+									<!-- Actions Column -->
+									<td class="pr-4 text-center align-middle">
+										<div class="btn-group" role="group" aria-label="Product Actions">
+											<a href="/crudsample/Edit/@product.Id" class="btn btn-sm btn-outline-warning border-warning mr-2 rounded" title="Edit Product">
+												<i class="fas fa-edit"></i> Edit
+											</a>
+											<a href="/crudsample/Delete/@product.Id" class="btn btn-sm btn-outline-danger rounded" onclick="return confirm('Are you sure you want to delete @Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(product.Name))?')" title="Delete Product">
+												<i class="fas fa-trash-alt"></i> Delete
+											</a>
+										</div>
+									</td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

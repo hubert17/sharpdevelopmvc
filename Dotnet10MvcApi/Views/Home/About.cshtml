@@ -1,0 +1,68 @@
+@{
+    ViewBag.Title = "About";
+}
+
+@section head
+{
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+}
+
+<div class="py-5 text-center">
+    <h1 class="display-4 font-weight-bold text-dark">About Us</h1>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <p class="lead text-secondary">Meet the talented team of individuals behind our lightweight starting framework, building ASP.NET MVC and Web API apps.</p>
+        </div>
+    </div>
+</div>
+
+<section id="team" class="pb-5">
+    <div class="container">
+        <div class="row">
+            @{
+                var hollywoodNames = new string[] { "Tom", "Meryl", "Leonardo", "Jennifer", "Brad", "Angelina", "Robert", "Scarlett", "Denzel", "Julia", "Johnny", "Emma" };
+            }
+            @for (int i = 0; i < hollywoodNames.Length; i++)
+            {
+                <div class="col-12 col-sm-6 col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm bg-light">
+                        <div class="card-body d-flex flex-column text-center p-4">
+                            <div class="rounded-circle bg-white shadow-sm d-flex align-items-center justify-content-center mx-auto mb-3 border" style="width: 80px; height: 80px;">
+                                <span class="h3 text-primary font-weight-bold mb-0">@hollywoodNames[i][0]</span>
+                            </div>
+                            <h4 class="card-title font-weight-bold mb-1 text-dark">@hollywoodNames[i]</h4>
+                            <p class="text-primary small font-weight-bold mb-2">Team Member</p>
+                            <p class="card-text text-secondary small mb-4">
+                                This is a basic card with initials on top, title, description, and social media channels.
+                            </p>
+                            <div class="mt-auto pt-3 border-top">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item">
+                                        <a class="text-secondary px-2" target="_blank" href="#" title="Facebook">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-secondary px-2" target="_blank" href="#" title="Twitter">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-secondary px-2" target="_blank" href="#" title="Skype">
+                                            <i class="fa fa-skype"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="text-secondary px-2" target="_blank" href="#" title="Google">
+                                            <i class="fa fa-google"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

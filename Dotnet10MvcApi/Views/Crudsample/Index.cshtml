@@ -1,0 +1,172 @@
+@model List<Dotnet10MvcApi.Models.Product>
+
+@{
+	ViewBag.TitleBar = "Shop";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+	<!-- FontAwesome for modern icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+@section Searchbar
+{
+	<form action="/Crudsample" method="get" class="form-inline mt-2 mt-md-0">
+		<div class="input-group">
+			<input type="text" id="searchqry" name="searchqry" value="@ViewBag.SearchQry" class="form-control" placeholder="Product search..." />
+			<div class="input-group-append">
+				<button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Search</button>
+			</div>
+		</div>
+	</form>
+}
+
+<div class="container py-4">
+	<div class="row">
+		<!-- Sidebar Column -->
+		<div class="col-lg-3">
+			<!-- Shop Brand Card -->
+			<div class="card border-0 shadow-sm mb-4 rounded-lg bg-primary text-white">
+				<div class="card-body p-4 text-center">
+					<i class="fas fa-shopping-bag fa-3x mb-3 text-white-50"></i>
+					<h4 class="font-weight-bold mb-1">Corner Store</h4>
+					<p class="small mb-0 text-white-50">Your everyday essentials</p>
+				</div>
+			</div>
+
+			<!-- Categories Card -->
+			<div class="card border-0 shadow-sm mb-4 rounded-lg">
+				<div class="card-header bg-white border-bottom-0 pt-3 pb-0">
+					<h6 class="font-weight-bold text-dark mb-0">Categories</h6>
+				</div>
+				<div class="list-group list-group-flush pt-2 pb-2">
+					<a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active border-0">
+						<span><i class="fas fa-list-ul mr-2 text-primary"></i>All Products</span>
+						<span class="badge badge-light badge-pill">@(Model?.Count ?? 0)</span>
+					</a>
+					<a href="#" class="list-group-item list-group-item-action border-0">
+						<span><i class="fas fa-cookie-bite mr-2 text-muted"></i>Groceries</span>
+					</a>
+					<a href="#" class="list-group-item list-group-item-action border-0">
+						<span><i class="fas fa-sparkles mr-2 text-muted"></i>Personal Care</span>
+					</a>
+					<a href="#" class="list-group-item list-group-item-action border-0">
+						<span><i class="fas fa-glass-martini-alt mr-2 text-muted"></i>Beverages</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Manage Inventory Button Card -->
+			<div class="card border-0 shadow-sm mb-4 rounded-lg">
+				<div class="card-body p-3">
+					<h6 class="font-weight-bold text-secondary mb-2 small text-uppercase">Admin Panel</h6>
+					<a href="/crudsample/manage" class="btn btn-outline-success btn-block font-weight-bold shadow-sm rounded-pill">
+						<i class="fas fa-tasks mr-1"></i> Manage Products
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Content Column -->
+		<div class="col-lg-9">
+			<!-- Carousel -->
+			<div id="carouselExampleIndicators" class="carousel slide shadow-sm mb-4 rounded-lg overflow-hidden" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<div class="carousel-item active">
+						<img class="d-block w-100" src="https://placehold.co/900x350/007bff/ffffff?text=Supermarket+Sale" alt="First slide" style="max-height: 350px; object-fit: cover;">
+					</div>
+					<div class="carousel-item">
+						<img class="d-block w-100" src="https://placehold.co/900x350/28a745/ffffff?text=Fresh+Deals" alt="Second slide" style="max-height: 350px; object-fit: cover;">
+					</div>
+					<div class="carousel-item">
+						<img class="d-block w-100" src="https://placehold.co/900x350/fd7e14/ffffff?text=New+Arrivals" alt="Third slide" style="max-height: 350px; object-fit: cover;">
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+
+			<!-- Product Grid -->
+			<div class="row">
+				@if (Model == null || !Model.Any())
+				{
+					<div class="col-12 text-center py-5 text-muted">
+						<i class="fas fa-search fa-3x mb-3 text-secondary"></i>
+						<h5>No products found</h5>
+						<p class="mb-0">Try searching for something else or check the name.</p>
+					</div>
+				}
+				else
+				{
+					foreach (var product in Model)
+					{
+						<div class="col-lg-4 col-md-6 mb-4">
+							<div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+								<a href="/crudsample/details/@product.Id" class="d-block text-decoration-none bg-light text-center">
+									<img class="card-img-top w-100" 
+										 src="@(!string.IsNullOrEmpty(product.PictureFilename) ? "/uploadedimages/thumb/" + product.PictureFilename : "https://placehold.co/700x400?text=No+Photo")" 
+										 alt="@product.Name" 
+										 style="height: 180px; object-fit: cover;">
+								</a>
+								<div class="card-body d-flex flex-column justify-content-between p-3">
+									<div>
+										<h5 class="card-title mb-1 font-weight-bold">
+											<a href="/crudsample/details/@product.Id" class="text-dark text-decoration-none text-truncate d-block" title="@product.Name">@product.Name</a>
+										</h5>
+										<h6 class="text-primary font-weight-bold mb-2">
+											@string.Format("{0:C2}", product.UnitPrice) <span class="text-muted small font-weight-normal">/ @product.Unit</span>
+										</h6>
+										<p class="card-text text-muted small text-truncate-2 mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px;">
+											@product.Description
+										</p>
+									</div>
+								</div>
+								<div class="card-footer bg-white border-top-0 pt-0 pb-3 px-3 d-flex justify-content-between align-items-center">
+									<small class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+									<a href="/crudsample/details/@product.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3 font-weight-bold">Details</a>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+
+			<!-- Pagination -->
+			@if (ViewBag.TotalPages != null && ViewBag.TotalPages > 1)
+			{
+				<nav aria-label="Product navigation" class="mt-4">
+					<ul class="pagination justify-content-center">
+						<li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+							<a class="page-link shadow-sm rounded-left" href="/Crudsample?searchqry=@ViewBag.SearchQry&page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+								<span aria-hidden="true">&laquo; Previous</span>
+							</a>
+						</li>
+						@for (int i = 1; i <= ViewBag.TotalPages; i++)
+						{
+							<li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+								<a class="page-link shadow-sm @(ViewBag.CurrentPage == i ? "bg-primary text-white border-primary" : "")" href="/Crudsample?searchqry=@ViewBag.SearchQry&page=@i">@i</a>
+							</li>
+						}
+						<li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+							<a class="page-link shadow-sm rounded-right" href="/Crudsample?searchqry=@ViewBag.SearchQry&page=@(ViewBag.CurrentPage + 1)" aria-label="Next">
+								<span aria-hidden="true">Next &raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			}
+		</div>
+	</div>
+</div>

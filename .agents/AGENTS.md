@@ -47,3 +47,11 @@ These instructions govern all future modifications, tests, and task executions p
 
 *   **API Reference Route:** The OpenAPI docs and visual playground are powered by **Scalar** (served at `/scalar/v1`).
     *   **Rule:** Ensure that the legacy redirection endpoint `/swagger` in `Program.cs` remains mapped to `/scalar/v1` for convenience.
+
+---
+
+## 🌐 HTML-First View Implementation
+
+*   **Markup Style:** Prefer standard HTML5 markup over legacy ASP.NET MVC Razor helpers (e.g., `@Html.BeginForm`, `@Html.TextBoxFor`, `@Html.LabelFor`).
+    *   **Rule:** Implement views using clean, raw HTML form controls and Bootstrap 4 classes (`<form action="..." method="...">`, `<input id="..." name="..." class="form-control" />`). Use Razor syntax for essential dynamic control flow (loops, conditionals) and model properties rather than HTML helper abstractions.
+

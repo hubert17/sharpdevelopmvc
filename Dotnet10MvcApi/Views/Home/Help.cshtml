@@ -1,0 +1,107 @@
+@{
+	ViewBag.Title = "Help & Documentation";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head {
+	<!-- FontAwesome for documentation icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+<div class="container py-4">
+	<!-- Page Header -->
+	<div class="border-bottom pb-3 mb-4">
+		<h1 class="font-weight-bold text-dark"><i class="fas fa-info-circle text-primary mr-2"></i>@ViewBag.Title</h1>
+		<p class="text-muted lead">Learn how this project is structured, how to resolve common setup issues, and how to get it running locally or in production.</p>
+	</div>
+
+	<div class="row">
+		<!-- Sidebar Navigation (Table of Contents) -->
+		<div class="col-lg-3 mb-4">
+			<div class="sticky-top" style="top: 80px; z-index: 100;">
+				<div class="card border-0 shadow-sm rounded-lg">
+					<div class="card-header bg-white border-bottom-0 pt-3 pb-0">
+						<h6 class="font-weight-bold text-uppercase text-muted small"><i class="fas fa-list-ul mr-2 text-primary"></i>On This Page</h6>
+					</div>
+					<div class="list-group list-group-flush pt-2 pb-2 small">
+						<a href="#overview" class="list-group-item list-group-item-action border-0 py-2 active font-weight-bold">Overview</a>
+						<a href="#features" class="list-group-item list-group-item-action border-0 py-2">Features &amp; Tech Stack</a>
+						<a href="#getting-started" class="list-group-item list-group-item-action border-0 py-2">Quick Start &amp; Fixes</a>
+						<a href="#database" class="list-group-item list-group-item-action border-0 py-2">Database Setup</a>
+						<a href="#publishing" class="list-group-item list-group-item-action border-0 py-2">Publishing &amp; Deploying</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Documentation Content -->
+		<div class="col-lg-9">
+			<!-- Section 1: Overview -->
+			<section id="overview" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Overview</h2>
+				<p>
+					<strong>Dotnet10MvcApi</strong> is a modern starting point for developing robust ASP.NET Core MVC and Web API applications targeting 
+					<code>.NET 10</code>. The project is designed specifically to run seamlessly across x64 architectures with EF Core Jet and MS Access database integration.
+				</p>
+			</section>
+
+			<!-- Section 2: Features & Tech Stack -->
+			<section id="features" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Features &amp; Tech Stack</h2>
+				<p>This project comes integrated with a bundle of modern libraries:</p>
+				
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-primary"><i class="fas fa-laptop-code mr-2"></i>Frontend &amp; UI</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>Bootstrap 4.6</strong>: Styled responsive framework.</li>
+									<li><strong>Petite-Vue</strong>: Progressive JS enhancement subset.</li>
+									<li><strong>Bootbox.js</strong>: Modal notifications.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6 mb-3">
+						<div class="card h-100 border-0 shadow-sm">
+							<div class="card-body">
+								<h6 class="font-weight-bold text-success"><i class="fas fa-database mr-2"></i>Data Access</h6>
+								<ul class="small pl-3 mb-0 text-muted">
+									<li><strong>EF Core Jet Provider</strong>: Access database ORM mapping.</li>
+									<li><strong>#Dual table support</strong>: LINQ query scalar resolution.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 3: Quick Start -->
+			<section id="getting-started" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Quick Start</h2>
+				
+				<div class="card border-0 shadow-sm mb-4">
+					<div class="card-body">
+						<h5 class="font-weight-bold text-dark">Running the Application</h5>
+						<p class="small text-muted mb-2">Execute with the x64 architecture flag:</p>
+						<pre class="bg-dark text-light p-3 rounded small mb-0"><code>dotnet run --arch x64</code></pre>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section 4: Database Configuration -->
+			<section id="database" class="mb-5 scroll-margin">
+				<h2 class="h3 font-weight-bold text-dark border-bottom pb-2 mb-3">Database Setup</h2>
+				<p>Database is seeded automatically on startup in <code>Program.cs</code>.</p>
+			</section>
+		</div>
+	</div>
+</div>
+
+<style>
+	.scroll-margin {
+		scroll-margin-top: 80px;
+	}
+</style>

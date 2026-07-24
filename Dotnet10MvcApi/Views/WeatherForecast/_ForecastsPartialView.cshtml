@@ -1,0 +1,14 @@
+@model List<Dotnet10MvcApi.Models.WeatherForecast>
+
+@if (Model != null)
+{
+    foreach (var forecast in Model)
+    {
+        <tr>
+            <td>@forecast.Date</td>
+            <td>@forecast.TemperatureC</td>
+            <td>@forecast.TemperatureF</td>
+            <td>@forecast.Summary</td>
+        </tr>
+    }
+}
