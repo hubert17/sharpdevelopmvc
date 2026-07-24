@@ -12,6 +12,9 @@ These instructions govern all future modifications, tests, and task executions p
         dotnet run --arch x64
         ```
     *   **Failure Mode:** Running without `--arch x64` results in `assembly not found` or `provider not registered` exceptions during database connection handshakes.
+*   **Debug & Helper Script (`run-debug.bat`):** The project includes `Dotnet10MvcApi/run-debug.bat` to launch the application under the correct architecture:
+    *   **Standard Run:** `.\Dotnet10MvcApi\run-debug.bat`
+    *   **Agent Run (Low Verbosity):** `.\Dotnet10MvcApi\run-debug.bat --agent` (or `/agent`), which executes `dotnet run --project . --arch x64 --verbosity quiet`.
 
 ---
 
