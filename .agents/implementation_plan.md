@@ -35,7 +35,7 @@ This document tracks the modernization details and the phase-by-phase execution 
     *   `Models/ViewModels/`: Razor View Models (`ErrorViewModel`).
     *   `Models/Dtos/`: API Transfer objects (`WeatherForecast`).
     *   `Services/`: Injectable services (`TokenManager`, `EmailService`).
-*   **Modernization of Helpers:** Replaced legacy ASP.NET 4.5 helpers with ASP.NET Core Tag Helpers (`asp-controller`, `asp-action`, `asp-validation-summary`).
+*   **HTML-First View Implementation:** Replaced legacy ASP.NET 4.5 Razor helpers (`@Html.BeginForm`, `@Html.TextBoxFor`, `@Html.LabelFor`) with clean, raw HTML5 form controls and Bootstrap 4 styling (`<form action="..." method="...">`, `<input class="form-control" />`), using Razor strictly for essential dynamic control flow and model properties.
 *   **Build Verification:** Verified clean compilation via `dotnet build --arch x64` (0 errors).
 
 ### [ ] Phase 5: Vue.js Integration & Final End-to-End Verification
