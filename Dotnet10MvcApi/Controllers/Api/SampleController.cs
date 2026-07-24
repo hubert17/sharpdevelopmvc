@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Dotnet10MvcApi.Data;
 using Dotnet10MvcApi.Helpers;
 using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.Dtos;
+using Dotnet10MvcApi.Models.Entities;
+using Dotnet10MvcApi.Services;
 
 namespace Dotnet10MvcApi.Controllers.Api
 {

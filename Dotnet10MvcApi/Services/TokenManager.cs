@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 
-namespace Dotnet10MvcApi.Helpers
+namespace Dotnet10MvcApi.Services
 {
     public class TokenManager
     {

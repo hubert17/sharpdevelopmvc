@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.Entities;
 
 namespace Dotnet10MvcApi.Data
 {

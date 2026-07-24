@@ -9,8 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Dotnet10MvcApi.Data;
 using Dotnet10MvcApi.Helpers;
 using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.Entities;
 
-namespace Dotnet10MvcApi.Controllers
+namespace Dotnet10MvcApi.Controllers.Mvc
 {
     public class CrudsampleController : Controller
     {

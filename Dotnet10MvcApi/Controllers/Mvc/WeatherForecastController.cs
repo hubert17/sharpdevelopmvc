@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.Dtos;
 
-namespace Dotnet10MvcApi.Controllers
+namespace Dotnet10MvcApi.Controllers.Mvc
 {
     public class WeatherForecastController : Controller
     {       

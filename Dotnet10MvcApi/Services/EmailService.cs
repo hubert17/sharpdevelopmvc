@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Dotnet10MvcApi.Helpers
+namespace Dotnet10MvcApi.Services
 {
     public static class EmailService
     {

@@ -1,4 +1,4 @@
-namespace Dotnet10MvcApi.Models;
+namespace Dotnet10MvcApi.Models.ViewModels;
 
 public class ErrorViewModel
 {

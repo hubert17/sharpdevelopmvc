@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Dotnet10MvcApi.Models
+namespace Dotnet10MvcApi.Models.Entities
 {
     public class Product
     {

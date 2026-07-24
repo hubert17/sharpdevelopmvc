@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Dotnet10MvcApi.Models
+namespace Dotnet10MvcApi.Models.Entities
 {
     [Table("Users")]
     public class UserAccount

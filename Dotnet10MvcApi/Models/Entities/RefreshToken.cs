@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dotnet10MvcApi.Models
+namespace Dotnet10MvcApi.Models.Entities
 {
     [Table("RefreshTokens")]
     public class RefreshToken

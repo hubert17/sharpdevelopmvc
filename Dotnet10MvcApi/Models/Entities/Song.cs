@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Dotnet10MvcApi.Data;
 using CsvHelper.Configuration.Attributes;
 
-namespace Dotnet10MvcApi.Models
+namespace Dotnet10MvcApi.Models.Entities
 {
     public class Song
     {

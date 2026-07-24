@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dotnet10MvcApi.Models
+namespace Dotnet10MvcApi.Models.Dtos
 {
     public class WeatherForecast
     {

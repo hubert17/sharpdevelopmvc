@@ -2,8 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.ViewModels;
 
-namespace Dotnet10MvcApi.Controllers;
+namespace Dotnet10MvcApi.Controllers.Mvc;
 
 public class HomeController : Controller
 {

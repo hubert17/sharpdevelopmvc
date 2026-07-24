@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using Dotnet10MvcApi.Data;
 using Dotnet10MvcApi.Helpers;
 using Dotnet10MvcApi.Models;
+using Dotnet10MvcApi.Models.Entities;
+using Dotnet10MvcApi.Services;
 using Scalar.AspNetCore;
 using OpenApi = Microsoft.OpenApi;
 
